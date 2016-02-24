@@ -14,4 +14,19 @@
 			return self::$connection;
 		}
 
+		public static function query($query) {
+			$db = self::getConnection();
+
+			$result = $db->query($query);
+
+			if(!is_object($result) || !$result->rowCount()) {
+				print_r($db->errorInfo()); //dev
+				throw new Exception("Error Processing Request", 1);
+			}
+
+			$result->setFetchMode(PDO::FETCH_ASSOC);
+
+			return $result;
+		}
+
 	}
