@@ -5,10 +5,13 @@
 		public function actionIndex($shortName = null) {
 			$categoryID = ShopCategory::getID(array($shortName));
 			$categoryList = ShopCategory::getList($categoryID);
+			$breadcrumbArray = ShopCategory::getBreadcrumbArray($categoryID);
 
 			echo "ID: $categoryID";
 			echo "<pre>";
 			print_r($categoryList);
+			echo "<br>";
+			print_r($breadcrumbArray);
 			echo "</pre>";
 
 			$contentView = "ShopCategory";

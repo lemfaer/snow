@@ -14,14 +14,22 @@
 			return self::$connection;
 		}
 
+		public static function checkedQuery($query) {
+			$result = self::query($query);
+			if(!$result->rowCount()) {
+				throw new Exception("404 NOT FOUND", 1);
+			}
+			return $result;
+		}
+
 		public static function query($query) {
 			$db = self::getConnection();
 
 			$result = $db->query($query);
 
-			if(!is_object($result) || !$result->rowCount()) {
+			if(!is_object($result)) {
 				print_r($db->errorInfo()); //dev
-				throw new Exception("Error Processing Request", 1);
+				throw new Exception("MySQL ERROR", 1);
 			}
 
 			$result->setFetchMode(PDO::FETCH_ASSOC);
