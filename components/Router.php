@@ -19,7 +19,7 @@
 
 			foreach($this->routeArray as $uriPattern => $path) {
 
-				if(preg_match("~$uriPattern~", $uri)) {
+				if(preg_match("~^$uriPattern$~", $uri)) {
 					$path = preg_replace("~$uriPattern~", $path, $uri);
 
 					$segments = explode("/", $path);

@@ -8,11 +8,20 @@
 				$query = "SELECT id 
 					FROM category 
 					WHERE parent_id = '$id' AND short_name = '$shortName' AND status = '1'";
-				$result = DB::checkedQuery($query);
+				$result = DB::query($query);
 				$id = array_shift($result->fetch());
 			}
 
 			return $id;
+		}
+
+		public static function getName($categoryID) {
+			if(!$categoryID) {
+				return;
+			}
+			$query = "SELECT name FROM category WHERE id = '$categoryID' AND status = '1'";
+			$result = DB::query($query);
+			return array_shift($result->fetch());
 		}
 
 		public static function getList($categoryID) {
@@ -20,30 +29,41 @@
 				FROM category 
 				WHERE parent_id = '$categoryID' AND status = '1'
 				ORDER BY sort_order";
-			$result = DB::checkedQuery($query);
+			$result = DB::query($query);
 
 			return $result->fetchAll();
 		}
 
-		public static function getBreadcrumbArray($categoryID) {
+		public static function getBCArrayByCategoryID($categoryID) {
 			if(!$categoryID) {
-				return;
+				return false;
 			}
 
 			$id = $categoryID;
 			while($id) {
-				$query = "SELECT a.id, a.name 
-					FROM category AS a INNER JOIN category AS b
-					ON a.id = b.parent_id
-					WHERE b.id = '$id' AND b.status = '1'";
-				$result = DB::query($query);
-				$elem = $result->fetch();
-				$id = $elem['id'];
+				$query = "SELECT parent_id, short_name, name FROM category WHERE id = '$id' AND status = '1'";
+				$elem = DB::query($query)->fetch();
+
+				$id = array_shift($elem);
+				$elem['url'] = "/category";
+				$bc[] = $elem;
+			}
+
+			while($elem = array_pop($bc)) {
+				foreach ($bc as $key => $value) {
+					$bc[$key]['url'] .= "/".$elem['short_name'];
+				}
+				$elem['url'] .= "/".array_shift($elem);
 				$bcArray[] = $elem;
 			}
-			array_pop($bcArray);
 
 			return $bcArray;
+		}
+
+		public static function getBCArrayByProductID($productID) {
+			$query = "SELECT category_id FROM product WHERE id = '$productID' AND status = '1'";
+			$categoryID = array_shift(DB::query($query)->fetch());
+			return self::getBCArrayByCategoryID($categoryID);
 		}
 
 	}

@@ -4,17 +4,18 @@
 
 		public function actionIndex($shortName = null) {
 			$categoryID = ShopCategory::getID(array($shortName));
+			$categoryName = ShopCategory::getName($categoryID);
 			$categoryList = ShopCategory::getList($categoryID);
-			$breadcrumbArray = ShopCategory::getBreadcrumbArray($categoryID);
+			$breadcrumbArray = ShopCategory::getBCArrayByCategoryID($categoryID);
 
-			echo "ID: $categoryID";
-			echo "<pre>";
-			print_r($categoryList);
-			echo "<br>";
-			print_r($breadcrumbArray);
-			echo "</pre>";
+			// echo "ID: $categoryID";
+			// echo "<pre>";
+			// print_r($categoryList);
+			// echo "<br>";
+			// print_r($breadcrumbArray);
+			// echo "</pre>";
 
-			$contentView = "ShopCategory";
+			$contentView = ROOT."/views/ShopCategoryView/index.php";
 			require_once(ROOT."/views/template/index.php");
 		}
 
