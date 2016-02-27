@@ -1785,14 +1785,14 @@ fieldset.input input[type="submit"]:hover {
  	margin-left: 71%;
  }
 }
-@media (max-width:1280px){
+/*@media (max-width:1024px){
 .icon1 ul {
 	width: 270px;
 	top: 63px;
 	right: -55px;
  }
-}	
-@media (max-width:1024px){
+}	*/
+@media (max-width:1280px){ /*1024*/
 .menu li a {	
 	padding: 5px 10px;
  }
@@ -1824,8 +1824,8 @@ fieldset.input input[type="submit"]:hover {
 	padding: 12px 11px 14px 63px;
  }
 }	
-@media (max-width:800px){
-.menu {
+@media (max-width:800px){ /*800*/
+  .menu {
 	 margin:10px 0 0;
   }
   .header_right {
@@ -2035,4 +2035,68 @@ h4.m_11 {
 .breadcrumb {
 	padding: 0 1%;
 	background: #fff;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  color: #000;
+}
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  color: #f90000;
+  border-color: #eee;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: #000;
+  border-color: #000;
+}
+
+
+.product-specifications {
+	margin-bottom: 5%;
+}
+.product-specifications h4 {
+	color:#333;
+	font-size:1.5em;
+	margin-bottom:1%;
+	text-transform:uppercase;
+}
+.product-specifications li span.specification-heading{
+	color:#999999;
+	font-size:13px;
+	border-left:none;
+}
+.product-specifications li{
+	border:1px solid #eee;
+	border-top:none;
+	list-style-type: none;
+}
+.product-specifications li span{
+	float:left;
+	width:47%;
+	padding:10px;
+	color:#23272a;
+	font-size:14px;
+	font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+	border-left:1px solid #EEE;
+}
+.product-specifications li:first-child span{
+	border-top:1px solid #eee;
 }

@@ -7,6 +7,10 @@
 			$categoryName = ShopCategory::getName($categoryID);
 			$breadcrumbArray = ShopCategory::getBCArrayByCategoryID($categoryID);
 
+			$total = ShopProduct::getListTotal($categoryID);
+			$limit = ShopProduct::getListShowCount();
+			$pagination = new Pagination($total, $page, $limit, "page-");
+
 			// echo "ID: $categoryID";
 			// echo "<pre>";
 			// print_r($productList);

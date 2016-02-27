@@ -8,12 +8,23 @@
 		private static $recCount;
 		private static $listCount;
 
-		public static function getRecomendedList($count = self::DEF_REC_COUNT) {
+		public static function getRecShowCount() {
+
+			return self::$recCount;
+		}
+
+		public static function getListShowCount() {
+
+			return self::$listCount;
+		}
+
+		public static function getRecList($count = self::DEF_REC_COUNT) {
 			self::$recCount = $count;
-			$query = "SELECT id, name, short_description, price, image
-				FROM product 
-				WHERE is_recomended = '1' AND status = '1'
-				ORDER BY id DESC
+			$query = "SELECT a.id, a.name, a.short_description, a.price, a.image, a.year, b.name AS producer_name
+				FROM product AS a INNER JOIN producer AS b
+				ON a.producer_id = b.id
+				WHERE a.is_recomended = '1' AND a.status = '1' AND b.status = '1'
+				ORDER BY a.id DESC
 				LIMIT $count";
 			$result = DB::query($query);
 			return $result->fetchAll();
@@ -22,13 +33,21 @@
 		public static function getList($categoryID, $page, $count = self::DEF_LIST_COUNT) {
 			self::$listCount = $count;
 			$offset = ($page - 1) * $count;
-			$query = "SELECT id, name, short_description, price, image, is_new
-				FROM product 
-				WHERE category_id = '$categoryID' AND status = '1'
-				ORDER BY id DESC
+			$query = "SELECT a.id, a.name, a.short_description, a.price, a.image, a.year, a.is_new, 
+				b.name AS producer_name
+				FROM product AS a INNER JOIN producer AS b
+				ON a.producer_id = b.id
+				WHERE a.category_id = '$categoryID' AND a.status = '1' AND b.status = '1'
+				ORDER BY a.id DESC
 				LIMIT $count OFFSET $offset";
 			$result = DB::query($query);
 			return $result->fetchAll();
+		}
+
+		public static function getListTotal($categoryID) {
+			$query = "SELECT count(*) FROM product WHERE category_id = '$categoryID' AND status = '1'";
+			$result = DB::query($query);
+			return array_shift($result->fetch());
 		}
 
 		public static function getItem($productID) {

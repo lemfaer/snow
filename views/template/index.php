@@ -9,17 +9,28 @@
 <!-- meta end -->
 
 <!-- css links -->
-	<link href="/template/css/bootstrap.css" rel='stylesheet' type='text/css' />
-	<link href="/template/css/style.css" rel='stylesheet' type='text/css' />
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' 
-		rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="/template/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="/template/css/fwslider.css" />
+	<link rel="stylesheet" type="text/css" href="/template/css/magnific-popur.css" />
+	<link rel="stylesheet" type="text/css" href="/template/css/flexslider.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/template/css/jquery.fancybox.css" media="screen" />
+	<link rel="stylesheet" type="text/css" 
+		href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' />
+	<link rel="stylesheet" type="text/css" href="/template/css/style.css" />
 <!-- css links end -->
 
 <!-- js links -->
-	<script src="/template/js/jquery.min.js"></script>
-	<script src="/template/js/classie.js"></script>
-	<script src="/template/js/uisearch.js"></script>
-<!-- js kinks end -->
+	<script type="text/javascript" src="/template/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/template/js/jquery.fancybox.js"></script>
+	<script type="text/javascript" src="/template/js/jquery.flexisel.js"></script>
+	<script type="text/javascript" src="/template/js/jquery.magnific-popur.js"></script>
+	<script type="text/javascript" src="/template/js/responsive-nav.js"></script>
+	<script type="text/javascript" src="/template/js/classie.js"></script>
+	<script type="text/javascript" src="/template/js/uisearch.js"></script>
+	<script type="text/javascript" src="/template/js/fwslider.js"></script>
+	<script type="text/javascript" src="/template/js/imagezoom.js"></script>
+	<script type="text/javascript" src="/template/js/jquery.flexslider.js" defer></script>
+<!-- js links end -->
 
 <!-- js script -->
 	<script type="application/x-javascript"> 
@@ -61,6 +72,19 @@
 			});
 		});
 	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.fancybox').fancybox();
+		});
+	</script>
+	<script type="text/javascript">
+		$(window).load(function() {
+			$('.flexslider').flexslider({
+				animation: "slide",
+				controlNav: "thumbnails"
+			});
+		});
+	</script>
 <!-- js script end -->
 
 </head>
@@ -87,7 +111,7 @@
 							<li><a href="contact.html">Contact</a></li>								
 							<div class="clear"></div>
 						</ul>
-						<script type="text/javascript" src="/template/js/responsive-nav.js"></script>
+						
 					</div>							
 					<div class="clear"></div>
 				</div>

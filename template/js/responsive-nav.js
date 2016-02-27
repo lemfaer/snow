@@ -1,7 +1,8 @@
 
-var ww = document.body.clientWidth;
+var ww;
 
 $(document).ready(function() {
+	ww = document.body.clientWidth;
 	$(".nav li a").each(function() {
 		if ($(this).next().length > 0) {
 			$(this).addClass("parent");
@@ -14,11 +15,11 @@ $(document).ready(function() {
 		$(".nav").toggle();
 	});
 	adjustMenu();
-})
 
-$(window).bind('resize orientationchange', function() {
-	ww = document.body.clientWidth;
-	adjustMenu();
+	$(window).bind('resize orientationchange', function() {
+		ww = document.body.clientWidth;
+		adjustMenu();
+	});
 });
 
 var adjustMenu = function() {

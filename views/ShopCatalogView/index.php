@@ -45,7 +45,9 @@
 								<?php endif; ?>
 								<div class="shop_desc">
 									<h3><a href="/product/<?php echo $product['id']; ?>">
-										<?php echo $product['name']; ?>
+										<?php echo $product['producer_name']
+											.' '.$product['name']
+											.' '.$product['year']; ?>
 									</a></h3>
 									<p><?php echo $product['short_description']; ?></p>
 									<span class="actual">$<?php echo $product['price']; ?></span><br>
@@ -62,6 +64,8 @@
 
 				</div>
 			<?php endforeach; ?>
+
+			<?php echo $pagination->get(); ?>
 
 		</div>
 	</div>
