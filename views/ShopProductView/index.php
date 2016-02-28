@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/views/ShopProductView/product-options.js"></script>
+
 <div class="main">
 	<div class="shop_top">
 		<div class="container">
@@ -72,18 +74,73 @@
 				        </div>
 				        <div class="clear"> </div>
 					</div>
-				<div class="col-md-3">
-					<div class="box-info-product">
-						<p class="price2">$<?php echo $product['price']; ?></p>
 
-						<form>
+				<?php if ($product['is_aviable']): ?>	
+					<div class="col-md-3">
+						<div class="box-info-product">
+							<p class="price2">$<?php echo $product['price']; ?></p>
 
-							<button type="submit" name="Submit" class="exclusive">
-								<span>Add to cart</span>
-							</button>
-						</form>
-				   </div>
-			   </div>
+							<form class="product-options">
+								
+								<?php if (count($product['color']) > 1): ?>
+									<ul class="op-group" op-name="color">
+
+										<?php foreach ($product['color'] as $value): ?>
+											<?php $value['size_id'] = implode(",", $value['size_id']); ?>
+											<li class="op-li">
+												<input type="radio" 
+													class="op-radio" 
+													name="op-color" 
+													id="op-color-<?php echo $value['id']; ?>"
+													value="<?php echo $value['id']; ?>"
+													fgn-name="size"
+													fgn-id="<?php echo $value['size_id']; ?>">
+												<label class="op-label" 
+													for="op-color-<?php echo $value['id']; ?>">
+													<span class="op-color"
+														style="background: 
+															<?php echo $value['value']; ?>">
+													</span>
+												</label>
+											</li>
+										<?php endforeach; ?>
+
+									</ul>								
+								<?php endif; ?>
+								
+								<?php if (count($product['size']) > 1): ?>
+									<ul class="op-group" op-name="size">
+
+										<?php foreach ($product['size'] as $value): ?>
+											<?php $value['color_id'] = implode(",", $value['color_id']); ?>
+											<li class="op-li">
+												<input type="radio" 
+													class="op-radio" 
+													name="op-size" 
+													id="op-size-<?php echo $value['id']; ?>"
+													value="<?php echo $value['id']; ?>"
+													fgn-name="color"
+													fgn-id="<?php echo $value['color_id']; ?>">
+												<label class="op-label" 
+													for="op-size-<?php echo $value['id']; ?>">
+													<span class="op-text">
+														<?php echo $value['name']; ?>
+													</span>
+												</label>
+											</li>
+										<?php endforeach ?>
+
+									</ul>
+								<?php endif; ?>
+
+								<button type="submit" name="Submit" class="exclusive">
+									<span>Add to cart</span>
+								</button>
+							</form>
+						</div>
+					</div>
+				<?php endif; ?>
+				
 			</div>
 
 			<?php if (!empty($product['description'])): ?>

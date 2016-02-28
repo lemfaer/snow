@@ -2100,3 +2100,68 @@ h4.m_11 {
 .product-specifications li:first-child span{
 	border-top:1px solid #eee;
 }
+
+
+.product-options{
+
+}
+.op-group{
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 5%;
+}
+.op-li{
+	flex: 0 0 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 2px;
+}
+.op-radio{
+	opacity: 0;
+	width: 0;
+	height: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.op-label{
+	margin: 0;
+}
+.op-label span{
+	border: 3px solid #e2e2e2;
+	padding: 3px;
+	cursor: pointer;
+	background: #fff;
+	display: block;
+}
+.op-color{
+	width: 32px; 
+	height: 32px;
+	display: inline-block;
+}
+.op-text{
+	min-width: 2.15em;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.op-label:hover span{
+	border-color: #8c8c8c;
+}
+.op-radio:checked + .op-label span{
+	border-color: #40ae32;
+}
+.op-radio:disabled + .op-label{
+	opacity: 0.2;
+}
+.op-radio:disabled + .op-label:hover span{
+	border-color: #e2e2e2;
+	cursor: default;
+}
