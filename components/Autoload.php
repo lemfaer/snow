@@ -2,7 +2,7 @@
 	
 	function __autoload($className) {
 
-		$pathArray = array("/components/", "/models/", "/controllers/");
+		$pathArray = array("/components/", "/models/", "/models/ActiveRecord/","/controllers/");
 
 		foreach($pathArray as $path) {
 			$path = ROOT.$path.$className.".php";

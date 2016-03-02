@@ -10,4 +10,6 @@
 		"products/([0-9]+)/page-([0-9]+)" => "shopCatalog/index/$1/$2",
 
 		"product/([0-9]+)" => "shopProduct/index/$1",
+
+		"test" => "test/test",
 	);
