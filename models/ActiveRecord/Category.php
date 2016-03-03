@@ -63,7 +63,7 @@ class Category extends AbstractRecord {
 		$this->image = $image;
 	}
 
-	public function setParent($parent) {
+	public function setParent(Category $parent) {
 		$this->parent = $parent;
 	}
 

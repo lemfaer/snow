@@ -71,7 +71,7 @@ class Product extends AbstractRecord {
 		$this->name = $name;
 	}
 
-	public function setProudcer($producer) {
+	public function setProducer(Producer $producer) {
 		$this->producer = $producer;
 	}
 
@@ -95,7 +95,7 @@ class Product extends AbstractRecord {
 		$this->image = $image;
 	}
 
-	public function setCategory($category) {
+	public function setCategory(Category $category) {
 		$this->category = $category;
 	}
 

@@ -10,6 +10,8 @@ class TestController {
 		$c = Product::findFirst("id = 1");
 		$c = Product::findAll("category_id = 1", 10, 0);
 
+		$c = Characteristic::getCharList(1);
+
 		echo "<pre>";
 		print_r($c);
 		echo "</pre>";
