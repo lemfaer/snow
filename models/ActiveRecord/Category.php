@@ -110,7 +110,9 @@ class Category extends AbstractRecord {
 	}
 
 	public function insert() {}
+
 	public function update() {}
+	
 	public function delete() {}
 
 	public function getArray() {

@@ -33,25 +33,4 @@ class Characteristic {
 
 		return $charList;
 	}
-
-	public static function getCharList($productID) {
-		$charList = array();
-		$query = "SELECT count(value_id) FROM product_has_value WHERE product_id = '$productID'";
-		$result = DB::query($query);
-
-		if($result->fetch()) {
-			$query = "SELECT value_id FROM product_has_value WHERE product_id = '$productID'";
-			$result = DB::query($query);
-
-			$arrID = array();
-			while($id = $result->fetch()) {
-				$id = array_shift($id);
-				$arrID[] = $id;
-			}
-
-			$valueIDString = implode(",", $arrID);
-			$charList = self::findAll("")
-		}
-	}
-
 }

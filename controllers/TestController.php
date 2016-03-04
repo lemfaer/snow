@@ -3,17 +3,25 @@
 class TestController {
 	
 	public function actionTest() {
-		$c = Category::findFirst("id = 10");
-		echo $c->link();
-		$c = Category::findAll("parent_id = '9'", 1, 0);
-
-		$c = Product::findFirst("id = 1");
-		$c = Product::findAll("category_id = 1", 10, 0);
-
-		$c = Characteristic::getCharList(1);
+		$category = Category::findFirst("id = 1");
+		$product = Product::findFirst("id = 1");
+		$productItem = ProductItem::findFirst("id = 1");
+		$color 	= Color::findFirst("id = 1");
+		$size 	= Size::findFirst("id = 1");
+		$available = Available::findFirst("id = 1");
 
 		echo "<pre>";
-		print_r($c);
+		print_r($category);
+		echo "<hr>";
+		print_r($product);
+		echo "<hr>";
+		print_r($productItem);
+		echo "<hr>";
+		print_r($color);
+		echo "<hr>";
+		print_r($size);
+		echo "<hr>";
+		print_r($available);
 		echo "</pre>";
 	}
 

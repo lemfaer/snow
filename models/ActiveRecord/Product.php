@@ -115,7 +115,7 @@ class Product extends AbstractRecord {
 
 //abstract methods realization
 	public static function findFirst($where, $nullStatus = false) {
-		$product = self::findFirstDefault(__CLASS__, "product", $where, $nullStatus); 
+		$product = self::findFirstDefault(__CLASS__, "product", $where, $nullStatus);
 		return $product;
 	}
 
@@ -126,14 +126,16 @@ class Product extends AbstractRecord {
 	}
 
 	public function insert() {}
+
 	public function update() {}
+	
 	public function delete() {}
 
 	public function getArray() {
 		$arr = array();
 		$arr['id']					= $this->id;
 		$arr['name']				= $this->name;
-		$arr['producer']			= $this->producer; //->getArray();
+		$arr['producer']			= $this->producer->getArray();
 		$arr['price']				= $this->price;
 		$arr['year']				= $this->year;
 		$arr['short_description']	= $this->short_description;
@@ -159,7 +161,7 @@ class Product extends AbstractRecord {
 		$this->status				= $arr['status'];
 
 		$this->category	= Category::findFirst("id = {$arr['category_id']}"); //class
-		$this->producer	= $arr['producer_id']; //Producer::findFirst("id = {$arr['producer_id']}");
+		$this->producer	= Producer::findFirst("id = {$arr['producer_id']}"); //class
 
 		return $this;
 	}
