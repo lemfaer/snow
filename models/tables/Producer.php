@@ -38,7 +38,7 @@ class Producer extends AbstractRecord {
 		return $producer;
 	}
 
-	public static function findAll($where, $limit, $offset, $order = "id", $nullStatus = false) {
+	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
 		$producerList = self::findAllDefault(__CLASS__, "producer", $where, $limit, $offset, 
 			$order, $nullStatus);
 		return $producerList;

@@ -52,12 +52,12 @@ class Available extends AbstractRecord {
 
 //abstract methods realization
 	public static function findFirst($where, $nullStatus = true) {
-		$color = self::findFirstDefault(__CLASS__, "aviable", $where, $nullStatus);
+		$color = self::findFirstDefault(__CLASS__, "available", $where, $nullStatus);
 		return $color;
 	}
 
-	public static function findAll($where, $limit, $offset, $order = "id", $nullStatus = true) {
-		$colorList = self::findAllDefault(__CLASS__, "aviable", $where, $limit, $offset, 
+	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = true) {
+		$colorList = self::findAllDefault(__CLASS__, "available", $where, $limit, $offset, 
 			$order, $nullStatus);
 		return $colorList;
 	}
@@ -85,7 +85,7 @@ class Available extends AbstractRecord {
 
 		$this->size = Size::findFirst("id = {$arr['size_id']}");
 		$this->color = Color::findFirst("id = {$arr['color_id']}");
-		//$this->product = Product::findFirst("id = {$arr['product_id']}");
+		$this->product = Product::findFirst("id = {$arr['product_id']}");
 	}
 //abstract methods realization end
 

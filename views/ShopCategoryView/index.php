@@ -4,27 +4,23 @@
 
 			<div style="margin-bottom: 20px">
 				<h3 class="m_2" style="margin-bottom: 1%">
-					<?php echo ($categoryName) ? ($categoryName) : ("Категории"); ?>
+					<?php echo ($category) ? ($category->getName()) : ("Категории"); ?>
 				</h3>
 				
-				<?php if(!empty($breadcrumbArray)): ?>
+				<?php if(!empty($category)): ?>
+					<?php 
+						while($category) {
+							$breadcrumb[$category->link()] = $category->getName();
+							$category = $category->getParent();
+						}
+						$bcFirstName = array_shift($breadcrumb);
+					?>
 					<ul class="breadcrumb" style="margin-bottom: 0">
 						<li><a href="/category">Все категории</a></li>
-						<?php $i = count($breadcrumbArray) - 1; ?>
-						<?php foreach($breadcrumbArray as $key => $value): ?>
-							<?php if($i): ?>
-								<?php $i--; ?>
-								<li><a href="<?php echo $value['url']; ?>" class="active">
-									<?php echo $value['name']; ?>
-								</a></li>
-							<?php 
-								else: 
-									$i = $key;
-									break;
-								endif;
-							?>
+						<?php foreach(array_reverse($breadcrumb) as $key => $value): ?>
+							<li><a href="<?php echo $key ?>"><?php echo $value ?></a></li>
 						<?php endforeach; ?>
-						<li class="active"><?php echo $breadcrumbArray[$i]['name'] ?></li>
+						<li class="active"><?php echo $bcFirstName; ?></li>
 					</ul>
 				<?php endif; ?>
 			</div>
@@ -38,12 +34,12 @@
 						<div class="col-md-4 team1">
 							<div class="img_section magnifier2">
 								<a class="fancybox" 
-									href="<?php echo $_SERVER['REQUEST_URI'].'/'.$category['short_name']; ?>"
+									href="<?php echo $_SERVER['REQUEST_URI'].'/'.$category->getShortName(); ?>"
 									data-fancybox-group="gallery">
-									<img src="<?php echo $category['image']; ?>" class="img-responsive" alt="">
+									<img src="<?php echo $category->getImage(); ?>" class="img-responsive" alt="">
 									<span> </span>
 									<div class="img_section_txt">
-										<?php echo $category['name']; ?>
+										<?php echo $category->getName(); ?>
 									</div>
 								</a>
 							</div>

@@ -2,6 +2,8 @@
 
 abstract class AbstractRecord {
 
+	const LIMIT_MAX = 9999;
+
 	protected static function findFirstDefault($class, $table, $where, $nullStatus) {
 		$status = ($nullStatus) ? ("") : ("AND status = '1'");
 		$query = "SELECT * FROM $table 

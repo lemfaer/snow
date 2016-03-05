@@ -103,7 +103,7 @@ class Category extends AbstractRecord {
 		return $category;
 	}
 
-	public static function findAll($where, $limit, $offset, $order = "id", $nullStatus = false) {
+	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
 		$categoryList = self::findAllDefault(__CLASS__, "category", $where, $limit, $offset, 
 			$order, $nullStatus);
 		return $categoryList;
@@ -146,7 +146,7 @@ class Category extends AbstractRecord {
 	}
 //abstract methods realization end
 
-//stupid functions
+//static functions
 	public static function getIDByShortNameArray($shortNameArray) {
 		$id = 0;
 		while($shortName = array_shift($shortNameArray)) {
@@ -158,6 +158,6 @@ class Category extends AbstractRecord {
 		}
 		return $id;
 	}
-//stupid functions end
+//static functions end
 
 }

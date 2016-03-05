@@ -113,15 +113,33 @@ class Product extends AbstractRecord {
 	//setters end
 //main info end
 
+//available
+	private $available;
+
+	public function isAvailable() {
+		return $this->available;
+	}
+
+	private function checkAvailable() {
+		$query = "SELECT count(id) FROM available WHERE product_id = $this->id";
+		$result = DB::query($query);
+		$this->available = array_shift($result->fetch()) == true;
+	}
+//available
+
 //abstract methods realization
 	public static function findFirst($where, $nullStatus = false) {
 		$product = self::findFirstDefault(__CLASS__, "product", $where, $nullStatus);
+		$product->checkAvailable();
 		return $product;
 	}
 
-	public static function findAll($where, $limit, $offset, $order = "id", $nullStatus = false) {
+	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
 		$productList = self::findAllDefault(__CLASS__, "product", $where, $limit, $offset, 
 			$order, $nullStatus);
+		foreach ($productList as $key => $x) {
+			$productList[$key]->checkAvailable();
+		}
 		return $productList;
 	}
 
@@ -166,5 +184,14 @@ class Product extends AbstractRecord {
 		return $this;
 	}
 //abstract methods realization end
+
+//static functions
+	public static function getTotal($where, $nullStatus = false) {
+		$status = ($nullStatus) ? ("") : ("AND status = '1'");
+		$query = "SELECT count(*) FROM product WHERE $where $status";
+		$result = DB::query($query);
+		return array_shift($result->fetch());
+	}
+//static functions end
 
 }

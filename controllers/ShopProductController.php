@@ -3,15 +3,14 @@
 	class ShopProductController {
 
 		public function actionIndex($productID) {
-			$product = ShopProduct::getItem($productID);
-			$recomendedList = ShopProduct::getRecList();
-			$breadcrumbArray = ShopCategory::getBCArrayByProductID($productID);
+			$productItem = ProductItem::findFirst("id = $productID");
+			$recomendedList = Product::findAll("is_recomended = '1'", 3);
 
 			// echo "ID: $productID";
 			// echo "<pre>";
-			// print_r($product);
+			// print_r($productItem);
 			// echo "<br>";
-			// print_r($breadcrumbArray);
+			// print_r($recomendedList);
 			// echo "</pre>";
 
 			$contentView = ROOT."/views/ShopProductView/index.php";

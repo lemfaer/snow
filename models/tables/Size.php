@@ -1,11 +1,10 @@
 <?php
 
-class CharName extends AbstractRecord {
+class Size extends AbstractRecord {
 
 //main info
 	private $id;
 	private $name;
-	private $category; //class
 	private $status;
 
 	//getters
@@ -15,10 +14,6 @@ class CharName extends AbstractRecord {
 
 	public function getName() {
 		return $this->name;
-	}
-
-	public function getCategory() {
-		return $this->category;
 	}
 
 	public function getStatus() {
@@ -31,10 +26,6 @@ class CharName extends AbstractRecord {
 		$this->name = $name;
 	}
 
-	public function setCategory(Category $category) {
-		$this->category = $category;
-	}
-
 	public function setStatus($status) {
 		$this->status = $status;
 	}
@@ -43,14 +34,14 @@ class CharName extends AbstractRecord {
 
 //abstract methods realization
 	public static function findFirst($where, $nullStatus = false) {
-		$charName = self::findFirstDefault(__CLASS__, "char_name", $where, $nullStatus);
-		return $charName;
+		$color = self::findFirstDefault(__CLASS__, "size", $where, $nullStatus);
+		return $color;
 	}
 
 	public static function findAll($where, $limit, $offset, $order = "id", $nullStatus = false) {
-		$charNameList = self::findAllDefault(__CLASS__, "char_name", $where, $limit, $offset, 
+		$colorList = self::findAllDefault(__CLASS__, "size", $where, $limit, $offset, 
 			$order, $nullStatus);
-		return $charNameList;
+		return $colorList;
 	}
 
 	public function insert() {}
@@ -61,10 +52,9 @@ class CharName extends AbstractRecord {
 
 	public function getArray() {
 		$arr = array();
-		$arr['id'] 			= $this->id;
-		$arr['name'] 		= $this->name;
-		$arr['category'] 	= $this->category->getArray(); //class
-		$arr['status'] 		= $this->status;
+		$arr['id'] 		= $this->id;
+		$arr['name'] 	= $this->name;
+		$arr['status'] 	= $this->status;
 
 		return $arr;
 	}
@@ -73,9 +63,11 @@ class CharName extends AbstractRecord {
 		$this->id 		= $arr['id'];
 		$this->name 	= $arr['name'];
 		$this->status 	= $arr['status'];
-
-		$this->category = Category::findFirst("id = {$arr['category_id']}");
 	}
 //abstract methods realization end
+
+	public function __toString() {
+		return strval($this->id);
+	}
 
 }

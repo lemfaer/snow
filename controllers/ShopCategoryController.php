@@ -3,16 +3,13 @@
 	class ShopCategoryController {
 
 		public function actionIndex($shortName = null) {
-			$categoryID = ShopCategory::getID(array($shortName));
-			$categoryName = ShopCategory::getName($categoryID);
-			$categoryList = ShopCategory::getList($categoryID);
-			$breadcrumbArray = ShopCategory::getBCArrayByCategoryID($categoryID);
+			$categoryID = Category::getIDByShortNameArray(array($shortName));
+			$category = ($categoryID) ? (Category::findFirst("id = $categoryID")) : (null);
+			$categoryList = Category::findAll("parent_id = $categoryID");
 
 			// echo "ID: $categoryID";
 			// echo "<pre>";
 			// print_r($categoryList);
-			// echo "<br>";
-			// print_r($breadcrumbArray);
 			// echo "</pre>";
 
 			$contentView = ROOT."/views/ShopCategoryView/index.php";
@@ -20,7 +17,7 @@
 		}
 
 		public function actionRedirect($shortName1, $shortName2) {
-			$categoryID = ShopCategory::getID(array($shortName1, $shortName2));
+			$categoryID = Category::getIDByShortNameArray(array($shortName1, $shortName2));
 			new Redirect("/products/$categoryID");
 		}
 

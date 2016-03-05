@@ -1,5 +1,9 @@
 <script type="text/javascript" src="/views/ShopProductView/product-options.js"></script>
 
+<?php 
+	$product = $productItem->getProduct();
+?>
+
 <div class="main">
 	<div class="shop_top">
 		<div class="container">
@@ -8,9 +12,9 @@
 					<div class="single_image">
 						<div class="flexslider">
 			  				<ul class="slides">
-								<li data-thumb="<?php echo $product['image']; ?>">
+								<li data-thumb="<?php echo $product->getImage(); ?>">
 									<div class="thumb-image"> 
-										<img src="<?php echo $product['image']; ?>" 
+										<img src="<?php echo $product->getImage(); ?>" 
 											data-imagezoom="true" class="img-responsive"> 
 									</div>
 								</li>
@@ -19,29 +23,31 @@
 					</div>
 					<div class="single_right">
 						<h3>
-							<?php echo $product['producer_name']
-								.' '.$product['name']
-								.' '.$product['year']; ?>
+							<?php echo $product->getProducer()->getName()
+								.' '.$product->getName()
+								.' '.$product->getYear(); ?>
 						</h3>
-						<p class="m_10"><?php echo $product['short_description']; ?></p>
+						<p class="m_10"><?php echo $product->getShortDescription(); ?></p>
 				        	
-				        	<?php if ($product['is_aviable']): ?>
+				        	<?php if ($product->isAvailable()): ?>
 
-					        	<?php if (count($product['size']) > 1): ?>
+					        	<?php if (count($productItem->getSizeList()) > 1): ?>
 									<ul class="options">
 										<h4 class="m_12">Select a Size(cm)</h4>
-										<?php foreach ($product['size'] as $value): ?>
-											<li><a><?php echo $value['name']; ?></a></li>
+										<?php foreach ($productItem->getSizeList() as $value): ?>
+											<li><a><?php echo $value['size']->getName(); ?></a></li>
 										<?php endforeach; ?>
 									</ul>
 								<?php endif; ?>
 
-								<?php if (count($product['color']) > 1): ?>
+								<?php if (count($productItem->getColorList()) > 1): ?>
 									<ul class="product-colors">
 										<h3>available Colors</h3>
-										<?php foreach ($product['color'] as $value): ?>
+										<?php foreach ($productItem->getColorList() as $value): ?>
 											<li><a>
-												<span style="background: <?php echo $value['value'] ?>"></span>
+												<span style="background: 
+													<?php echo $value['color']->getValue(); ?>
+												"></span>
 											</a></li>
 										<?php endforeach; ?>
 										<div class="clear"> </div>
@@ -75,31 +81,31 @@
 				        <div class="clear"> </div>
 					</div>
 
-				<?php if ($product['is_aviable']): ?>	
+				<?php if ($product->isAvailable()): ?>	
 					<div class="col-md-3">
 						<div class="box-info-product">
-							<p class="price2">$<?php echo $product['price']; ?></p>
+							<p class="price2">$<?php echo $product->getPrice(); ?></p>
 
 							<form class="product-options">
 								
-								<?php if (count($product['color']) > 1): ?>
+								<?php if (count($productItem->getColorList()) > 1): ?>
 									<ul class="op-group" op-name="color">
 
-										<?php foreach ($product['color'] as $value): ?>
+										<?php foreach ($productItem->getColorList() as $value): ?>
 											<?php $value['size_id'] = implode(",", $value['size_id']); ?>
 											<li class="op-li">
 												<input type="radio" 
 													class="op-radio" 
 													name="op-color" 
-													id="op-color-<?php echo $value['id']; ?>"
-													value="<?php echo $value['id']; ?>"
+													id="op-color-<?php echo $value['color']->getID(); ?>"
+													value="<?php echo $value['color']->getID(); ?>"
 													fgn-name="size"
 													fgn-id="<?php echo $value['size_id']; ?>">
 												<label class="op-label" 
-													for="op-color-<?php echo $value['id']; ?>">
+													for="op-color-<?php echo $value['color']->getID(); ?>">
 													<span class="op-color"
 														style="background: 
-															<?php echo $value['value']; ?>">
+															<?php echo $value['color']->getValue(); ?>">
 													</span>
 												</label>
 											</li>
@@ -108,23 +114,23 @@
 									</ul>								
 								<?php endif; ?>
 								
-								<?php if (count($product['size']) > 1): ?>
+								<?php if (count($productItem->getSizeList()) > 1): ?>
 									<ul class="op-group" op-name="size">
 
-										<?php foreach ($product['size'] as $value): ?>
+										<?php foreach ($productItem->getSizeList() as $value): ?>
 											<?php $value['color_id'] = implode(",", $value['color_id']); ?>
 											<li class="op-li">
 												<input type="radio" 
 													class="op-radio" 
 													name="op-size" 
-													id="op-size-<?php echo $value['id']; ?>"
-													value="<?php echo $value['id']; ?>"
+													id="op-size-<?php echo $value['size']->getID(); ?>"
+													value="<?php echo $value['size']->getID(); ?>"
 													fgn-name="color"
 													fgn-id="<?php echo $value['color_id']; ?>">
 												<label class="op-label" 
-													for="op-size-<?php echo $value['id']; ?>">
+													for="op-size-<?php echo $value['size']->getID(); ?>">
 													<span class="op-text">
-														<?php echo $value['name']; ?>
+														<?php echo $value['size']->getName(); ?>
 													</span>
 												</label>
 											</li>
@@ -143,24 +149,24 @@
 				
 			</div>
 
-			<?php if (!empty($product['description'])): ?>
+			<?php if ($product->getDescription()): ?>
 				<div class="desc">
 					<h4>Description</h4>
-					<p><?php echo $product['description']; ?></p>
+					<p><?php echo $product->getDescription(); ?></p>
 				</div>				
 			<?php endif ?>
 
-			<?php if (!empty($product['char'])): ?>
+			<?php if ($productItem->getCharList()): ?>
 				<div class="product-specifications">
 					<h4>Characteristics</h4>
 					<ul>
-						<?php foreach ($product['char'] as $value): ?>
+						<?php foreach ($productItem->getCharList() as $value): ?>
 							<li>
 								<span class="specification-heading">
-									<?php echo $value['name']; ?>
+									<?php echo $value->getName()->getName(); ?>
 								</span>
 								<span>
-									<?php echo $value['value']; ?>
+									<?php echo $value->getValue()->getValue(); ?>
 								</span>
 								<div class="clear"></div>
 							</li>
@@ -174,22 +180,22 @@
 				
 				<?php foreach ($recomendedList as $value): ?>
 					<div class="col-md-4 product1">
-						<img src="<?php echo $value['image'] ?>" class="img-responsive" alt=""/> 
+						<img src="<?php echo $value->getImage(); ?>" class="img-responsive" alt=""/> 
 						<div class="shop_desc">
-							<a href="/product/<?php echo $value['id']; ?>"></a>
+							<a href="/product/<?php echo $value->getID(); ?>"></a>
 							<h3>
-								<a href="/product/<?php echo $value['id']; ?>"></a>
-								<a href="/product/<?php echo $value['id']; ?>">
-									<?php echo $value['producer_name']
-									.' '.$value['name']
-									.' '.$value['year']; ?>
+								<a href="/product/<?php echo $value->getID(); ?>"></a>
+								<a href="/product/<?php echo $value->getID(); ?>">
+									<?php echo $value->getProducer()->getName()
+									.' '.$value->getName()
+									.' '.$value->getYear(); ?>
 								</a>
 							</h3>
-							<p><?php echo $value['short_description']; ?></p>
-							<span class="actual">$<?php echo $value['price'] ?></span><br>
+							<p><?php echo $value->getShortDescription(); ?></p>
+							<span class="actual">$<?php echo $value->getPrice(); ?></span><br>
 							<ul class="buttons">
 								<li class="shop_btn">
-									<a href="/product/<?php echo $value['id']; ?>">Read More</a>
+									<a href="/product/<?php echo $value->getID(); ?>">Read More</a>
 								</li>
 								<div class="clear"> </div>
 							</ul>

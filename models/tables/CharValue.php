@@ -1,10 +1,10 @@
 <?php
 
-class Color extends AbstractRecord {
+class CharValue extends AbstractRecord {
 
 //main info
 	private $id;
-	private $name;
+	private $name; //class
 	private $value;
 	private $status;
 
@@ -27,7 +27,7 @@ class Color extends AbstractRecord {
 	//getters end
 
 	//setters
-	public function setName($name) {
+	public function setName(CharName $name) {
 		$this->name = $name;
 	}
 
@@ -43,14 +43,14 @@ class Color extends AbstractRecord {
 
 //abstract methods realization
 	public static function findFirst($where, $nullStatus = false) {
-		$color = self::findFirstDefault(__CLASS__, "color", $where, $nullStatus);
-		return $color;
+		$charValue = self::findFirstDefault(__CLASS__, "char_value", $where, $nullStatus);
+		return $charValue;
 	}
 
-	public static function findAll($where, $limit, $offset, $order = "id", $nullStatus = false) {
-		$colorList = self::findAllDefault(__CLASS__, "color", $where, $limit, $offset, 
+	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
+		$charValueList = self::findAllDefault(__CLASS__, "char_value", $where, $limit, $offset, 
 			$order, $nullStatus);
-		return $colorList;
+		return $charValueList;
 	}
 
 	public function insert() {}
@@ -62,7 +62,7 @@ class Color extends AbstractRecord {
 	public function getArray() {
 		$arr = array();
 		$arr['id'] 		= $this->id;
-		$arr['name'] 	= $this->name;
+		$arr['name'] 	= $this->name->getArray(); //class
 		$arr['value'] 	= $this->value;
 		$arr['status'] 	= $this->status;
 
@@ -71,9 +71,10 @@ class Color extends AbstractRecord {
 
 	protected function setByArray($arr) {
 		$this->id 		= $arr['id'];
-		$this->name 	= $arr['name'];
 		$this->value 	= $arr['value'];
 		$this->status 	= $arr['status'];
+
+		$this->name = CharName::findFirst("id = {$arr['name_id']}");
 	}
 //abstract methods realization end
 
