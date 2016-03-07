@@ -2,6 +2,8 @@
 
 class Producer extends AbstractRecord {
 
+	const TABLE = "producer";
+
 //main info
 	private $id;
 	private $name;
@@ -22,6 +24,10 @@ class Producer extends AbstractRecord {
 	//getters end
 
 	//setters
+	private function setID($id) {
+		$this->id = $id;
+	}
+
 	public function setName($name) {
 		$this->name = $name;
 	}
@@ -32,38 +38,24 @@ class Producer extends AbstractRecord {
 	//setters end
 //main info end
 
+//construct
+	protected function withArray($arr) {
+		$obj = new self();
+
+		$obj->id 		= $arr['id'];
+		$obj->name 		= $arr['name'];
+		$obj->status 	= $arr['status'];
+
+		return $obj;
+	}
+//construct end
+
 //abstract methods realization
-	public static function findFirst($where, $nullStatus = false) {
-		$producer = self::findFirstDefault(__CLASS__, "producer", $where, $nullStatus);
-		return $producer;
-	}
-
-	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
-		$producerList = self::findAllDefault(__CLASS__, "producer", $where, $limit, $offset, 
-			$order, $nullStatus);
-		return $producerList;
-	}
-
 	public function insert() {}
 
 	public function update() {}
 
 	public function delete() {}
-
-	public function getArray() {
-		$arr = array();
-		$arr['id'] 		= $this->id;
-		$arr['name'] 	= $this->name;
-		$arr['status'] 	= $this->status;
-
-		return $arr;
-	}
-
-	protected function setByArray($arr) {
-		$this->id 		= $arr['id'];
-		$this->name 	= $arr['name'];
-		$this->status 	= $arr['status'];
-	}
 //abstract methods realization end
 
 }

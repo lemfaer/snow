@@ -8,10 +8,10 @@
 			$category = Category::findFirst("id = $categoryID");
 
 			$offset = ($page - 1) * self::LIMIT_PRODUCT_LIST;
-			$productList = Product::findAll("category_id = $categoryID", 
-				self::LIMIT_PRODUCT_LIST, $offset, "id DESC");
+			$productList = Product::findAll("category_id = $categoryID", "id DESC",
+				self::LIMIT_PRODUCT_LIST, $offset);
 
-			$total = Product::getTotal("category_id = $categoryID");
+			$total = Product::findCount("category_id = $categoryID");
 			$limit = self::LIMIT_PRODUCT_LIST;
 			$pagination = new Pagination($total, $page, $limit, "page-");
 

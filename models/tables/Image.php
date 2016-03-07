@@ -1,13 +1,12 @@
 <?php
 
-class Color extends AbstractRecord {
+class Image extends AbstractRecord {
 
-	const TABLE = "color";
+	const TABLE = "image";
 
 //main info
 	private $id;
-	private $name;
-	private $value;
+	private $path;
 	private $status;
 
 	//getters
@@ -15,12 +14,8 @@ class Color extends AbstractRecord {
 		return $this->id;
 	}
 
-	public function getName() {
-		return $this->name;
-	}
-
-	public function getValue() {
-		return $this->value;
+	public function getPath() {
+		return $this->path;
 	}
 
 	public function getStatus() {
@@ -33,12 +28,8 @@ class Color extends AbstractRecord {
 		$this->id = $id;
 	}
 
-	public function setName($name) {
-		$this->name = $name;
-	}
-
-	public function setValue($value) {
-		$this->value = $value;
+	public function setPath($path) {
+		$this->path = $path;
 	}
 
 	public function setStatus($status) {
@@ -47,13 +38,18 @@ class Color extends AbstractRecord {
 	//setters end
 //main info end
 
+//link
+	public function link() {
+		return $this->path;
+	}
+//link end
+
 //construct
 	protected function withArray($arr) {
 		$obj = new self();
 
 		$obj->id 		= $arr['id'];
-		$obj->name 		= $arr['name'];
-		$obj->value 	= $arr['value'];
+		$obj->path 		= $arr['path'];
 		$obj->status 	= $arr['status'];
 
 		return $obj;

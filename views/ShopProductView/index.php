@@ -12,12 +12,16 @@
 					<div class="single_image">
 						<div class="flexslider">
 			  				<ul class="slides">
-								<li data-thumb="<?php echo $product->getImage(); ?>">
-									<div class="thumb-image"> 
-										<img src="<?php echo $product->getImage(); ?>" 
-											data-imagezoom="true" class="img-responsive"> 
-									</div>
-								</li>
+								
+								<?php foreach ($productItem->getImageList() as $value): ?>
+									<li data-thumb="<?php echo $value->link(); ?>">
+										<div class="thumb-image"> 
+											<img src="<?php echo $value->link(); ?>" 
+												data-imagezoom="true" class="img-responsive"> 
+										</div>
+									</li>
+								<?php endforeach; ?>
+
 							</ul>
 						</div>
 					</div>
@@ -180,7 +184,7 @@
 				
 				<?php foreach ($recomendedList as $value): ?>
 					<div class="col-md-4 product1">
-						<img src="<?php echo $value->getImage(); ?>" class="img-responsive" alt=""/> 
+						<img src="<?php echo $value->getImage()->link(); ?>" class="img-responsive" alt=""/> 
 						<div class="shop_desc">
 							<a href="/product/<?php echo $value->getID(); ?>"></a>
 							<h3>

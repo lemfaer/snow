@@ -3,6 +3,7 @@
 class ProductItem extends AbstractRecord {
 
 	const LIMIT_CHAR = 10;
+	const LIMIT_IMAGE = 5;
 	const LIMIT_COLOR = 20;
 	const LIMIT_SIZE = 20;
 
@@ -46,12 +47,50 @@ class ProductItem extends AbstractRecord {
 			}
 
 			$valueIDString = implode(",", $arrID);
-			$charList = Characteristic::findAll("id IN($valueIDString)", self::LIMIT_CHAR, 0);
+			$charList = Characteristic::findAll("id IN($valueIDString)", "id ASC", self::LIMIT_CHAR);
 		}
 
 		$this->charList = $charList;
 	} 
 //char list end
+
+//image list
+	private $imageList;
+
+	public function getImageList() {
+		return $this->imageList;
+	}
+
+	public function setImageList($imageList) {
+		$this->imageList = $imageList;
+	}
+
+	private function imageList() {
+		$id = $this->product->getID();
+		$query = "SELECT count(*) FROM product_has_image WHERE product_id = $id";
+		$result = DB::query($query);
+
+		$imageList = array();
+		if(array_shift($result->fetch())) {
+			$query = "SELECT image_id FROM product_has_image WHERE product_id = $id";
+			$result = DB::query($query);
+
+			$imageIDArray = array();
+			while($id = $result->fetch()) {
+				$id = array_shift($id);
+				$imageIDArray[] = $id;
+			}
+			$imageIDString = implode(",", $imageIDArray);
+			
+			$imageList = Image::findAll("id IN($imageIDString)", "id ASC", self::LIMIT_IMAGE);
+			array_shift($imageList);
+		}
+
+		array_unshift($imageList, $this->product->getImage());
+
+		$this->imageList = $imageList;
+	}
+//image list end
 
 //available list
 	private $availableList;
@@ -69,7 +108,7 @@ class ProductItem extends AbstractRecord {
 
 		if($this->product->isAvailable()) {
 			$id = $this->product->getID();
-			$availableList = Available::findAll("product_id = $id", 9999, 0);
+			$availableList = Available::findAll("product_id = $id", "id ASC", self::LIMIT_MAX);
 		}
 
 		$this->availableList = $availableList;
@@ -84,9 +123,8 @@ class ProductItem extends AbstractRecord {
 	}
 
 	private function colorList() {
-		$colorList = array();
 		if(!$this->product->isAvailable()) {
-			$this->colorList = $colorList;
+			$this->colorList = array();
 			return;
 		}
 
@@ -96,7 +134,7 @@ class ProductItem extends AbstractRecord {
 		$colorIDArray = array_unique($colorIDArray);
 		$colorIDString = implode(",", $colorIDArray);
 
-		$colorList = Color::findAll("id IN($colorIDString)", self::LIMIT_COLOR, 0, "name");
+		$colorList = Color::findAll("id IN($colorIDString)", "name ASC", self::LIMIT_COLOR);
 		foreach ($colorList as $key => $color) {
 			$colorList[$key] = array(
 				"color" => $color,
@@ -123,9 +161,8 @@ class ProductItem extends AbstractRecord {
 	}
 
 	private function sizeList() {
-		$sizeList = array();
 		if(!$this->product->isAvailable()) {
-			$this->sizeList = $sizeList;
+			$this->sizeList = array();
 			return;
 		}
 
@@ -135,7 +172,7 @@ class ProductItem extends AbstractRecord {
 		$sizeIDArray = array_unique($sizeIDArray);
 		$sizeIDString = implode(",", $sizeIDArray);
 
-		$sizeList = Size::findAll("id IN($sizeIDString)", self::LIMIT_COLOR, 0, "name");
+		$sizeList = Size::findAll("id IN($sizeIDString)", "name ASC", self::LIMIT_SIZE);
 		foreach ($sizeList as $key => $size) {
 			$sizeList[$key] = array(
 				"size" => $size,
@@ -154,15 +191,25 @@ class ProductItem extends AbstractRecord {
 	}
 //size list with color ids end
 
-//constructor
+//construct
 	public function __construct($product) {
 		$this->product = $product;
-		$this->charList();
-		$this->availableList();
-		$this->colorList();
-		$this->sizeList();
+		
+		$this->charList 		= array();
+		$this->imageList 		= array();
+		$this->availableList 	= array();
+		$this->colorList 		= array();
+		$this->sizeList 		= array();
+
+		if($this->product->getID()) {
+			$this->charList();
+			$this->imageList();
+			$this->availableList();
+			$this->colorList();
+			$this->sizeList();
+		}
 	}
-//constructor end
+//construct end
 
 //abstract methods realization
 	public static function findFirst($where, $nullStatus = false) {
@@ -171,8 +218,12 @@ class ProductItem extends AbstractRecord {
 		return $productItem;
 	}
 
-	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
-		$productList = Product::findAll($where, $limit, $offset, $order, $nullStatus);
+	public static function findCount($where, $nullStatus = false) {
+		return Product::findCount($where, $nullStatus);
+	} 
+
+	public static function findAll($where, $order = "id", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = false) {
+		$productList = Product::findAll($where, $order, $limit, $offset, $nullStatus);
 		foreach ($productList as $key => $product) {
 			$productList[$key] = new ProductItem($product);
 		}
@@ -184,12 +235,6 @@ class ProductItem extends AbstractRecord {
 	public function update() {}
 	
 	public function delete() {}
-
-	public function getArray() {}
-
-	protected function setByArray($arr) {		
-		throw new Exception("unsupported", 1);
-	}
 //abstract methods realization end
 
 }

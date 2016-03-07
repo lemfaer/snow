@@ -5,7 +5,7 @@
 		public function actionIndex($shortName = null) {
 			$categoryID = Category::getIDByShortNameArray(array($shortName));
 			$category = ($categoryID) ? (Category::findFirst("id = $categoryID")) : (null);
-			$categoryList = Category::findAll("parent_id = $categoryID");
+			$categoryList = Category::findAll("parent_id = $categoryID", "sort_order ASC");
 
 			// echo "ID: $categoryID";
 			// echo "<pre>";

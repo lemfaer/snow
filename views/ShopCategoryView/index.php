@@ -7,7 +7,7 @@
 					<?php echo ($category) ? ($category->getName()) : ("Категории"); ?>
 				</h3>
 				
-				<?php if(!empty($category)): ?>
+				<?php if($category): ?>
 					<?php 
 						while($category) {
 							$breadcrumb[$category->link()] = $category->getName();
@@ -36,7 +36,7 @@
 								<a class="fancybox" 
 									href="<?php echo $_SERVER['REQUEST_URI'].'/'.$category->getShortName(); ?>"
 									data-fancybox-group="gallery">
-									<img src="<?php echo $category->getImage(); ?>" class="img-responsive" alt="">
+									<img src="<?php echo $category->getImage()->link(); ?>" class="img-responsive" alt="">
 									<span> </span>
 									<div class="img_section_txt">
 										<?php echo $category->getName(); ?>

@@ -21,8 +21,8 @@ class Characteristic {
 		return $char;
 	}
 
-	public static function findAll($where, $limit = AbstractRecord::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
-		$charList = CharValue::findAll($where, $limit, $offset, $order, $nullStatus);
+	public static function findAll($where, $order = "id ASC", $limit = AbstractRecord::LIMIT_MAX, $offset = 0, $nullStatus = false) {
+		$charList = CharValue::findAll($where, $order, $limit, $offset, $nullStatus);
 		foreach ($charList as $key => $value) {
 			$char = new self();
 			$char->value = $value;

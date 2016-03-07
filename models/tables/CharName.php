@@ -2,6 +2,8 @@
 
 class CharName extends AbstractRecord {
 
+	const TABLE = "char_name";
+
 //main info
 	private $id;
 	private $name;
@@ -27,6 +29,10 @@ class CharName extends AbstractRecord {
 	//getters end
 
 	//setters
+	private function setID($id) {
+		$this->id = $id;
+	}
+
 	public function setName($name) {
 		$this->name = $name;
 	}
@@ -41,41 +47,27 @@ class CharName extends AbstractRecord {
 	//setters end
 //main info end
 
+//construct
+	protected function withArray($arr) {
+		$obj = new self();
+
+		$obj->id = $arr['id'];
+		$obj->name = $arr['name'];
+		$obj->status = $arr['status'];
+
+		$category = Category::findFirst("id = {$arr['category_id']}");
+		$obj->category = $category;
+
+		return $obj;
+	}
+//construct end
+
 //abstract methods realization
-	public static function findFirst($where, $nullStatus = false) {
-		$charName = self::findFirstDefault(__CLASS__, "char_name", $where, $nullStatus);
-		return $charName;
-	}
-
-	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
-		$charNameList = self::findAllDefault(__CLASS__, "char_name", $where, $limit, $offset, 
-			$order, $nullStatus);
-		return $charNameList;
-	}
-
 	public function insert() {}
 
 	public function update() {}
 
 	public function delete() {}
-
-	public function getArray() {
-		$arr = array();
-		$arr['id'] 			= $this->id;
-		$arr['name'] 		= $this->name;
-		$arr['category'] 	= $this->category->getArray(); //class
-		$arr['status'] 		= $this->status;
-
-		return $arr;
-	}
-
-	protected function setByArray($arr) {
-		$this->id 		= $arr['id'];
-		$this->name 	= $arr['name'];
-		$this->status 	= $arr['status'];
-
-		$this->category = Category::findFirst("id = {$arr['category_id']}");
-	}
 //abstract methods realization end
 
 }

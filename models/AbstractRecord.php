@@ -4,21 +4,61 @@ abstract class AbstractRecord {
 
 	const LIMIT_MAX = 9999;
 
-	protected static function findFirstDefault($class, $table, $where, $nullStatus) {
+	//construct
+	protected function withArray($arr) {
+		return null;
+	}
+
+	public function getArray() {
+		$rc = new ReflectionClass($this);
+		$arr = array();
+		foreach ($rc->getProperties() as $value) {
+			$value->setAccessible(true);
+			$name = $value->getName();
+			$value = $value->getValue($this);
+
+			if(is_object($value)) {
+				$name .= "_id";
+				$value = $value->getArray();
+			}
+			$arr[$name] = $value;
+		}
+		return $arr;
+	}
+
+	public static function findFirst($where, $nullStatus = false) {
+		$class = get_called_class();
+		$table = $class::TABLE;
+
 		$status = ($nullStatus) ? ("") : ("AND status = '1'");
 		$query = "SELECT * FROM $table 
-			WHERE $where $status 
+			WHERE $where $status
+			ORDER BY id ASC
 			LIMIT 1";
 		$result = DB::query($query);
+		
 		$arr = $result->fetch();
-
-		$object = new $class();
-		$object->setByArray($arr);
+		$object = $class::withArray($arr);
 
 		return $object;
 	}
 
-	protected static function findAllDefault($class, $table, $where, $limit, $offset, $order, $nullStatus) {
+	public static function findCount($where, $nullStatus = false) {
+		$class = get_called_class();
+		$table = $class::TABLE;
+
+		$status = ($nullStatus) ? ("") : ("AND status = '1'");
+		$query = "SELECT count(*) FROM $table 
+			WHERE $where $status";
+		$result = DB::query($query);
+
+		return array_shift($result->fetch());
+	}
+
+	public static function findAll($where, $order = "id ASC", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = false) {
+		$class = get_called_class();
+		$table = $class::TABLE;
+
 		$status = ($nullStatus) ? ("") : ("AND status = '1'");
 		$query = "SELECT * FROM $table 
 			WHERE $where $status 
@@ -29,27 +69,16 @@ abstract class AbstractRecord {
 
 		$objectList = $result->fetchAll();
 		foreach ($objectList as $key => $value) {
-			$object = new $class();
-			$object->setByArray($value);
-			$objectList[$key] = $object;
+			$objectList[$key] = $class::withArray($value);
 		}
 
 		return $objectList;
 	}
-
-	abstract public static function findFirst($where, $nullStatus);
-
-	abstract public static function findAll($where, $limit, $offset, $order, $nullStatus);
 
 	abstract public function insert();
 
 	abstract public function update();
 
 	abstract public function delete();
-
-	//reflection
-	abstract public function getArray();
-
-	abstract protected function setByArray($arr);
 
 }

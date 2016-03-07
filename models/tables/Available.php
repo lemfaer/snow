@@ -2,6 +2,8 @@
 
 class Available extends AbstractRecord {
 
+	const TABLE = "available";
+
 //main info
 	private $id;
 	private $count;
@@ -32,6 +34,10 @@ class Available extends AbstractRecord {
 	//getters end
 
 	//setters
+	private function setID($id) {
+		$this->id = $id;
+	}
+
 	public function setCount($count) {
 		$this->count = $count;
 	}
@@ -50,43 +56,44 @@ class Available extends AbstractRecord {
 	//setters end
 //main info end
 
+//construct
+	protected function withArray($arr) {
+		$obj = new self();
+
+		$obj->id 		= $arr['id'];
+		$obj->count 	= $arr['count'];
+
+		$size = Size::findFirst("id = {$arr['size_id']}");
+		$obj->size = $size;
+
+		$color = Color::findFirst("id = {$arr['color_id']}");
+		$obj->color = $color;
+
+		$product = Product::findFirst("id = {$arr['product_id']}");
+		$obj->product = $product;
+
+		return $obj;
+	}
+//construct end
+
 //abstract methods realization
 	public static function findFirst($where, $nullStatus = true) {
-		$color = self::findFirstDefault(__CLASS__, "available", $where, $nullStatus);
-		return $color;
+		return parent::findFirst($where, $nullStatus);
 	}
 
-	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = true) {
-		$colorList = self::findAllDefault(__CLASS__, "available", $where, $limit, $offset, 
-			$order, $nullStatus);
-		return $colorList;
+	public static function findCount($where, $nullStatus = true) {
+		return parent::findCount($where, $nullStatus);
 	}
+
+	public static function findAll($where, $order = "id ASC", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = true) {
+		return parent::findAll($where, $order, $limit, $offset, $nullStatus);
+	} 
 
 	public function insert() {}
 
 	public function update() {}
 
 	public function delete() {}
-
-	public function getArray() {
-		$arr = array();
-		$arr['id'] 		= $this->id;
-		$arr['count'] 	= $this->count;
-		$arr['size'] 	= $this->size->getArray();
-		$arr['color'] 	= $this->color->getArray();
-		$arr['product'] = $this->product->getArray();
-
-		return $arr;
-	}
-
-	protected function setByArray($arr) {
-		$this->id 		= $arr['id'];
-		$this->count	= $arr['count'];
-
-		$this->size = Size::findFirst("id = {$arr['size_id']}");
-		$this->color = Color::findFirst("id = {$arr['color_id']}");
-		$this->product = Product::findFirst("id = {$arr['product_id']}");
-	}
 //abstract methods realization end
 
 }

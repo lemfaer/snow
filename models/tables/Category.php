@@ -2,12 +2,14 @@
 
 class Category extends AbstractRecord {
 
+	const TABLE = "category";
+
 //main info
 	private $id;
 	private $name;
 	private $short_name;
 	private $description;
-	private $image;
+	private $image; //class
 	private $parent; //class
 	private $sort_order;
 	private $status;
@@ -47,6 +49,10 @@ class Category extends AbstractRecord {
 	//getters end
 
 	//setters
+	private function setID($id) {
+		$this->id = $id;
+	}
+
 	public function setName($name) {
 		$this->name = $name;
 	}
@@ -59,11 +65,11 @@ class Category extends AbstractRecord {
 		$this->description = $description;
 	}
 
-	public function setImage($image) {
+	public function setImage(Image $image) {
 		$this->image = $image;
 	}
 
-	public function setParent(Category $parent) {
+	public function setParent(Parent $parent) {
 		$this->parent = $parent;
 	}
 
@@ -75,40 +81,45 @@ class Category extends AbstractRecord {
 		$this->status = $status;
 	}
 	//setters end;
+//main info end
 
-	//link
-	private $link;
-
+//link
 	public function link() {
-		if(!isset($link)) {
-			$this->setLink();
-		}
-		return $this->link;
-	}
-
-	private function setLink() {
 		$arr = array();
 		for($i = $this; $i !== null; $i = $i->parent) {
 			$arr[] = $i->short_name;
 		}
 		$arr = array_reverse($arr);
-		$this->link = "/category/".implode("/", $arr);
+		$link = "/category/".implode("/", $arr);
+
+		return $link;
 	}
-	//link end
-//main info end
+//link end
+
+//construct
+	protected function withArray($arr) {
+		$obj = new self();
+
+		$obj->id 			= $arr['id'];
+		$obj->name 			= $arr['name'];
+		$obj->short_name 	= $arr['short_name'];
+		$obj->description 	= $arr['description'];
+		$obj->sort_order 	= $arr['sort_order'];
+		$obj->status 		= $arr['status'];
+
+		$image = Image::findFirst("id = {$arr['image_id']}");
+		$obj->image = $image;
+
+		$parent = ($arr['parent_id']) 
+			? (Category::findFirst("id = {$arr['parent_id']}"))
+			: (null);
+		$obj->parent = $parent;
+		
+		return $obj;
+	}
+//construct end
 
 //abstract methods realization
-	public static function findFirst($where, $nullStatus = false) {
-		$category = self::findFirstDefault(__CLASS__, "category", $where, $nullStatus);
-		return $category;
-	}
-
-	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
-		$categoryList = self::findAllDefault(__CLASS__, "category", $where, $limit, $offset, 
-			$order, $nullStatus);
-		return $categoryList;
-	}
-
 	public function insert() {}
 
 	public function update() {}
@@ -116,33 +127,10 @@ class Category extends AbstractRecord {
 	public function delete() {}
 
 	public function getArray() {
-		$arr = array();
-
-		$arr['id'] 				= $this->id;
-		$arr['name'] 			= $this->name;
-		$arr['short_name'] 		= $this->short_name;
-		$arr['description'] 	= $this->description;
-		$arr['image'] 			= $this->image;
-		$arr['sort_order'] 		= $this->sort_order;
-		$arr['status'] 			= $this->status;
-		$arr['parent'] 			= ($this->parent) ? ($this->parent->getArray()) : (null); //class
-
+		$arr = parent::getArray();
+		unset($arr['parent']);
+		$arr['parent_id'] = (is_object($this->parent)) ? ($parent->getID()) : (0);
 		return $arr;
-	}
-
-	protected function setByArray($arr) {
-		$this->id 			= $arr['id'];
-		$this->name 		= $arr['name'];
-		$this->short_name 	= $arr['short_name'];
-		$this->description 	= $arr['description'];
-		$this->image 		= $arr['image'];
-		$this->sort_order 	= $arr['sort_order'];
-		$this->status 		= $arr['status'];
-
-
-		$this->parent = ($arr['parent_id']) 
-			? (self::findFirst("id = {$arr['parent_id']}")) 
-			: (null); //class
 	}
 //abstract methods realization end
 

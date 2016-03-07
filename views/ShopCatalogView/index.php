@@ -1,8 +1,8 @@
 <div class="main">
 	<div class="shop_top">
-		<div class="container" style="width: 70%">
+		<div class="container">
 
-			<?php $productList = array_chunk($productList, 3); ?>
+			<?php $productList = array_chunk($productList, 4); ?>
 
 			<div style="margin-bottom: 20px">
 				<h3 class="m_2" style="margin-bottom: 1%">
@@ -32,9 +32,9 @@
 				<div class="row shop_box-top">
 
 					<?php foreach($value as $product): ?>
-						<div class="col-md-4 shop_box">
+						<div class="col-md-3 shop_box">
 							<a href="/product/<?php echo $product->getID(); ?>">
-								<img src="<?php echo $product->getImage() ?>" class="img-responsive" alt=""/>
+								<img src="<?php echo $product->getImage()->link() ?>" class="img-responsive" alt=""/>
 								<?php if($product->isNew()): ?>
 									<span class="new-box">
 										<span class="new-label">New</span>

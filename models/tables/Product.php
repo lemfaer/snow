@@ -2,6 +2,8 @@
 
 class Product extends AbstractRecord {
 
+	const TABLE = "product";
+
 //main info
 	private $id;
 	private $name;
@@ -10,7 +12,6 @@ class Product extends AbstractRecord {
 	private $year;
 	private $short_description;
 	private $description;
-	private $image;
 	private $category; //class
 	private $is_new;
 	private $is_recomended;
@@ -45,10 +46,6 @@ class Product extends AbstractRecord {
 		return $this->description;
 	}
 
-	public function getImage() {
-		return $this->image;
-	}
-
 	public function getCategory() {
 		return $this->category;
 	}
@@ -67,6 +64,10 @@ class Product extends AbstractRecord {
 	//getters end
 
 	//setters
+	private function setID($id) {
+		$this->id = $id;
+	}
+
 	public function setName($name) {
 		$this->name = $name;
 	}
@@ -89,10 +90,6 @@ class Product extends AbstractRecord {
 
 	public function setDescription($description) {
 		$this->description = $description;
-	}
-
-	public function setImage($image) {
-		$this->image = $image;
 	}
 
 	public function setCategory(Category $category) {
@@ -120,78 +117,59 @@ class Product extends AbstractRecord {
 		return $this->available;
 	}
 
-	private function checkAvailable() {
-		$query = "SELECT count(id) FROM available WHERE product_id = $this->id";
-		$result = DB::query($query);
-		$this->available = array_shift($result->fetch()) == true;
+	private function available() {
+		$avCount = Available::findCount("product_id = $this->id");
+		$this->available = $avCount == true;
 	}
-//available
+//available end
+
+//first image
+	private $firstImage;
+
+	public function getImage() {
+		return $this->firstImage;
+	}
+
+	private function firstImage() {
+		$query = "SELECT image_id FROM product_has_image WHERE product_id = $this->id LIMIT 1";
+		$id = array_shift(DB::query($query)->fetch());
+		$this->firstImage = Image::findFirst("id = $id");
+	}
+//first image end
+
+//construct
+	protected function withArray($arr) {
+		$obj = new self();
+
+		$obj->id 					= $arr['id'];
+		$obj->name					= $arr['name'];
+		$obj->price					= $arr['price'];
+		$obj->year					= $arr['year'];
+		$obj->short_description		= $arr['short_description'];
+		$obj->description			= $arr['description'];
+		$obj->is_new				= $arr['is_new'];
+		$obj->is_recomended			= $arr['is_recomended'];
+		$obj->status				= $arr['status'];
+
+		$category = Category::findFirst("id = {$arr['category_id']}");
+		$obj->category	= $category; //class
+
+		$producer = Producer::findFirst("id = {$arr['producer_id']}");
+		$obj->producer	= $producer; //class
+
+		$obj->available();
+		$obj->firstImage();
+
+		return $obj;
+	}
+//construct end
 
 //abstract methods realization
-	public static function findFirst($where, $nullStatus = false) {
-		$product = self::findFirstDefault(__CLASS__, "product", $where, $nullStatus);
-		$product->checkAvailable();
-		return $product;
-	}
-
-	public static function findAll($where, $limit = self::LIMIT_MAX, $offset = 0, $order = "id", $nullStatus = false) {
-		$productList = self::findAllDefault(__CLASS__, "product", $where, $limit, $offset, 
-			$order, $nullStatus);
-		foreach ($productList as $key => $x) {
-			$productList[$key]->checkAvailable();
-		}
-		return $productList;
-	}
-
 	public function insert() {}
 
 	public function update() {}
 	
 	public function delete() {}
-
-	public function getArray() {
-		$arr = array();
-		$arr['id']					= $this->id;
-		$arr['name']				= $this->name;
-		$arr['producer']			= $this->producer->getArray();
-		$arr['price']				= $this->price;
-		$arr['year']				= $this->year;
-		$arr['short_description']	= $this->short_description;
-		$arr['description']			= $this->description;
-		$arr['image']				= $this->image;
-		$arr['category']			= $this->category->getArray();
-		$arr['is_new']				= $this->is_new;
-		$arr['is_recomended']		= $this->is_recomended;
-		$arr['status']				= $this->status;
-		return $arr;
-	}
-
-	protected function setByArray($arr) {
-		$this->id 					= $arr['id'];
-		$this->name					= $arr['name'];
-		$this->price				= $arr['price'];
-		$this->year					= $arr['year'];
-		$this->short_description	= $arr['short_description'];
-		$this->description			= $arr['description'];
-		$this->image				= $arr['image'];
-		$this->is_new				= $arr['is_new'];
-		$this->is_recomended		= $arr['is_recomended'];
-		$this->status				= $arr['status'];
-
-		$this->category	= Category::findFirst("id = {$arr['category_id']}"); //class
-		$this->producer	= Producer::findFirst("id = {$arr['producer_id']}"); //class
-
-		return $this;
-	}
 //abstract methods realization end
-
-//static functions
-	public static function getTotal($where, $nullStatus = false) {
-		$status = ($nullStatus) ? ("") : ("AND status = '1'");
-		$query = "SELECT count(*) FROM product WHERE $where $status";
-		$result = DB::query($query);
-		return array_shift($result->fetch());
-	}
-//static functions end
 
 }
