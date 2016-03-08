@@ -3,16 +3,19 @@
 	class ShopCatalogController {
 
 		const LIMIT_PRODUCT_LIST = 12;
+		const SORT_ORDER = "id DESC";
 
 		public static function actionIndex($categoryID, $page = 1) {
-			$category = Category::findFirst("id = $categoryID");
-
-			$offset = ($page - 1) * self::LIMIT_PRODUCT_LIST;
-			$productList = Product::findAll("category_id = $categoryID", "id DESC",
-				self::LIMIT_PRODUCT_LIST, $offset);
-
-			$total = Product::findCount("category_id = $categoryID");
+			$category = Category::findFirst(array("id" => $categoryID));
+			
+			$order = self::SORT_ORDER;
 			$limit = self::LIMIT_PRODUCT_LIST;
+			$offset = ($page - 1) * $limit;
+			$total = Product::findCount(array("category_id" => $categoryID));
+
+			$productList = Product::findAll(array("category_id" => $categoryID), $order,
+				$limit, $offset);
+
 			$pagination = new Pagination($total, $page, $limit, "page-");
 
 			// echo "ID: $categoryID";

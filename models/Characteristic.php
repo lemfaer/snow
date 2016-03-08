@@ -13,16 +13,16 @@ class Characteristic {
 		return $this->value;
 	}
 
-	public static function findFirst($where, $nullStatus = false) {
+	public static function findFirst(array $whereArr, $nullStatus = false) {
 		$char = new self(); 
-		$char->value = CharValue::findFirst($where, $nullStatus);
+		$char->value = CharValue::findFirst($whereArr, $nullStatus);
 		$char->name = $char->value->getName();
 
 		return $char;
 	}
 
-	public static function findAll($where, $order = "id ASC", $limit = AbstractRecord::LIMIT_MAX, $offset = 0, $nullStatus = false) {
-		$charList = CharValue::findAll($where, $order, $limit, $offset, $nullStatus);
+	public static function findAll(array $whereArr, $order = "id ASC", $limit = AbstractRecord::LIMIT_MAX, $offset = 0, $nullStatus = false) {
+		$charList = CharValue::findAll($whereArr, $order, $limit, $offset, $nullStatus);
 		foreach ($charList as $key => $value) {
 			$char = new self();
 			$char->value = $value;

@@ -107,11 +107,11 @@ class Category extends AbstractRecord {
 		$obj->sort_order 	= $arr['sort_order'];
 		$obj->status 		= $arr['status'];
 
-		$image = Image::findFirst("id = {$arr['image_id']}");
+		$image = Image::findFirst(array("id" => $arr['image_id']));
 		$obj->image = $image;
 
 		$parent = ($arr['parent_id']) 
-			? (Category::findFirst("id = {$arr['parent_id']}"))
+			? (Category::findFirst(array("id" => $arr['parent_id'])))
 			: (null);
 		$obj->parent = $parent;
 		
@@ -125,13 +125,6 @@ class Category extends AbstractRecord {
 	public function update() {}
 	
 	public function delete() {}
-
-	public function getArray() {
-		$arr = parent::getArray();
-		unset($arr['parent']);
-		$arr['parent_id'] = (is_object($this->parent)) ? ($parent->getID()) : (0);
-		return $arr;
-	}
 //abstract methods realization end
 
 //static functions

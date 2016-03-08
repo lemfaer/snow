@@ -118,7 +118,7 @@ class Product extends AbstractRecord {
 	}
 
 	private function available() {
-		$avCount = Available::findCount("product_id = $this->id");
+		$avCount = Available::findCount(array("product_id" => $this->id));
 		$this->available = $avCount == true;
 	}
 //available end
@@ -133,7 +133,7 @@ class Product extends AbstractRecord {
 	private function firstImage() {
 		$query = "SELECT image_id FROM product_has_image WHERE product_id = $this->id LIMIT 1";
 		$id = array_shift(DB::query($query)->fetch());
-		$this->firstImage = Image::findFirst("id = $id");
+		$this->firstImage = Image::findFirst(array("id" => $id));
 	}
 //first image end
 
@@ -151,10 +151,10 @@ class Product extends AbstractRecord {
 		$obj->is_recomended			= $arr['is_recomended'];
 		$obj->status				= $arr['status'];
 
-		$category = Category::findFirst("id = {$arr['category_id']}");
+		$category = Category::findFirst(array("id" => $arr['category_id']));
 		$obj->category	= $category; //class
 
-		$producer = Producer::findFirst("id = {$arr['producer_id']}");
+		$producer = Producer::findFirst(array("id" => $arr['producer_id']));
 		$obj->producer	= $producer; //class
 
 		$obj->available();

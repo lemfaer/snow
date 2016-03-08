@@ -63,13 +63,13 @@ class Available extends AbstractRecord {
 		$obj->id 		= $arr['id'];
 		$obj->count 	= $arr['count'];
 
-		$size = Size::findFirst("id = {$arr['size_id']}");
+		$size = Size::findFirst(array("id" => $arr['size_id']));
 		$obj->size = $size;
 
-		$color = Color::findFirst("id = {$arr['color_id']}");
+		$color = Color::findFirst(array("id" => $arr['color_id']));
 		$obj->color = $color;
 
-		$product = Product::findFirst("id = {$arr['product_id']}");
+		$product = Product::findFirst(array("id" => $arr['product_id']));
 		$obj->product = $product;
 
 		return $obj;
@@ -77,16 +77,16 @@ class Available extends AbstractRecord {
 //construct end
 
 //abstract methods realization
-	public static function findFirst($where, $nullStatus = true) {
-		return parent::findFirst($where, $nullStatus);
+	public static function findFirst(array $whereArr, $nullStatus = true) {
+		return parent::findFirst($whereArr, $nullStatus);
 	}
 
-	public static function findCount($where, $nullStatus = true) {
-		return parent::findCount($where, $nullStatus);
+	public static function findCount(array $whereArr, $nullStatus = true) {
+		return parent::findCount($whereArr, $nullStatus);
 	}
 
-	public static function findAll($where, $order = "id ASC", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = true) {
-		return parent::findAll($where, $order, $limit, $offset, $nullStatus);
+	public static function findAll(array $whereArr, $order = "id ASC", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = true) {
+		return parent::findAll($whereArr, $order, $limit, $offset, $nullStatus);
 	} 
 
 	public function insert() {}

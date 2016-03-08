@@ -55,7 +55,7 @@ class CharName extends AbstractRecord {
 		$obj->name = $arr['name'];
 		$obj->status = $arr['status'];
 
-		$category = Category::findFirst("id = {$arr['category_id']}");
+		$category = Category::findFirst(array("id" => $arr['category_id']));
 		$obj->category = $category;
 
 		return $obj;

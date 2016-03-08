@@ -3,10 +3,14 @@
 class TestController {
 	
 	public function actionTest() {
-		$category = Category::findFirst("id = 11");
 
 		echo "<pre>";
-		print_r($category->getArray());
+		$categoryList = Category::findAll(array("parent_id" => array(11,12), "short_name" => "one"));
+			
+		foreach ($categoryList as $category) {
+			print_r($category->getArray());
+		}
+			
 		echo "</pre>";
 
 	}

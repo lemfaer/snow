@@ -55,7 +55,7 @@ class CharValue extends AbstractRecord {
 		$obj->value 	= $arr['value'];
 		$obj->status 	= $arr['status'];
 
-		$name = CharName::findFirst("id = {$arr['name_id']}");
+		$name = CharName::findFirst(array("id" => $arr['name_id']));
 		$obj->name = $name;
 
 		return $obj;

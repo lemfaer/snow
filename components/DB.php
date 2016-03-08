@@ -1,5 +1,5 @@
 <?php
-	
+
 	class DB {
 
 		private static $connection;
@@ -14,10 +14,14 @@
 			return self::$connection;
 		}
 
-		public static function query($query) {
+		public static function query($query, $binds = array()) {
 			$db = self::getConnection();
 
-			$result = $db->query($query);
+			$result = $db->prepare($query);
+			foreach ($binds as $key => $value) {
+				$result->bindParam($key, strval($value), PDO::PARAM_STR);
+			}
+			$result->execute();
 
 			if(!is_object($result) || !$result->rowCount()) {
 				print_r($db->errorInfo()); //dev

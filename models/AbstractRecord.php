@@ -5,7 +5,7 @@ abstract class AbstractRecord {
 	const LIMIT_MAX = 9999;
 
 	//construct
-	protected function withArray($arr) {
+	protected function withArray(array $arr) {
 		return null;
 	}
 
@@ -18,7 +18,6 @@ abstract class AbstractRecord {
 			$value = $value->getValue($this);
 
 			if(is_object($value)) {
-				$name .= "_id";
 				$value = $value->getArray();
 			}
 			$arr[$name] = $value;
@@ -26,16 +25,46 @@ abstract class AbstractRecord {
 		return $arr;
 	}
 
-	public static function findFirst($where, $nullStatus = false) {
+	private static function buildWhere(array $whereArr, $nullStatus) {
+		$where = array();
+		foreach ($whereArr as $key => $value) {
+			if(is_array($value)) {
+				$where[] = "FIND_IN_SET($key, :$key)";
+			} else {
+				$where[] = "$key = :$key";	
+			}
+		}
+
+		(!$nullStatus) ? ($where[] = "status = '1'") : (null);
+		$where = ($where = implode(" AND ", $where)) ? ("WHERE ".$where) : (null);
+
+		return $where;
+	}
+
+	private static function buildBinds(array $whereArr) {
+		$binds = array();
+		foreach ($whereArr as $key => $value) {
+			if(is_array($value)) {
+				$value = implode(",", $value);
+			}
+			$binds[":$key"] = $value;
+		}
+
+		return $binds;
+	} 
+
+	public static function findFirst(array $whereArr = array(), $nullStatus = false) {
 		$class = get_called_class();
 		$table = $class::TABLE;
 
-		$status = ($nullStatus) ? ("") : ("AND status = '1'");
+		$where = self::buildWhere($whereArr, $nullStatus);
+		$binds = self::buildBinds($whereArr);
+
 		$query = "SELECT * FROM $table 
-			WHERE $where $status
+			$where
 			ORDER BY id ASC
 			LIMIT 1";
-		$result = DB::query($query);
+		$result = DB::query($query, $binds);
 		
 		$arr = $result->fetch();
 		$object = $class::withArray($arr);
@@ -43,29 +72,33 @@ abstract class AbstractRecord {
 		return $object;
 	}
 
-	public static function findCount($where, $nullStatus = false) {
+	public static function findCount(array $whereArr, $nullStatus = false) {
 		$class = get_called_class();
 		$table = $class::TABLE;
 
-		$status = ($nullStatus) ? ("") : ("AND status = '1'");
+		$where = self::buildWhere($whereArr, $nullStatus);
+		$binds = self::buildBinds($whereArr);
+
 		$query = "SELECT count(*) FROM $table 
-			WHERE $where $status";
-		$result = DB::query($query);
+			$where";
+		$result = DB::query($query, $binds);
 
 		return array_shift($result->fetch());
 	}
 
-	public static function findAll($where, $order = "id ASC", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = false) {
+	public static function findAll(array $whereArr, $order = "id ASC", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = false) {
 		$class = get_called_class();
 		$table = $class::TABLE;
 
-		$status = ($nullStatus) ? ("") : ("AND status = '1'");
+		$where = self::buildWhere($whereArr, $nullStatus);
+		$binds = self::buildBinds($whereArr);
+
 		$query = "SELECT * FROM $table 
-			WHERE $where $status 
+			$where
 			ORDER BY $order 
 			LIMIT $limit 
 			OFFSET $offset";
-		$result = DB::query($query);
+		$result = DB::query($query, $binds);
 
 		$objectList = $result->fetchAll();
 		foreach ($objectList as $key => $value) {
