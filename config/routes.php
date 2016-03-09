@@ -11,5 +11,8 @@
 
 		"product/([0-9]+)" => "shopProduct/index/$1",
 
+		"register" => "userRegister/index",
+		"register/submit" => "userRegister/submit",  
+
 		"test" => "test/test",
 	);

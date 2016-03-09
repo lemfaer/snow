@@ -1666,7 +1666,8 @@ fieldset.input input[type="submit"]:hover {
 }
 .register-top-grid div, .register-bottom-grid div {
 	width: 48%;
-	float: left;
+	float: none;
+	/*float: left;*/
 	margin: 10px 0;
 }
 .register-top-grid span, .register-bottom-grid span {
