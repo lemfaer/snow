@@ -12,61 +12,61 @@ class User extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() {
+	public function getID() : int {
 		return $this->id;
 	}
 
-	public function getFirstName() {
+	public function getFirstName() : string {
 		return $this->first_name;
 	}
 
-	public function getLastName() {
+	public function getLastName() : string {
 		return $this->last_name;
 	}
 
-	public function getEmail() {
+	public function getEmail() : string {
 		return $this->email;
 	}
 
-	public function getLogin() {
+	public function getLogin() : string {
 		return $this->login;
 	}
 
-	public function getPassword() {
+	public function getPassword() : string {
 		return $this->password;
 	}
 
-	public function getStatus() {
+	public function getStatus() : bool {
 		return $this->status;
 	}
 	//getters end
 
 	//setters
-	private setID($id) {
+	private setID(int $id) {
 		$this->id = $id;
 	}
 
-	public function setFirstName($first_name) {
+	public function setFirstName(string $first_name) {
 		$this->first_name = $first_name;
 	}
 
-	public function setLastName($last_name) {
+	public function setLastName(string $last_name) {
 		$this->last_name = $last_name;
 	}
 
-	public function setEmail($email) {
+	public function setEmail(string $email) {
 		$this->email = $email;
 	}
 
-	public function setLogin($login) {
+	public function setLogin(string $login) {
 		$this->login = $login;
 	}
 
-	public function setPassword($password) {
+	public function setPassword(string $password) {
 		$this->password = $password;
 	}
 
-	public function setStatus($status) {
+	public function setStatus(bool $status) {
 		$this->status = $status;
 	}
 	//setters end

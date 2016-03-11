@@ -11,29 +11,29 @@ class CharName extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() {
+	public function getID() : int {
 		return $this->id;
 	}
 
-	public function getName() {
+	public function getName() : string {
 		return $this->name;
 	}
 
-	public function getCategory() {
+	public function getCategory() : Category {
 		return $this->category;
 	}
 
-	public function getStatus() {
+	public function getStatus() : bool {
 		return $this->status;
 	}
 	//getters end
 
 	//setters
-	private function setID($id) {
+	private function setID(int $id) {
 		$this->id = $id;
 	}
 
-	public function setName($name) {
+	public function setName(string $name) {
 		$this->name = $name;
 	}
 
@@ -41,14 +41,14 @@ class CharName extends AbstractRecord {
 		$this->category = $category;
 	}
 
-	public function setStatus($status) {
+	public function setStatus(bool $status) {
 		$this->status = $status;
 	}
 	//setters end
 //main info end
 
 //construct
-	protected function withArray($arr) {
+	protected static function withArray(array $arr) : AbstractRecord {
 		$obj = new self();
 
 		$obj->id = $arr['id'];

@@ -6,8 +6,6 @@
 		const SORT_ORDER = "id DESC";
 
 		public static function actionIndex($categoryID, $page = 1) {
-			$t1 = microtime(true);
-
 			$category = Category::findFirst(array("id" => $categoryID));
 			
 			$order = self::SORT_ORDER;
@@ -27,9 +25,6 @@
 
 			$contentView = ROOT."/views/ShopCatalogView/index.php";
 			require_once(ROOT."/views/template/index.php");
-
-			$t2 = microtime(true);
-			echo $t2 - $t1."<br>";
 		}
 
 	}

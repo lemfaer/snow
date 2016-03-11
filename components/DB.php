@@ -19,13 +19,14 @@
 
 			$result = $db->prepare($query);
 			foreach ($binds as $key => $value) {
-				$result->bindParam($key, strval($value), PDO::PARAM_STR);
+				$value = (string)$value;
+				$result->bindParam((string)$key, $value, PDO::PARAM_STR);
 			}
 			$result->execute();
 
 			if(!is_object($result) || !$result->rowCount()) {
-				print_r($db->errorInfo()); //dev
-				throw new Exception("404", 1);
+				$dev = implode(", ", $db->errorInfo()); //dev
+				throw new Exception("404 db: $dev", 1);
 			}
 
 			$result->setFetchMode(PDO::FETCH_ASSOC);

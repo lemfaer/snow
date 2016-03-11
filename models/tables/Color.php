@@ -11,44 +11,44 @@ class Color extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() {
+	public function getID() : int {
 		return $this->id;
 	}
 
-	public function getName() {
+	public function getName() : string {
 		return $this->name;
 	}
 
-	public function getValue() {
+	public function getValue() : string {
 		return $this->value;
 	}
 
-	public function getStatus() {
+	public function getStatus() : bool {
 		return $this->status;
 	}
 	//getters end
 
 	//setters
-	private function setID($id) {
+	private function setID(int $id) {
 		$this->id = $id;
 	}
 
-	public function setName($name) {
+	public function setName(string $name) {
 		$this->name = $name;
 	}
 
-	public function setValue($value) {
+	public function setValue(string $value) {
 		$this->value = $value;
 	}
 
-	public function setStatus($status) {
+	public function setStatus(bool $status) {
 		$this->status = $status;
 	}
 	//setters end
 //main info end
 
 //construct
-	protected function withArray($arr) {
+	protected static function withArray(array $arr) : AbstractRecord {
 		$obj = new self();
 
 		$obj->id 		= $arr['id'];

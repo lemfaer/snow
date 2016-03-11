@@ -10,7 +10,7 @@ class ProductItem extends AbstractRecord {
 //product
 	private $product;
 
-	public function getProduct() {
+	public function getProduct() : Product {
 		return $this->product;
 	}
 
@@ -22,34 +22,32 @@ class ProductItem extends AbstractRecord {
 //char list
 	private $charList;
 
-	public function getCharList() {
+	public function getCharList() : array {
 		return $this->charList;
 	}
 
-	public function setCharList($charList) {
+	public function setCharList(array $charList) {
 		$this->charList = $charList;
 	}
 
 	private function charList() {
-		$charList = array();
 		$id = $this->product->getID();
-		$query = "SELECT count(value_id) FROM product_has_value WHERE product_id = '$id'";
-		$result = DB::query($query);
-
-		if(array_shift($result->fetch())) {
-			$query = "SELECT value_id FROM product_has_value WHERE product_id = '$id'";
+		$query = "SELECT value_id FROM product_has_value WHERE product_id = '$id'";
+		
+		try {
 			$result = DB::query($query);
-
-			$charIDArray = array();
-			while($id = $result->fetch()) {
-				$id = array_shift($id);
-				$charIDArray[] = $id;
-			}
-
-			$charList = Characteristic::findAll(array("id" => $charIDArray), 
-				"id ASC", self::LIMIT_CHAR);
+		} catch(Exception $e) {
+			return;
 		}
 
+		$charIDArray = array();
+		while($id = $result->fetch()) {
+			$id = array_shift($id);
+			$charIDArray[] = $id;
+		}
+
+		$charList = Characteristic::findAll(array("id" => $charIDArray), 
+			"id ASC", self::LIMIT_CHAR);
 		$this->charList = $charList;
 	} 
 //char list end
@@ -57,35 +55,33 @@ class ProductItem extends AbstractRecord {
 //image list
 	private $imageList;
 
-	public function getImageList() {
+	public function getImageList() : array {
 		return $this->imageList;
 	}
 
-	public function setImageList($imageList) {
+	public function setImageList(array $imageList) {
 		$this->imageList = $imageList;
 	}
 
 	private function imageList() {
 		$id = $this->product->getID();
-		$query = "SELECT count(*) FROM product_has_image WHERE product_id = $id";
-		$result = DB::query($query);
+		$query = "SELECT image_id FROM product_has_image WHERE product_id = $id";
 
-		$imageList = array();
-		if(array_shift($result->fetch())) {
-			$query = "SELECT image_id FROM product_has_image WHERE product_id = $id";
+		try {
 			$result = DB::query($query);
-
-			$imageIDArray = array();
-			while($id = $result->fetch()) {
-				$id = array_shift($id);
-				$imageIDArray[] = $id;
-			}
-			
-			$imageList = Image::findAll(array("id" => $imageIDArray), "id ASC", self::LIMIT_IMAGE);
-			array_shift($imageList);
+		}
+		catch(Exception $e) {
+			$this->imageList = array($this->product->getImage());
+			return;
 		}
 
-		array_unshift($imageList, $this->product->getImage());
+		$imageIDArray = array();
+		while($id = $result->fetch()) {
+			$id = array_shift($id);
+			$imageIDArray[] = $id;
+		}
+			
+		$imageList = Image::findAll(array("id" => $imageIDArray), "id ASC", self::LIMIT_IMAGE);
 
 		$this->imageList = $imageList;
 	}
@@ -94,11 +90,11 @@ class ProductItem extends AbstractRecord {
 //available list
 	private $availableList;
 
-	public function getAvailableList() {
+	public function getAvailableList() : array {
 		return $this->availableList;
 	}
 
-	public function setAvailableList($availableList) {
+	public function setAvailableList(array $availableList) {
 		$this->availableList = $availableList;
 	}
 
@@ -118,7 +114,7 @@ class ProductItem extends AbstractRecord {
 //color list with size ids
 	private $colorList;
 
-	public function getColorList() {
+	public function getColorList() : array {
 		return $this->colorList;
 	}
 
@@ -155,7 +151,7 @@ class ProductItem extends AbstractRecord {
 //size list with color ids
 	private $sizeList;
 
-	public function getSizeList() {
+	public function getSizeList() : array {
 		return $this->sizeList;
 	}
 
@@ -210,17 +206,17 @@ class ProductItem extends AbstractRecord {
 //construct end
 
 //abstract methods realization
-	public static function findFirst(array $whereArr, $nullStatus = false) {
+	public static function findCount(array $whereArr = array(), bool $nullStatus = false) : int {
+		return Product::findCount($whereArr, $nullStatus);
+	} 
+
+	public static function findFirst(array $whereArr = array(), bool $nullStatus = false) : AbstractRecord {
 		$product = Product::findFirst($whereArr, $nullStatus);
 		$productItem = new ProductItem($product);
 		return $productItem;
 	}
 
-	public static function findCount(array $whereArr, $nullStatus = false) {
-		return Product::findCount($whereArr, $nullStatus);
-	} 
-
-	public static function findAll(array $whereArr, $order = "id", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = false) {
+	public static function findAll(array $whereArr = array(), string $order = "id", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
 		$productList = Product::findAll($whereArr, $order, $limit, $offset, $nullStatus);
 		foreach ($productList as $key => $product) {
 			$productList[$key] = new ProductItem($product);

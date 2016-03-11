@@ -5,11 +5,9 @@ abstract class AbstractRecord {
 	const LIMIT_MAX = 9999;
 
 	//construct
-	protected function withArray(array $arr) {
-		return null;
-	}
+	abstract protected static function withArray(array $arr) : self;
 
-	public function getArray() {
+	public function getArray() : array {
 		$rc = new ReflectionClass($this);
 		$arr = array();
 		foreach ($rc->getProperties() as $value) {
@@ -25,7 +23,7 @@ abstract class AbstractRecord {
 		return $arr;
 	}
 
-	private static function buildWhere(array $whereArr, $nullStatus) {
+	private static function buildWhere(array $whereArr, bool $nullStatus) : string {
 		$where = array();
 		foreach ($whereArr as $key => $value) {
 			if(is_array($value)) {
@@ -41,7 +39,7 @@ abstract class AbstractRecord {
 		return $where;
 	}
 
-	private static function buildBinds(array $whereArr) {
+	private static function buildBinds(array $whereArr) : array {
 		$binds = array();
 		foreach ($whereArr as $key => $value) {
 			if(is_array($value)) {
@@ -53,7 +51,22 @@ abstract class AbstractRecord {
 		return $binds;
 	} 
 
-	public static function findFirst(array $whereArr = array(), $nullStatus = false) {
+	public static function findCount(array $whereArr = array(), bool $nullStatus = false) : int {
+		$class = get_called_class();
+		$table = $class::TABLE;
+
+		$where = self::buildWhere($whereArr, $nullStatus);
+		$binds = self::buildBinds($whereArr);
+
+		$query = "SELECT count(*) FROM $table 
+			$where";
+		$result = DB::query($query, $binds);
+
+		$result = $result->fetch();
+		return array_shift($result);
+	}
+
+	public static function findFirst(array $whereArr = array(), bool $nullStatus = false) : self {
 		$class = get_called_class();
 		$table = $class::TABLE;
 
@@ -72,21 +85,7 @@ abstract class AbstractRecord {
 		return $object;
 	}
 
-	public static function findCount(array $whereArr, $nullStatus = false) {
-		$class = get_called_class();
-		$table = $class::TABLE;
-
-		$where = self::buildWhere($whereArr, $nullStatus);
-		$binds = self::buildBinds($whereArr);
-
-		$query = "SELECT count(*) FROM $table 
-			$where";
-		$result = DB::query($query, $binds);
-
-		return array_shift($result->fetch());
-	}
-
-	public static function findAll(array $whereArr, $order = "id ASC", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = false) {
+	public static function findAll(array $whereArr, string $order = "id ASC", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
 		$class = get_called_class();
 		$table = $class::TABLE;
 

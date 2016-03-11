@@ -12,33 +12,33 @@ class Available extends AbstractRecord {
 	private $product; //class
 
 	//getters
-	public function getID() {
+	public function getID() : int {
 		return $this->id;
 	}
 
-	public function getCount() {
+	public function getCount() : int {
 		return $this->count;
 	}
 
-	public function getSize() {
+	public function getSize() : Size {
 		return $this->size;
 	}
 
-	public function getColor() {
+	public function getColor() : Color {
 		return $this->color;
 	}
 
-	public function getProduct() {
+	public function getProduct() : Product {
 		return $this->product;
 	}
 	//getters end
 
 	//setters
-	private function setID($id) {
+	private function setID(int $id) {
 		$this->id = $id;
 	}
 
-	public function setCount($count) {
+	public function setCount(int $count) {
 		$this->count = $count;
 	}
 
@@ -57,7 +57,7 @@ class Available extends AbstractRecord {
 //main info end
 
 //construct
-	protected function withArray($arr) {
+	protected static function withArray(array $arr) : AbstractRecord {
 		$obj = new self();
 
 		$obj->id 		= $arr['id'];
@@ -77,18 +77,6 @@ class Available extends AbstractRecord {
 //construct end
 
 //abstract methods realization
-	public static function findFirst(array $whereArr, $nullStatus = true) {
-		return parent::findFirst($whereArr, $nullStatus);
-	}
-
-	public static function findCount(array $whereArr, $nullStatus = true) {
-		return parent::findCount($whereArr, $nullStatus);
-	}
-
-	public static function findAll(array $whereArr, $order = "id ASC", $limit = self::LIMIT_MAX, $offset = 0, $nullStatus = true) {
-		return parent::findAll($whereArr, $order, $limit, $offset, $nullStatus);
-	} 
-
 	public function insert() {}
 
 	public function update() {}

@@ -10,29 +10,29 @@ class Image extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() {
+	public function getID() : int {
 		return $this->id;
 	}
 
-	public function getPath() {
+	public function getPath() : string {
 		return $this->path;
 	}
 
-	public function getStatus() {
+	public function getStatus() : bool {
 		return $this->status;
 	}
 	//getters end
 
 	//setters
-	private function setID($id) {
+	private function setID(int $id) {
 		$this->id = $id;
 	}
 
-	public function setPath($path) {
+	public function setPath(string $path) {
 		$this->path = $path;
 	}
 
-	public function setStatus($status) {
+	public function setStatus(bool $status) {
 		$this->status = $status;
 	}
 	//setters end
@@ -45,7 +45,7 @@ class Image extends AbstractRecord {
 //link end
 
 //construct
-	protected function withArray($arr) {
+	protected static function withArray(array $arr) : AbstractRecord {
 		$obj = new self();
 
 		$obj->id 		= $arr['id'];

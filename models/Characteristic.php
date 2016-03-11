@@ -5,11 +5,11 @@ class Characteristic {
 	private $name; //class
 	private $value; //class
 
-	public function getName() {
+	public function getName() : CharName {
 		return $this->name;
 	}
 
-	public function getValue() {
+	public function getValue() : CharValue {
 		return $this->value;
 	}
 

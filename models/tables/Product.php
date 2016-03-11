@@ -18,57 +18,57 @@ class Product extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() {
+	public function getID() : int {
 		return $this->id;
 	}
 
-	public function getName() {
+	public function getName() : string {
 		return $this->name;
 	}
 
-	public function getProducer() {
+	public function getProducer() : Producer {
 		return $this->producer;
 	}
         
-    public function getPrice() {
+    public function getPrice() : int {
     	return $this->price;
     }
 
-    public function getYear() {
+    public function getYear() : int {
 		return $this->year;
     }
 
-	public function getShortDescription() {
+	public function getShortDescription() : string {
 		return $this->short_description;
 	}
 
-	public function getDescription() {
+	public function getDescription() : string {
 		return $this->description;
 	}
 
-	public function getCategory() {
+	public function getCategory() : Category {
 		return $this->category;
 	}
 
-	public function isNew() {
+	public function isNew() : bool {
 		return $this->is_new;
 	}
 
-	public function isRecomended() {
+	public function isRecomended() : bool {
 		return $this->is_recomended;
 	}
 
-	public function getStatus() {
+	public function getStatus() : bool {
 		return $this->status;
 	}
 	//getters end
 
 	//setters
-	private function setID($id) {
+	private function setID(int $id) {
 		$this->id = $id;
 	}
 
-	public function setName($name) {
+	public function setName(string $name) {
 		$this->name = $name;
 	}
 
@@ -76,19 +76,19 @@ class Product extends AbstractRecord {
 		$this->producer = $producer;
 	}
 
-	public function setPrice($price) {
+	public function setPrice(int $price) {
 		$this->price = $price;
 	}
 
-	public function setYear($year) {
+	public function setYear(int $year) {
 		$this->year = $year;
 	}
 
-	public function setShortDescription($short_description) {
+	public function setShortDescription(string $short_description) {
 		$this->short_description = $short_description;
 	}
 
-	public function setDescription($description) {
+	public function setDescription(string $description) {
 		$this->description = $description;
 	}
 
@@ -96,15 +96,15 @@ class Product extends AbstractRecord {
 		$this->category = $category;
 	}
 
-	public function setNew($is_new) {
+	public function setNew(bool $is_new) {
 		$this->is_new = $is_new;
 	}
 
-	public function setRecomended($is_recomended) {
+	public function setRecomended(bool $is_recomended) {
 		$this->is_recomended = $is_recomended;
 	}
 
-	public function setStatus($status) {
+	public function setStatus(bool $status) {
 		$this->status = $status;
 	}
 	//setters end
@@ -113,7 +113,7 @@ class Product extends AbstractRecord {
 //available
 	private $available;
 
-	public function isAvailable() {
+	public function isAvailable() : bool {
 		return $this->available;
 	}
 
@@ -126,19 +126,27 @@ class Product extends AbstractRecord {
 //first image
 	private $firstImage;
 
-	public function getImage() {
+	public function getImage() : Image {
 		return $this->firstImage;
 	}
 
 	private function firstImage() {
-		$query = "SELECT image_id FROM product_has_image WHERE product_id = $this->id LIMIT 1";
-		$id = array_shift(DB::query($query)->fetch());
-		$this->firstImage = Image::findFirst(array("id" => $id));
+		try {
+			$query = "SELECT image_id FROM product_has_image WHERE product_id = $this->id LIMIT 1";
+			$result = DB::query($query);
+			$result = $result->fetch();
+			$id = array_shift($result);
+			$this->firstImage = Image::findFirst(array("id" => $id));
+		} catch(Exception $e) {
+			$image = new Image();
+			$image->setPath("http://i65.tinypic.com/k6ey0.gif");
+			$this->firstImage = $image;
+		}
 	}
 //first image end
 
 //construct
-	protected function withArray($arr) {
+	protected static function withArray(array $arr) : AbstractRecord {
 		$obj = new self();
 
 		$obj->id 					= $arr['id'];

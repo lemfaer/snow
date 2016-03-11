@@ -15,23 +15,23 @@ class Category extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() {
+	public function getID() : int {
 		return $this->id;
 	}
 
-	public function getName() {
+	public function getName() : string {
 		return $this->name;
 	}
 
-	public function getShortName() {
+	public function getShortName() : string {
 		return $this->short_name;
 	}
 
-	public function getDescription() {
+	public function getDescription() : string {
 		return $this->description;
 	}
 
-	public function getImage() {
+	public function getImage() : Image {
 		return $this->image;
 	}
 
@@ -39,29 +39,29 @@ class Category extends AbstractRecord {
 		return $this->parent;
 	}
 
-	public function getSortOrder() {
+	public function getSortOrder() : int {
 		return $this->sort_order;
 	}
 
-	public function getStatus() {
+	public function getStatus() : bool {
 		return $this->status;
 	}
 	//getters end
 
 	//setters
-	private function setID($id) {
+	private function setID(int $id) {
 		$this->id = $id;
 	}
 
-	public function setName($name) {
+	public function setName(string $name) {
 		$this->name = $name;
 	}
 
-	public function setShortName($short_name) {
+	public function setShortName(string $short_name) {
 		$this->short_name = $short_name;
 	}
 
-	public function setDescription($description) {
+	public function setDescription(string $description) {
 		$this->description = $description;
 	}
 
@@ -73,18 +73,18 @@ class Category extends AbstractRecord {
 		$this->parent = $parent;
 	}
 
-	public function setSortOrder($sort_order) {
+	public function setSortOrder(int $sort_order) {
 		$this->sort_order = $sort_order;
 	}
 
-	public function setStatus($status) {
+	public function setStatus(bool $status) {
 		$this->status = $status;
 	}
 	//setters end;
 //main info end
 
 //link
-	public function link() {
+	public function link() : string {
 		$arr = array();
 		for($i = $this; $i !== null; $i = $i->parent) {
 			$arr[] = $i->short_name;
@@ -97,7 +97,7 @@ class Category extends AbstractRecord {
 //link end
 
 //construct
-	protected function withArray($arr) {
+	protected static function withArray(array $arr) : AbstractRecord {
 		$obj = new self();
 
 		$obj->id 			= $arr['id'];
@@ -128,14 +128,15 @@ class Category extends AbstractRecord {
 //abstract methods realization end
 
 //static functions
-	public static function getIDByShortNameArray($shortNameArray) {
+	public static function getIDByShortNameArray(array $shortNameArray) {
 		$id = 0;
 		while($shortName = array_shift($shortNameArray)) {
 			$query = "SELECT id 
 				FROM category 
 				WHERE parent_id = '$id' AND short_name = '$shortName' AND status = '1'";
 			$result = DB::query($query);
-			$id = array_shift($result->fetch());
+			$result = $result->fetch();
+			$id = array_shift($result);
 		}
 		return $id;
 	}
