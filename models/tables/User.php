@@ -12,31 +12,31 @@ class User extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() : int {
+	public function getID() {
 		return $this->id;
 	}
 
-	public function getFirstName() : string {
+	public function getFirstName() {
 		return $this->first_name;
 	}
 
-	public function getLastName() : string {
+	public function getLastName() {
 		return $this->last_name;
 	}
 
-	public function getEmail() : string {
+	public function getEmail() {
 		return $this->email;
 	}
 
-	public function getLogin() : string {
+	public function getLogin() {
 		return $this->login;
 	}
 
-	public function getPassword() : string {
+	public function getPassword() {
 		return $this->password;
 	}
 
-	public function getStatus() : bool {
+	public function getStatus() {
 		return $this->status;
 	}
 	//getters end
@@ -71,6 +71,10 @@ class User extends AbstractRecord {
 	}
 	//setters end
 //main info end
+
+//construct
+	
+//construct end
 
 //abstract methods realization
 	public function insert();

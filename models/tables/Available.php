@@ -4,6 +4,14 @@ class Available extends AbstractRecord {
 
 	const TABLE = "available";
 
+//validator
+	private $validator;
+
+	public function errorInfo() : array {
+		return $this->validator->errorInfo();
+	}
+//validator end
+
 //main info
 	private $id;
 	private $count;
@@ -12,34 +20,42 @@ class Available extends AbstractRecord {
 	private $product; //class
 
 	//getters
-	public function getID() : int {
+	public function getID() {
 		return $this->id;
 	}
 
-	public function getCount() : int {
+	public function getCount() {
 		return $this->count;
 	}
 
-	public function getSize() : Size {
+	public function getSize() {
 		return $this->size;
 	}
 
-	public function getColor() : Color {
+	public function getColor() {
 		return $this->color;
 	}
 
-	public function getProduct() : Product {
+	public function getProduct() {
 		return $this->product;
 	}
 	//getters end
 
 	//setters
-	private function setID(int $id) {
-		$this->id = $id;
+	private function setID(int $id) : bool {
+		if ($this->validator->checkID($id)) {
+			$this->id = $id;
+			return true;
+		}
+		return false;
 	}
 
-	public function setCount(int $count) {
-		$this->count = $count;
+	public function setCount(int $count) : bool {
+		if ($this->validator->checkCount($count)) {
+			$this->count = $count;
+			return true;
+		}
+		return false;
 	}
 
 	public function setSize(Size $size) {
@@ -57,6 +73,10 @@ class Available extends AbstractRecord {
 //main info end
 
 //construct
+	public function __construct() {
+		$this->validator = new AvailableValidator();
+	}
+
 	protected static function withArray(array $arr) : AbstractRecord {
 		$obj = new self();
 
@@ -83,5 +103,17 @@ class Available extends AbstractRecord {
 
 	public function delete() {}
 //abstract methods realization end
+
+}
+
+class AvailableValidator extends Validator {
+
+//const
+	const CLASS_NAME = "Available";
+//const end
+
+//check
+
+//check end
 
 }

@@ -4,8 +4,9 @@ abstract class AbstractRecord {
 
 	const LIMIT_MAX = 9999;
 
-	//construct
-	abstract protected static function withArray(array $arr) : self;
+	abstract protected static function withArray(array $arr) : AbstractRecord;
+
+	abstract public function getID(); 
 
 	public function getArray() : array {
 		$rc = new ReflectionClass($this);
@@ -16,7 +17,11 @@ abstract class AbstractRecord {
 			$value = $value->getValue($this);
 
 			if(is_object($value)) {
-				$value = $value->getArray();
+				if($value instanceof self) {
+					$value = $value->getArray();
+				} else {
+					continue;
+				}
 			}
 			$arr[$name] = $value;
 		}

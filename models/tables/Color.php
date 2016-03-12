@@ -11,19 +11,19 @@ class Color extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() : int {
+	public function getID() {
 		return $this->id;
 	}
 
-	public function getName() : string {
+	public function getName() {
 		return $this->name;
 	}
 
-	public function getValue() : string {
+	public function getValue() {
 		return $this->value;
 	}
 
-	public function getStatus() : bool {
+	public function getStatus() {
 		return $this->status;
 	}
 	//getters end

@@ -10,15 +10,15 @@ class Image extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() : int {
+	public function getID() {
 		return $this->id;
 	}
 
-	public function getPath() : string {
+	public function getPath() {
 		return $this->path;
 	}
 
-	public function getStatus() : bool {
+	public function getStatus() {
 		return $this->status;
 	}
 	//getters end

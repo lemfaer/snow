@@ -11,19 +11,19 @@ class CharName extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() : int {
+	public function getID() {
 		return $this->id;
 	}
 
-	public function getName() : string {
+	public function getName() {
 		return $this->name;
 	}
 
-	public function getCategory() : Category {
+	public function getCategory() {
 		return $this->category;
 	}
 
-	public function getStatus() : bool {
+	public function getStatus() {
 		return $this->status;
 	}
 	//getters end

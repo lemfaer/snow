@@ -11,19 +11,19 @@ class Size extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() : int {
+	public function getID() {
 		return $this->id;
 	}
 
-	public function getName() : string {
+	public function getName() {
 		return $this->name;
 	}
 
-	public function getCategory() : Category {
+	public function getCategory() {
 		return $this->category;
 	}
 
-	public function getStatus() : bool {
+	public function getStatus() {
 		return $this->status;
 	}
 	//getters end
@@ -55,7 +55,7 @@ class Size extends AbstractRecord {
 		$obj->name 		= $arr['name'];
 		$obj->status 	= $arr['status'];
 
-		$obj->category = Category::findFirst(array("id" => $arr['categoty_id']));
+		$obj->category = Category::findFirst(array("id" => $arr['category_id']));
 
 		return $obj;
 	}

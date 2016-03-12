@@ -5,10 +5,9 @@ class TestController {
 	public function actionTest() {
 		echo "<pre>";
 
-		var_dump(Validator::checkID("231", "image"));
-		print_r(Validator::errorInfo());
-
-		Product::findFirst(["id" => 1]);
+		$av = new Available();
+		var_dump($av->setID(-1));
+		print_r($av->errorInfo());
 
 		echo "</pre>";
 	}

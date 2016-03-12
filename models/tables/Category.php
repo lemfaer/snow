@@ -15,23 +15,23 @@ class Category extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() : int {
+	public function getID() {
 		return $this->id;
 	}
 
-	public function getName() : string {
+	public function getName() {
 		return $this->name;
 	}
 
-	public function getShortName() : string {
+	public function getShortName() {
 		return $this->short_name;
 	}
 
-	public function getDescription() : string {
+	public function getDescription() {
 		return $this->description;
 	}
 
-	public function getImage() : Image {
+	public function getImage() {
 		return $this->image;
 	}
 
@@ -39,11 +39,11 @@ class Category extends AbstractRecord {
 		return $this->parent;
 	}
 
-	public function getSortOrder() : int {
+	public function getSortOrder() {
 		return $this->sort_order;
 	}
 
-	public function getStatus() : bool {
+	public function getStatus() {
 		return $this->status;
 	}
 	//getters end

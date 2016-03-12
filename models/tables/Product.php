@@ -18,47 +18,47 @@ class Product extends AbstractRecord {
 	private $status;
 
 	//getters
-	public function getID() : int {
+	public function getID() {
 		return $this->id;
 	}
 
-	public function getName() : string {
+	public function getName() {
 		return $this->name;
 	}
 
-	public function getProducer() : Producer {
+	public function getProducer() {
 		return $this->producer;
 	}
         
-    public function getPrice() : int {
+    public function getPrice() {
     	return $this->price;
     }
 
-    public function getYear() : int {
+    public function getYear() {
 		return $this->year;
     }
 
-	public function getShortDescription() : string {
+	public function getShortDescription() {
 		return $this->short_description;
 	}
 
-	public function getDescription() : string {
+	public function getDescription() {
 		return $this->description;
 	}
 
-	public function getCategory() : Category {
+	public function getCategory() {
 		return $this->category;
 	}
 
-	public function isNew() : bool {
+	public function isNew() {
 		return $this->is_new;
 	}
 
-	public function isRecomended() : bool {
+	public function isRecomended() {
 		return $this->is_recomended;
 	}
 
-	public function getStatus() : bool {
+	public function getStatus() {
 		return $this->status;
 	}
 	//getters end
@@ -111,36 +111,24 @@ class Product extends AbstractRecord {
 //main info end
 
 //available
-	private $available;
-
 	public function isAvailable() : bool {
-		return $this->available;
-	}
-
-	private function available() {
 		$avCount = Available::findCount(array("product_id" => $this->id));
-		$this->available = $avCount == true;
+		return $avCount == true;
 	}
 //available end
 
 //first image
-	private $firstImage;
-
 	public function getImage() : Image {
-		return $this->firstImage;
-	}
-
-	private function firstImage() {
 		try {
 			$query = "SELECT image_id FROM product_has_image WHERE product_id = $this->id LIMIT 1";
 			$result = DB::query($query);
 			$result = $result->fetch();
 			$id = array_shift($result);
-			$this->firstImage = Image::findFirst(array("id" => $id));
+			return Image::findFirst(array("id" => $id));
 		} catch(Exception $e) {
 			$image = new Image();
 			$image->setPath("http://i65.tinypic.com/k6ey0.gif");
-			$this->firstImage = $image;
+			return $image;
 		}
 	}
 //first image end
@@ -164,9 +152,6 @@ class Product extends AbstractRecord {
 
 		$producer = Producer::findFirst(array("id" => $arr['producer_id']));
 		$obj->producer	= $producer; //class
-
-		$obj->available();
-		$obj->firstImage();
 
 		return $obj;
 	}
