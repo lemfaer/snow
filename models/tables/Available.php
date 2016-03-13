@@ -1,16 +1,8 @@
 <?php
 
-class Available extends AbstractRecord {
+class Available extends AbstractTable {
 
 	const TABLE = "available";
-
-//validator
-	private $validator;
-
-	public function errorInfo() : array {
-		return $this->validator->errorInfo();
-	}
-//validator end
 
 //main info
 	private $id;
@@ -18,6 +10,7 @@ class Available extends AbstractRecord {
 	private $size; //class
 	private $color; //class
 	private $product; //class
+	private $status;
 
 	//getters
 	public function getID() {
@@ -39,10 +32,14 @@ class Available extends AbstractRecord {
 	public function getProduct() {
 		return $this->product;
 	}
+
+	public function getStatus() {
+		return $this->status;
+	}
 	//getters end
 
 	//setters
-	private function setID(int $id) : bool {
+	protected function setID(int $id) : bool {
 		if ($this->validator->checkID($id)) {
 			$this->id = $id;
 			return true;
@@ -58,17 +55,37 @@ class Available extends AbstractRecord {
 		return false;
 	}
 
-	public function setSize(Size $size) {
-		$this->size = $size;
+	public function setSize(Size $size) : bool {
+		if ($this->validator->checkSize($size)) {
+			$this->size = $size;
+			return true;
+		}
+		return false;
 	}
 
-	public function setColor(Color $color) {
-		$this->color = $color;
+	public function setColor(Color $color) : bool {
+		if ($this->validator->checkColor($color)) {
+			$this->color = $color;
+			return true;
+		}
+		return false;
 	}
 
-	public function setProduct(Product $product) {
-		$this->product = $product;
+	public function setProduct(Product $product) : bool {
+		if ($this->validator->checkProduct($product)) {
+			$this->product = $product;
+			return true;
+		}
+		return false;
 	}
+
+	public function setStatus(bool $status) : bool {
+		if($this->validator->checkStatus($status)) {
+			$this->status = $status;
+			return true;
+		}
+		return false;
+	} 
 	//setters end
 //main info end
 
@@ -77,7 +94,7 @@ class Available extends AbstractRecord {
 		$this->validator = new AvailableValidator();
 	}
 
-	protected static function withArray(array $arr) : AbstractRecord {
+	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
 		$obj->id 		= $arr['id'];
@@ -96,24 +113,38 @@ class Available extends AbstractRecord {
 	}
 //construct end
 
-//abstract methods realization
-	public function insert() {}
-
-	public function update() {}
-
-	public function delete() {}
-//abstract methods realization end
-
 }
 
-class AvailableValidator extends Validator {
+class AvailableValidator extends AbstractValidator {
 
 //const
 	const CLASS_NAME = "Available";
+
+	const COUNT_LIMIT = 1000;
+	const COUNT_ERROR = "Неправильный ввод количества товаров";
 //const end
 
 //check
+	public function checkCount(int $count) : bool {
+		$error = array("count" => self::COUNT_ERROR);
+		$bool = $count < self::COUNT_LIMIT;
+		return parent::log($bool, $error);
+	}
 
+	public function checkSize(Size $size) : bool {
+		$error = array("size" => parent::SIZE_OBJECT_ERROR);
+		return parent::checkObject($size, $error);
+	}
+
+	public function checkColor(Color $color) : bool {
+		$error = array("color" => parent::COLOR_OBJECT_ERROR);
+		return parent::checkObject($color, $error);
+	}
+
+	public function checkProduct(Product $product) : bool {
+		$error = array("product" => parent::PRODUCT_OBJECT_ERROR);
+		return parent::checkObject($product, $error);
+	}
 //check end
 
 }

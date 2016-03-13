@@ -1,6 +1,6 @@
 <?php
 
-class CharValue extends AbstractRecord {
+class CharValue extends AbstractTable {
 
 	const TABLE = "char_value";
 
@@ -29,26 +29,46 @@ class CharValue extends AbstractRecord {
 	//getters end
 
 	//setters
-	private function setID(int $id) {
-		$this->id = $id;
+	protected function setID(int $id) : bool {
+		if ($this->validator->checkID($id)) {
+			$this->id = $id;
+			return true;
+		}
+		return false;
 	}
 
 	public function setName(CharName $name) {
-		$this->name = $name;
+		if ($this->validator->checkName($name)) {
+			$this->name = $name;
+			return true;
+		}
+		return false;
 	}
 
 	public function setValue(string $value) {
-		$this->value = $value;
+		if ($this->validator->checkValue($value)) {
+			$this->value = $value;
+			return true;
+		}
+		return false;
 	}
 
 	public function setStatus(bool $status) {
-		$this->status = $status;
+		if ($this->validator->checkStatus($status)) {
+			$this->status = $status;
+			return true;
+		}
+		return false;
 	}
 	//setters end
 //main info end
 
 //construct
-	protected static function withArray(array $arr) : AbstractRecord {
+	public function __construct() {
+		$this->validator = new CharValueValidator();
+	}
+
+	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
 		$obj->id 		= $arr['id'];
@@ -62,12 +82,29 @@ class CharValue extends AbstractRecord {
 	}
 //construct end
 
-//abstract methods realization
-	public function insert() {}
+}
 
-	public function update() {}
+class CharValueValidator extends AbstractValidator {
 
-	public function delete() {}
-//abstract methods realization end
+//const
+	const CLASS_NAME = "CharValue";
+
+	//кириллица, латиница, цифры, пробел, дефис. 2-99 символов
+	const VALUE_PATTERN = "/^[A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,99}$/u";
+
+	const VALUE_ERROR = "Неправильный ввод значения";
+//const end
+
+//check
+	public function checkName(CharName $name) : bool {
+		$error = array("name" => parent::CHARNAME_OBJECT_ERROR);
+		return parent::checkObject($name, $error);
+	}
+	
+	public function checkValue(string $value) : bool {
+		$error = array("value" => self::VALUE_ERROR);
+		return parent::checkString($value, self::VALUE_PATTERN, $error);
+	}
+//check end
 
 }

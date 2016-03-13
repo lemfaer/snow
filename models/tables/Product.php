@@ -1,6 +1,6 @@
 <?php
 
-class Product extends AbstractRecord {
+class Product extends AbstractTable {
 
 	const TABLE = "product";
 
@@ -64,48 +64,92 @@ class Product extends AbstractRecord {
 	//getters end
 
 	//setters
-	private function setID(int $id) {
-		$this->id = $id;
+	protected function setID(int $id) : bool {
+		if ($this->validator->checkID($id)) {
+			$this->id = $id;
+			return true;
+		}
+		return false;
 	}
 
 	public function setName(string $name) {
-		$this->name = $name;
+		if ($this->validator->checkName($name)) {
+			$this->name = $name;
+			return true;
+		}
+		return false;
 	}
 
 	public function setProducer(Producer $producer) {
-		$this->producer = $producer;
+		if ($this->validator->checkProducer($producer)) {
+			$this->producer = $producer;
+			return true;
+		}
+		return false;
 	}
 
 	public function setPrice(int $price) {
-		$this->price = $price;
+		if ($this->validator->checkPrice($price)) {
+			$this->price = $price;
+			return true;
+		}
+		return false;
 	}
 
 	public function setYear(int $year) {
-		$this->year = $year;
+		if ($this->validator->checkYear($year)) {
+			$this->year = $year;
+			return true;
+		}
+		return false;
 	}
 
 	public function setShortDescription(string $short_description) {
-		$this->short_description = $short_description;
+		if ($this->validator->checkShortDescription($short_description)) {
+			$this->short_description = $short_description;
+			return true;
+		}
+		return false;
 	}
 
 	public function setDescription(string $description) {
-		$this->description = $description;
+		if ($this->validator->checkDescription($description)) {
+			$this->description = $description;
+			return true;
+		}
+		return false;
 	}
 
 	public function setCategory(Category $category) {
-		$this->category = $category;
+		if ($this->validator->checkCategory($category)) {
+			$this->category = $category;
+			return true;
+		}
+		return false;
 	}
 
 	public function setNew(bool $is_new) {
-		$this->is_new = $is_new;
+		if ($this->validator->checkNew($is_new)) {
+			$this->is_new = $is_new;
+			return true;
+		}
+		return false;
 	}
 
 	public function setRecomended(bool $is_recomended) {
-		$this->is_recomended = $is_recomended;
+		if ($this->validator->checkRecomended($is_recomended)) {
+			$this->is_recomended = $is_recomended;
+			return true;
+		}
+		return false;
 	}
 
 	public function setStatus(bool $status) {
-		$this->status = $status;
+		if ($this->validator->checkStatus($status)) {
+			$this->status = $status;
+			return true;
+		}
+		return false;
 	}
 	//setters end
 //main info end
@@ -134,7 +178,11 @@ class Product extends AbstractRecord {
 //first image end
 
 //construct
-	protected static function withArray(array $arr) : AbstractRecord {
+	public function __construct() {
+		$this->validator = new ProductValidator();
+	}
+
+	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
 		$obj->id 					= $arr['id'];
@@ -157,12 +205,72 @@ class Product extends AbstractRecord {
 	}
 //construct end
 
-//abstract methods realization
-	public function insert() {}
+}
 
-	public function update() {}
-	
-	public function delete() {}
-//abstract methods realization end
+class ProductValidator extends AbstractValidator {
+
+//const
+	const CLASS_NAME = "Product";
+
+	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
+	const NAME_PATTERN = "/^[A-Z,А-Я,Ё][A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,98}$/u";
+
+	const NAME_ERROR		= "Неправильный ввод имени";
+	const PRICE_ERROR		= "Неправильный ввод цены";
+	const YEAR_ERROR		= "Неправильный ввод года";
+	const SHORTDESC_ERROR	= "Неправильный ввод краткого описания";
+	const DESCRIPTION_ERROR	= "Неправильный ввод описания";
+	const NEW_ERROR			= "Неправильное поле new";
+	const RECOMENDED_ERROR	= "Неправильное поле recomended";
+//const end
+
+//check
+	public function checkName(string $name) : bool {
+		$error = array("name" => self::NAME_ERROR);
+		return parent::checkString($name, self::NAME_PATTERN, $error);
+	}
+
+	public function checkProducer(Producer $producer) : bool {
+		$error = array("producer" => parent::PRODUCER_OBJECT_ERROR);
+		return parent::checkObject($producer, $error);
+	}
+
+	public function checkPrice(int $price) : bool {
+		$error = array("price" => self::PRICE_ERROR);
+		$bool = $price > 0;
+		return parent::log($bool, $error);
+	}
+
+	public function checkYear(int $year) : bool {
+		$error = array("year" => self::YEAR_ERROR);
+		$bool = $year >= (int)date("Y", 0) && $year <= (int)date("Y");
+		return parent::log($bool, $error); 
+	}
+
+	public function checkShortDescription(string $short_description) : bool {
+		$error = array("short_description" => self::SHORTDESC_ERROR);
+		return parent::log(true, $error);
+	}
+
+	public function checkDescription(string $description) : bool {
+		$error = array("description" => self::DESCRIPTION_ERROR);
+		return parent::log(true, $error);
+	}
+
+	public function checkCategory(Category $category) : bool {
+		$error = array("category" => parent::CATEGORY_OBJECT_ERROR);
+		return parent::checkObject($category, $error);
+	}
+
+	public function checkNew(bool $is_new) : bool {
+		$error = array("is_new" => self::NEW_ERROR);
+		return parent::log(true, $error);
+	}
+
+	public function checkRecomended(bool $is_recomended) : bool {
+		$error = array("is_recomended" => self::RECOMENDED_ERROR);
+		return parent::log(true, $error);
+	}
+//check end
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Color extends AbstractRecord {
+class Color extends AbstractTable {
 
 	const TABLE = "color";
 
@@ -29,26 +29,46 @@ class Color extends AbstractRecord {
 	//getters end
 
 	//setters
-	private function setID(int $id) {
-		$this->id = $id;
+	protected function setID(int $id) : bool {
+		if ($this->validator->checkID($id)) {
+			$this->id = $id;
+			return true;
+		}
+		return false;
 	}
 
 	public function setName(string $name) {
-		$this->name = $name;
+		if ($this->validator->checkName($name)) {
+			$this->name = $name;
+			return true;
+		}
+		return false;
 	}
 
 	public function setValue(string $value) {
-		$this->value = $value;
+		if ($this->validator->checkValue($value)) {
+			$this->value = $value;
+			return true;
+		}
+		return false;
 	}
 
 	public function setStatus(bool $status) {
-		$this->status = $status;
+		if ($this->validator->checkStatus($status)) {
+			$this->status = $status;
+			return true;
+		}
+		return false;
 	}
 	//setters end
 //main info end
 
 //construct
-	protected static function withArray(array $arr) : AbstractRecord {
+	public function __construct() {
+		$this->validator = new ColorValidator();
+	}
+
+	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
 		$obj->id 		= $arr['id'];
@@ -60,12 +80,32 @@ class Color extends AbstractRecord {
 	}
 //construct end
 
-//abstract methods realization
-	public function insert() {}
+}
 
-	public function update() {}
+class ColorValidator extends AbstractValidator {
 
-	public function delete() {}
-//abstract methods realization end
+//const
+	const CLASS_NAME = "Color";
+
+	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
+	const NAME_PATTERN = "/^[A-Z,А-Я,Ё][A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,98}$/u";
+	//Символ #, цифры, a,b,c,d,e. 7 символов
+	const VALUE_PATTERN = "/^#[0-9,a,A,b,B,c,C,d,D,e,E]{6}$/";
+
+	const NAME_ERROR = "Неправильный ввод имени";
+	const VALUE_ERROR = "Неправильный ввод значения";
+//const end
+
+//check
+	public function checkName(string $name) : bool {
+		$error = array("name" => self::NAME_ERROR);
+		return parent::checkString($name, self::NAME_PATTERN, $error);
+	}
+
+	public function checkValue(string $value) : bool {
+		$error = array("value" => self::VALUE_ERROR);
+		return parent::checkString($value, self::VALUE_PATTERN, $error);
+	}
+//check end
 
 }

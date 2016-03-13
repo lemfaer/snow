@@ -1,6 +1,6 @@
 <?php
 
-class CharName extends AbstractRecord {
+class CharName extends AbstractTable {
 
 	const TABLE = "char_name";
 
@@ -29,26 +29,46 @@ class CharName extends AbstractRecord {
 	//getters end
 
 	//setters
-	private function setID(int $id) {
-		$this->id = $id;
+	protected function setID(int $id) : bool {
+		if ($this->validator->checkID($id)) {
+			$this->id = $id;
+			return true;
+		}
+		return false;
 	}
 
 	public function setName(string $name) {
-		$this->name = $name;
+		if ($this->validator->checkName($name)) {
+			$this->name = $name;
+			return true;
+		}
+		return false;
 	}
 
 	public function setCategory(Category $category) {
-		$this->category = $category;
+		if ($this->validator->checkCategory($category)) {
+			$this->category = $category;
+			return true;
+		}
+		return false;
 	}
 
 	public function setStatus(bool $status) {
-		$this->status = $status;
+		if ($this->validator->checkStatus($status)) {
+			$this->status = $status;
+			return true;
+		}
+		return false;
 	}
 	//setters end
 //main info end
 
 //construct
-	protected static function withArray(array $arr) : AbstractRecord {
+	public function __construct() {
+		$this->validator = new CharNameValidator();
+	}
+
+	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
 		$obj->id = $arr['id'];
@@ -62,12 +82,29 @@ class CharName extends AbstractRecord {
 	}
 //construct end
 
-//abstract methods realization
-	public function insert() {}
+}
 
-	public function update() {}
+class CharNameValidator extends AbstractValidator {
 
-	public function delete() {}
-//abstract methods realization end
+//const
+	const CLASS_NAME = "CharName";
+
+	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
+	const NAME_PATTERN = "/^[A-Z,А-Я,Ё][A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,98}$/u";
+
+	const NAME_ERROR = "Неправильный ввод имени";
+//const end
+
+//check
+	public function checkName(string $name) : bool {
+		$error = array("name" => self::NAME_ERROR);
+		return parent::checkString($name, self::NAME_PATTERN, $error);
+	}
+	
+	public function checkCategory(Category $category) : bool {
+		$error = array("category" => parent::CATEGORY_OBJECT_ERROR);
+		return parent::checkObject($category, $error);
+	}
+//check end
 
 }

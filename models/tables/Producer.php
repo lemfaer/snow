@@ -1,6 +1,6 @@
 <?php
 
-class Producer extends AbstractRecord {
+class Producer extends AbstractTable {
 
 	const TABLE = "producer";
 
@@ -29,26 +29,46 @@ class Producer extends AbstractRecord {
 	//getters end
 
 	//setters
-	private function setID(int $id) {
-		$this->id = $id;
+	protected function setID(int $id) : bool {
+		if ($this->validator->checkID($id)) {
+			$this->id = $id;
+			return true;
+		}
+		return false;
 	}
 
 	public function setName(string $name) {
-		$this->name = $name;
+		if ($this->validator->checkName($name)) {
+			$this->name = $name;
+			return true;
+		}
+		return false;
 	}
 
 	public function setImage(Image $image) {
-		$this->image = $image;
+		if ($this->validator->checkImage($image)) {
+			$this->image = $image;
+			return true;
+		}
+		return false;
 	}
 
 	public function setStatus(bool $status) {
-		$this->status = $status;
+		if ($this->validator->checkStatus($status)) {
+			$this->status = $status;
+			return true;
+		}
+		return false;
 	}
 	//setters end
 //main info end
 
 //construct
-	protected static function withArray(array $arr) : AbstractRecord {
+	public function __construct() {
+		$this->validator = new ProducerValidator();
+	}
+
+	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
 		$obj->id 		= $arr['id'];
@@ -61,12 +81,29 @@ class Producer extends AbstractRecord {
 	}
 //construct end
 
-//abstract methods realization
-	public function insert() {}
+}
 
-	public function update() {}
+class ProducerValidator extends AbstractValidator {
 
-	public function delete() {}
-//abstract methods realization end
+//const
+	const CLASS_NAME = "Producer";
+
+	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
+	const NAME_PATTERN = "/^[A-Z,А-Я,Ё][A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,98}$/u";
+
+	const NAME_ERROR = "Неправильный ввод имени";
+//const end
+
+//check
+	public function checkName(string $name) : bool {
+		$error = array("name" => self::NAME_ERROR);
+		return parent::checkString($name, self::NAME_PATTERN, $error);
+	}
+	
+	public function checkImage(Image $image) : bool {
+		$error = array("image" => parent::IMAGE_OBJECT_ERROR);
+		return parent::checkObject($image, $error);
+	}
+//check end
 
 }

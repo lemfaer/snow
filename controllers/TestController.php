@@ -5,9 +5,13 @@ class TestController {
 	public function actionTest() {
 		echo "<pre>";
 
-		$av = new Available();
-		var_dump($av->setID(-1));
-		print_r($av->errorInfo());
+		$c = new User();
+		
+		var_dump($c->setPassword("Hello1"));
+
+		print_r($c->getArray());
+		echo "<hr>";
+		print_r($c->errorInfo());
 
 		echo "</pre>";
 	}

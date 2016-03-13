@@ -1,6 +1,6 @@
 <?php
 
-class Image extends AbstractRecord {
+class Image extends AbstractTable {
 
 	const TABLE = "image";
 
@@ -24,16 +24,28 @@ class Image extends AbstractRecord {
 	//getters end
 
 	//setters
-	private function setID(int $id) {
-		$this->id = $id;
+	protected function setID(int $id) : bool {
+		if ($this->validator->checkID($id)) {
+			$this->id = $id;
+			return true;
+		}
+		return false;
 	}
 
 	public function setPath(string $path) {
-		$this->path = $path;
+		if ($this->validator->checkPath($path)) {
+			$this->path = $path;
+			return true;
+		}
+		return false;
 	}
 
 	public function setStatus(bool $status) {
-		$this->status = $status;
+		if ($this->validator->checkStatus($status)) {
+			$this->status = $status;
+			return true;
+		}
+		return false;
 	}
 	//setters end
 //main info end
@@ -45,7 +57,11 @@ class Image extends AbstractRecord {
 //link end
 
 //construct
-	protected static function withArray(array $arr) : AbstractRecord {
+	public function __construct() {
+		$this->validator = new ImageValidator();
+	}
+
+	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
 		$obj->id 		= $arr['id'];
@@ -56,12 +72,23 @@ class Image extends AbstractRecord {
 	}
 //construct end
 
-//abstract methods realization
-	public function insert() {}
+}
 
-	public function update() {}
+class ImageValidator extends AbstractValidator {
 
-	public function delete() {}
-//abstract methods realization end
+//const
+	const CLASS_NAME = "Image";
+
+	const PATH_ERROR = "Указан неправильный путь";
+//const end
+
+//check
+	public function checkPath(string $path) : bool {
+		$error = array("path" => self::PATH_ERROR);
+		$path = ROOT."/images/".$path;
+		//return parent::log(file_exists($path), $error);
+		return true;
+	}
+//check end
 
 }
