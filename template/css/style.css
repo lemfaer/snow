@@ -131,9 +131,9 @@ body a{
      }
  }
 .header_right{
-	float:right;
-	width:6%;
-	margin-top: 16px;
+	float: right;
+	width: 6%;
+	margin-top: 17px;
 }
 .sb-search {
 	position: absolute;
@@ -231,7 +231,7 @@ ul.icon1 {
 	zoom: 1;
 	list-style: none;
 	padding: 0;
-	margin-left:25%;
+	/*margin-left:25%;*/
 }
 .icon1 li {
 	float: left;
@@ -1665,10 +1665,11 @@ fieldset.input input[type="submit"]:hover {
 	margin: 0;
 }
 .register-top-grid div, .register-bottom-grid div {
-	width: 48%;
+	width: 96%;
 	float: none;
 	/*float: left;*/
-	margin: 10px 0;
+	margin-top: 0.5em;
+	margin-bottom: 1em;
 }
 .register-top-grid span, .register-bottom-grid span {
 	color:#555;
@@ -1677,14 +1678,40 @@ fieldset.input input[type="submit"]:hover {
 	display: block;
 	text-transform: uppercase;
 }
-.register-top-grid input[type="text"], .register-bottom-grid input[type="text"] {
+.register-top-grid input[type="text"],
+.register-bottom-grid input[type="text"],
+.register-top-grid input[type="password"],
+.register-bottom-grid input[type="password"] {
 	border: 1px solid #EEE;
 	outline-color:#00BFF0;
-	width: 96%;
+	width: 48%;
 	font-size: 1em;
 	padding: 0.5em;
 	font-family: 'Open Sans', sans-serif;
 }
+.reg-status {
+	display: inline-block;
+	font-style: normal;
+	/*display: none;*/
+}
+.reg-status.ok, .reg-status.error {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+}
+.reg-status.ok {
+	background: url("../images/reg-ok.png");
+}
+.reg-status.error {
+	background: url("../images/reg-error.png");
+}
+.reg-text {
+	display: block;
+	font-size: 0.7em;
+	font-style: normal;
+	font-family: 'Open Sans', sans-serif;
+}
+
 .checkbox {
 	margin-bottom: 4px;
 	padding-left: 27px;
@@ -1786,14 +1813,14 @@ fieldset.input input[type="submit"]:hover {
  	margin-left: 71%;
  }
 }
-/*@media (max-width:1024px){
+@media (max-width:1280px){
 .icon1 ul {
 	width: 270px;
 	top: 63px;
 	right: -55px;
  }
-}	*/
-@media (max-width:1280px){ /*1024*/
+}	
+@media (max-width:1280px){
 .menu li a {	
 	padding: 5px 10px;
  }
@@ -2019,14 +2046,17 @@ h4.m_11 {
 	 width:50px !important;
 	 height:50px !important;
   }
-  .register-top-grid(
+  .register-top-grid{
   	margin-bottom:20px;
-  )
+  }
   .nav {
 	top: 66px;
 	right: 8px;
   }
-  .register-top-grid div, .register-bottom-grid div {
+  .register-top-grid input[type="text"],
+  .register-bottom-grid input[type="text"],
+  .register-top-grid input[type="password"],
+  .register-bottom-grid input[type="password"] {
 	width: 100%;
 	float: none;
 	margin: 10px 0;

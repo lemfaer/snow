@@ -14,6 +14,8 @@ class TestController {
 		print_r($c->errorInfo());
 
 		echo "</pre>";
+
+		require_once(ROOT."/views/template/index.php");
 	}
 
 }

@@ -7,15 +7,21 @@
 					<h3>PERSONAL INFORMATION</h3>
 					<div>
 						<span>First Name<label></label></span>
-						<input type="text" name="first_name" required> 
+						<input type="text" name="first_name" required>
+						<i class="reg-status error ok"></i>
+						<i class="reg-text error">Привет</i>
 					</div>
 					<div>
 						<span>Last Name<label></label></span>
 						<input type="text" name="last_name" required> 
+						<i class="reg-status error ok"></i>
+						<i class="reg-text error">Привет</i>
 					</div>
 					<div>
 						<span>Email Address<label></label></span>
 						<input type="text" name="email" required> 
+						<i class="reg-status error ok"></i>
+						<i class="reg-text error">Привет</i>
 					</div>
 					<div class="clear"> </div>
 				</div>
@@ -28,14 +34,20 @@
 					<div>
 						<span>Login<label></label></span>
 						<input type="text" name="login" required>
+						<i class="reg-status error ok"></i>
+						<i class="reg-text error">Привет</i>
 					</div>
 					<div>
 						<span>Password<label></label></span>
 						<input type="password" name="password" required>
+						<i class="reg-status error ok"></i>
+						<i class="reg-text error">Привет</i>
 					</div>
 					<div>
 						<span>Confirm Password<label></label></span>
 						<input type="password" name="cpass" required>
+						<i class="reg-status error ok"></i>
+						<i class="reg-text error">Привет</i>
 					</div>
 				</div>
 				<!-- 

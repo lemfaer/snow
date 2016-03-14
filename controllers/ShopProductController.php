@@ -3,8 +3,6 @@
 	class ShopProductController {
 
 		public function actionIndex($productID) {
-			$t1 = microtime(true);
-
 			$productItem = ProductItem::findFirst(array("id" => $productID));
 			$recomendedList = Product::findAll(array("is_recomended" => '1'), "id DESC", 3);
 
@@ -17,9 +15,6 @@
 
 			$contentView = ROOT."/views/ShopProductView/index.php";
 			require_once(ROOT."/views/template/index.php");
-
-			$t2 = microtime(true);
-			echo $t2 - $t1."<br>";
 		}
 
 	}
