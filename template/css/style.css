@@ -1690,9 +1690,8 @@ fieldset.input input[type="submit"]:hover {
 	font-family: 'Open Sans', sans-serif;
 }
 .reg-status {
-	display: inline-block;
 	font-style: normal;
-	/*display: none;*/
+	display: none;
 }
 .reg-status.ok, .reg-status.error {
 	display: inline-block;
@@ -1706,10 +1705,14 @@ fieldset.input input[type="submit"]:hover {
 	background: url("../images/reg-error.png");
 }
 .reg-text {
-	display: block;
+	display: none;
 	font-size: 0.7em;
 	font-style: normal;
 	font-family: 'Open Sans', sans-serif;
+}
+.reg-text.error {
+	display: block;
+	color: #E92546;
 }
 
 .checkbox {

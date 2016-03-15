@@ -12,6 +12,7 @@
 		"product/([0-9]+)" => "shopProduct/index/$1",
 
 		"register" => "userRegister/index",
+		"register/check" => "userRegister/check",
 		"register/submit" => "userRegister/submit",  
 
 		"test" => "test/test",
