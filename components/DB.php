@@ -18,7 +18,11 @@
 			$db = self::getConnection();
 
 			$result = $db->prepare($query);
-			$result->execute($binds);
+			foreach ($binds as $key => $value) {
+				$value = (string)$value;
+				$result->bindParam((string)$key, $value, PDO::PARAM_STR);
+			}
+			$result->execute();
 
 			if(!is_object($result) || !$result->rowCount()) {
 				$dev = implode(", ", $db->errorInfo()); //dev

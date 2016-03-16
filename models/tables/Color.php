@@ -88,9 +88,9 @@ class ColorValidator extends AbstractValidator {
 	const CLASS_NAME = "Color";
 
 	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
-	const NAME_PATTERN = "/^[A-ZА-ЯЁ][A-Za-zА-Яа-яЁё0-9\- ]{1,98}$/u";
+	const NAME_PATTERN = "/^[A-Z,А-Я,Ё][A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,98}$/u";
 	//Символ #, цифры, a,b,c,d,e. 7 символов
-	const VALUE_PATTERN = "/^#[0-9aAbBcCdDeE]{6}$/";
+	const VALUE_PATTERN = "/^#[0-9,a,A,b,B,c,C,d,D,e,E]{6}$/";
 
 	const NAME_ERROR = "Неправильный ввод имени";
 	const VALUE_ERROR = "Неправильный ввод значения";

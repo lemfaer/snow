@@ -110,13 +110,13 @@ class User extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id			= $arr['id'];
-		$obj->first_name	= $arr['first_name'];
-		$obj->last_name	= $arr['last_name'];
-		$obj->email		= $arr['email'];
-		$obj->login		= $arr['login'];
-		$obj->password		= $arr['password'];
-		$obj->status		= $arr['status'];
+		$this->id			= $arr['id'];
+		$this->first_name	= $arr['first_name'];
+		$this->last_name	= $arr['last_name'];
+		$this->email		= $arr['email'];
+		$this->login		= $arr['login'];
+		$this->password		= $arr['password'];
+		$this->status		= $arr['status'];
 
 		return $obj;
 	}
@@ -130,13 +130,13 @@ class UserValidator extends AbstractValidator {
 	const CLASS_NAME = "User";
 
 	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
-	const FIRSTNAME_PATTERN = "/^[A-ZА-ЯЁ][A-Za-zА-Яа-яЁё0-9\- ]{1,98}$/u";
+	const FIRSTNAME_PATTERN = "/^[A-Z,А-Я,Ё][A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,98}$/u";
 	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
-	const LASTNAME_PATTERN = "/^[A-ZА-ЯЁ][A-Za-zА-Яа-яЁё0-9\- ]{1,98}$/u";
+	const LASTNAME_PATTERN = "/^[A-Z,А-Я,Ё][A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,98}$/u";
 	//латиница, цифры. 1-99 символов
-	const LOGIN_PATTERN = "/^[a-zA-Z0-9]{1,99}$/";
+	const LOGIN_PATTERN = "/^[a-z,A-Z,0-9]{1,99}$/";
 	//латиница, цифры. 6-99 символов
-	const PASSWORD_PATTERN = "/^[a-zA-Z0-9]{6,99}$/";
+	const PASSWORD_PATTERN = "/^[a-z,A-Z,0-9]{6,99}$/";
 
 	const FIRSTNAME_ERROR = "Неправильный ввод имени";
 	const LASTNAME_ERROR = "Неправильный ввод фамилии";

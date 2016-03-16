@@ -178,7 +178,7 @@ class CategoryValidator extends AbstractValidator {
 	const CLASS_NAME = "Category";
 
 	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
-	const NAME_PATTERN = "/^[A-ZА-ЯЁ][A-Za-zА-Яа-яЁё0-9\- ]{1,98}$/u";
+	const NAME_PATTERN = "/^[A-Z,А-Я,Ё][A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,98}$/u";
 	//lowercase латиница. 1-99 символов
 	const SHORTNAME_PATTERN = "/^[a-z]{1,99}$/";
 
