@@ -2199,3 +2199,7 @@ h4.m_11 {
 	border-color: #e2e2e2;
 	cursor: default;
 }
+
+#captcha {
+	margin-bottom: 1em;
+}

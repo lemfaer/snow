@@ -89,7 +89,7 @@ class ProducerValidator extends AbstractValidator {
 	const CLASS_NAME = "Producer";
 
 	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
-	const NAME_PATTERN = "/^[A-Z,А-Я,Ё][A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,98}$/u";
+	const NAME_PATTERN = "/^[A-ZА-ЯЁ][A-Za-zА-Яа-яЁё0-9\- ]{1,98}$/u";
 
 	const NAME_ERROR = "Неправильный ввод имени";
 //const end
