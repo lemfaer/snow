@@ -28,9 +28,19 @@ abstract class AbstractTable extends AbstractRecord {
 		return $where;
 	}
 
-	private static function buildBinds(array $whereArr) : array {
+	private static function buildInsert(array $insertArr) : string {
+		$insert = array();
+		foreach ($insertArr as $key => $value) {
+			$insert[] = "$key = :$key";
+		}
+		$insert = implode(", ", $insert);
+
+		return $insert;
+	}
+
+	private static function buildBinds(array $arr) : array {
 		$binds = array();
-		foreach ($whereArr as $key => $value) {
+		foreach ($arr as $key => $value) {
 			if(is_array($value)) {
 				$value = implode(",", $value);
 			}
@@ -97,7 +107,33 @@ abstract class AbstractTable extends AbstractRecord {
 	}
 
 	public function insert() : bool {
+		if($this->errorInfo() || $this->getID()) {
+			return false;
+		}
 
+		$class = get_class($this);
+		$table = $class::TABLE;
+
+		$insertArr = array();
+		$func = function($name, $value) use(&$insertArr) {
+			if($value instanceof self) {
+				$name = $name."_id";
+				$value = $value->getID();
+			}
+			if($name === "id") {
+				return;
+			}
+			$insertArr[$name] = $value;
+		};
+		self::reflect($func);
+
+		$insert = self::buildInsert($insertArr);
+		$binds = self::buildBinds($insertArr);
+
+		$query = "INSERT into $table SET $insert";
+		$result = DB::query($query, $binds);
+
+		return true;
 	}
 
 	public function update() : bool {
@@ -111,24 +147,31 @@ abstract class AbstractTable extends AbstractRecord {
 
 //get array
 	public function getArray() : array {
-		$rc = new ReflectionClass($this);
 		$arr = array();
-		foreach ($rc->getProperties() as $value) {
-			$value->setAccessible(true);
-			$name = $value->getName();
-			$value = $value->getValue($this);
-
-			if(is_object($value)) {
-				if($value instanceof self) {
-					$value = $value->getArray();
-				} else {
-					continue;
-				}
+		$func = function($name, $value) use(&$arr) {
+			if($value instanceof self) {
+				$value = $value->getArray();
 			}
 			$arr[$name] = $value;
-		}
+		};
+		self::reflect($func);
 		return $arr;
 	}
 //get array end
+
+//reflection
+	private function reflect(Closure $func) {
+		$rc = new ReflectionClass($this);
+		foreach ($rc->getProperties() as $prop) {
+			if(!$prop->isPrivate()) {
+				continue;
+			} 
+			$prop->setAccessible(true);
+			$name = $prop->getName();
+			$value = $prop->getValue($this);
+			$func($name, $value);
+		}
+	}
+//reflection end
 
 }

@@ -90,7 +90,7 @@ class CharValueValidator extends AbstractValidator {
 	const CLASS_NAME = "CharValue";
 
 	//кириллица, латиница, цифры, пробел, дефис. 2-99 символов
-	const VALUE_PATTERN = "/^[A-Z,a-z,А-Я,а-я,Ё,ё,0-9,\-, ]{1,99}$/u";
+	const VALUE_PATTERN = "/^[A-Za-zА-Яа-яЁё0-9\- ]{1,99}$/u";
 
 	const VALUE_ERROR = "Неправильный ввод значения";
 //const end

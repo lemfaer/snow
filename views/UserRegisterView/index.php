@@ -1,27 +1,31 @@
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script type="text/javascript" src="/views/UserRegisterView/register-check.js"></script>
 
 <div class="main">
 	<div class="shop_top">
 		<div class="container">
 
-			<form method="post" id="form"> 
+			<form method="post" id="form" action="<?="/register/submit"?>"> 
 				<div class="register-top-grid">
-					<h3>PERSONAL INFORMATION</h3>
+					<h3>ПЕРСОНАЛЬНАЯ ИНФОРМАЦИЯ</h3>
 					<div>
-						<span>First Name<label></label></span>
-						<input type="text" name="first_name" class="check" required>
+						<span>Имя<label></label></span>
+						<input type="text" name="regform[first_name]" class="check ajax" 
+							id="reg-check-first_name" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
-						<span>Last Name<label></label></span>
-						<input type="text" name="last_name" class="check" required> 
+						<span>Фамилия<label></label></span>
+						<input type="text" name="regform[last_name]" class="check ajax"
+							id="reg-check-last_name" required> 
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
-						<span>Email Address<label></label></span>
-						<input type="text" name="email" class="check" required> 
+						<span>Email<label></label></span>
+						<input type="text" name="regform[email]" class="check ajax"
+							id="reg-check-email" required> 
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
@@ -32,22 +36,24 @@
 				<br>
 
 				<div class="register-bottom-grid">
-					<h3>LOGIN INFORMATION</h3>
+					<h3>РЕГИСТРАЦИОННАЯ ИНФОРМАЦИЯ</h3>
 					<div>
-						<span>Login<label></label></span>
-						<input type="text" name="login" class="check" required>
+						<span>Логин<label></label></span>
+						<input type="text" name="regform[login]" class="check ajax"
+							id="reg-check-login" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
-						<span>Password<label></label></span>
-						<input type="password" name="password" class="check" required>
+						<span>Пароль<label></label></span>
+						<input type="password" name="regform[password]" class="check ajax"
+							id="reg-check-password" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
-						<span>Confirm Password<label></label></span>
-						<input type="password" name="cpass" required>
+						<span>Подтвердите Пароль<label></label></span>
+						<input type="password" id="cpass" class="check" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
@@ -58,8 +64,11 @@
 						<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i>Sign Up for Newsletter</label>
 					</a> 
 				-->
+				<div class="g-recaptcha" data-theme="light" id="captcha"
+					data-sitekey="6Ld9xhoTAAAAABPLHe7BJCHLuPFffdD8nP4geB9z">
+				</div>
 				<div class="clear"> </div>
-				<input type="submit" value="submit">
+				<input type="submit" value="Отправить">
 			</form>
 		</div>
 	</div>
