@@ -81,31 +81,3 @@ class Color extends AbstractTable {
 //construct end
 
 }
-
-class ColorValidator extends AbstractValidator {
-
-//const
-	const CLASS_NAME = "Color";
-
-	//кириллица, латиница, цифры, пробел, дефис. 1-99 символов
-	const NAME_PATTERN = "/^[A-Za-zА-Яа-яЁё0-9\- ]{1,99}$/u";
-	//Символ #, цифры, a,b,c,d,e. 7 символов
-	const VALUE_PATTERN = "/^#[0-9aAbBcCdDeE]{6}$/";
-
-	const NAME_ERROR = "Неправильный ввод имени";
-	const VALUE_ERROR = "Неправильный ввод значения";
-//const end
-
-//check
-	public function checkName(string $name) : bool {
-		$error = array("name" => self::NAME_ERROR);
-		return parent::checkString($name, self::NAME_PATTERN, $error);
-	}
-
-	public function checkValue(string $value) : bool {
-		$error = array("value" => self::VALUE_ERROR);
-		return parent::checkString($value, self::VALUE_PATTERN, $error);
-	}
-//check end
-
-}

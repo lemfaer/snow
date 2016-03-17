@@ -3,9 +3,6 @@
 abstract class AbstractValidator {
 
 //const
-	const ID_ERROR 	   = "Неправильный идентификатор";
-	const STATUS_ERROR = "Неправильный статус";
-
 	const AVAILABLE_OBJECT_ERROR = "Передан неправильный обьект Available";
 	const CATEGORY_OBJECT_ERROR  = "Передан неправильный обьект Category";
 	const CHARNAME_OBJECT_ERROR  = "Передан неправильный обьект CharName";
@@ -40,17 +37,6 @@ abstract class AbstractValidator {
 //error info end
 
 //standart check
-	public function checkID(int $id) : bool {
-		$class = get_called_class()::CLASS_NAME;
-		$error = array("id" => self::ID_ERROR);
-		return self::log($class::findCount(array("id" => $id)) > 0, $error);
-	}
-
-	public function checkStatus(bool $status) : bool {
-		$error = array("status" => self::STATUS_ERROR);
-		return self::log(true, $error);
-	}
-
 	protected function checkString(string $str, string $pattern, array $error) : bool {
 		return self::log(preg_match($pattern, $str) === 1, $error);
 	}

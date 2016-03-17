@@ -73,22 +73,3 @@ class Image extends AbstractTable {
 //construct end
 
 }
-
-class ImageValidator extends AbstractValidator {
-
-//const
-	const CLASS_NAME = "Image";
-
-	const PATH_ERROR = "Указан неправильный путь";
-//const end
-
-//check
-	public function checkPath(string $path) : bool {
-		$error = array("path" => self::PATH_ERROR);
-		$path = ROOT."/images/".$path;
-		//return parent::log(file_exists($path), $error);
-		return true;
-	}
-//check end
-
-}
