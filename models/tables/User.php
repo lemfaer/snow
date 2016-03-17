@@ -39,6 +39,10 @@ class User extends AbstractTable {
 		return parent::get($this->password);
 	}
 
+	public function getHash() : string {
+		return parent::get($this->hash);
+	}
+
 	public function getStatus() : bool {
 		return parent::get($this->status);
 	}
@@ -87,7 +91,7 @@ class User extends AbstractTable {
 
 	public function setPassword(string $password) : bool {
 		if ($this->validator->checkPassword($password)) {
-			$this->password = $password;
+			$this->password = md5(md5($password));
 			return true;
 		}
 		return false;
@@ -101,6 +105,22 @@ class User extends AbstractTable {
 		return false;
 	}
 	//setters end
+
+	public function generateHash() {
+		$this->hash = md5(self::generateHashString());
+	}
+
+	private function generateHashString(int $n = 10) : string {
+		$char = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
+		$charLen = strlen($char) - 1;
+
+		$str = "";
+		while(strlen($str) < $n) {
+			$str .= $char[mt_rand(0, $charLen)];
+		}
+
+		return $str;
+	}
 //main info end
 
 //construct
