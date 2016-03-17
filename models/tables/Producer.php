@@ -39,7 +39,7 @@ class Producer extends AbstractTable {
 
 	public function setName(string $name) {
 		if ($this->validator->checkName($name)) {
-			$this->name = $name;
+			$this->name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
 			return true;
 		}
 		return false;

@@ -54,7 +54,7 @@ class User extends AbstractTable {
 
 	public function setFirstName(string $first_name) {
 		if ($this->validator->checkFirstName($first_name)) {
-			$this->first_name = $first_name;
+			$this->first_name = mb_convert_case($first_name, MB_CASE_TITLE, "UTF-8");
 			return true;
 		}
 		return false;
@@ -62,7 +62,7 @@ class User extends AbstractTable {
 
 	public function setLastName(string $last_name) {
 		if ($this->validator->checkLastName($last_name)) {
-			$this->last_name = $last_name;
+			$this->last_name = mb_convert_case($last_name, MB_CASE_TITLE, "UTF-8");
 			return true;
 		}
 		return false;
