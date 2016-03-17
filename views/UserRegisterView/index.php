@@ -10,21 +10,21 @@
 					<h3>ПЕРСОНАЛЬНАЯ ИНФОРМАЦИЯ</h3>
 					<div>
 						<span>Имя<label></label></span>
-						<input type="text" name="regform[first_name]" class="check ajax" 
+						<input type="text" name="regData[first_name]" class="check ajax" 
 							id="reg-check-first_name" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
 						<span>Фамилия<label></label></span>
-						<input type="text" name="regform[last_name]" class="check ajax"
+						<input type="text" name="regData[last_name]" class="check ajax"
 							id="reg-check-last_name" required> 
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
 						<span>Email<label></label></span>
-						<input type="text" name="regform[email]" class="check ajax"
+						<input type="text" name="regData[email]" class="check ajax"
 							id="reg-check-email" required> 
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
@@ -39,14 +39,14 @@
 					<h3>РЕГИСТРАЦИОННАЯ ИНФОРМАЦИЯ</h3>
 					<div>
 						<span>Логин<label></label></span>
-						<input type="text" name="regform[login]" class="check ajax"
+						<input type="text" name="regData[login]" class="check ajax"
 							id="reg-check-login" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
 						<span>Пароль<label></label></span>
-						<input type="password" name="regform[password]" class="check ajax"
+						<input type="password" name="regData[password]" class="check ajax"
 							id="reg-check-password" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>

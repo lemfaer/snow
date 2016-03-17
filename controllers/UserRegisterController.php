@@ -77,7 +77,10 @@ class UserRegisterController {
 	}
 
 	public function actionCheck() {
-		$data = $_POST['regData'] ?? header("location: /register");
+		if(!isset($_POST['regData'])) {
+			header("location: /register");
+		}
+		$data = $_POST['regData'];
 		
 		if(isset($data['captcha'])) {
 			$captcha = $this->checkCaptcha($data['captcha']);
@@ -94,7 +97,10 @@ class UserRegisterController {
 	}
 
 	public function actionSubmit() {
-		$data = $_POST['regform'] ?? header("location: /register");
+		if(!isset($_POST['regData'])) {
+			header("location: /register");
+		}
+		$data = $_POST['regData'];
 
 		$contentView = ROOT."/views/UserRegisterView/submit.php";
 		require_once(ROOT."/views/template/index.php");
