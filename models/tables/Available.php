@@ -97,16 +97,16 @@ class Available extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id 		= $arr['id'];
-		$obj->count 	= $arr['count'];
+		$obj->id    = $arr['id'];
+		$obj->count = $arr['count'];
 
-		$size = Size::findFirst(array("id" => $arr['size_id']));
+		$size      = Size::findFirst(array("id" => $arr['size_id']));
 		$obj->size = $size;
 
-		$color = Color::findFirst(array("id" => $arr['color_id']));
+		$color      = Color::findFirst(array("id" => $arr['color_id']));
 		$obj->color = $color;
 
-		$product = Product::findFirst(array("id" => $arr['product_id']));
+		$product      = Product::findFirst(array("id" => $arr['product_id']));
 		$obj->product = $product;
 
 		return $obj;

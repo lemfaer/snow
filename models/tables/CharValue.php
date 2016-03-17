@@ -71,11 +71,11 @@ class CharValue extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id 		= $arr['id'];
-		$obj->value 	= $arr['value'];
-		$obj->status 	= $arr['status'];
+		$obj->id     = $arr['id'];
+		$obj->value  = $arr['value'];
+		$obj->status = $arr['status'];
 
-		$name = CharName::findFirst(array("id" => $arr['name_id']));
+		$name      = CharName::findFirst(array("id" => $arr['name_id']));
 		$obj->name = $name;
 
 		return $obj;

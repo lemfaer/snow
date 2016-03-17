@@ -185,21 +185,21 @@ class Product extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id 					= $arr['id'];
-		$obj->name					= $arr['name'];
-		$obj->price					= $arr['price'];
-		$obj->year					= $arr['year'];
-		$obj->short_description		= $arr['short_description'];
-		$obj->description			= $arr['description'];
-		$obj->is_new				= $arr['is_new'];
-		$obj->is_recomended			= $arr['is_recomended'];
-		$obj->status				= $arr['status'];
+		$obj->id                = $arr['id'];
+		$obj->name              = $arr['name'];
+		$obj->price             = $arr['price'];
+		$obj->year              = $arr['year'];
+		$obj->short_description = $arr['short_description'];
+		$obj->description       = $arr['description'];
+		$obj->is_new            = $arr['is_new'];
+		$obj->is_recomended     = $arr['is_recomended'];
+		$obj->status            = $arr['status'];
 
-		$category = Category::findFirst(array("id" => $arr['category_id']));
-		$obj->category	= $category; //class
+		$category      = Category::findFirst(array("id" => $arr['category_id']));
+		$obj->category = $category; //class
 
-		$producer = Producer::findFirst(array("id" => $arr['producer_id']));
-		$obj->producer	= $producer; //class
+		$producer      = Producer::findFirst(array("id" => $arr['producer_id']));
+		$obj->producer = $producer; //class
 
 		return $obj;
 	}

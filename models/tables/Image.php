@@ -64,9 +64,9 @@ class Image extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id 		= $arr['id'];
-		$obj->path 		= $arr['path'];
-		$obj->status 	= $arr['status'];
+		$obj->id     = $arr['id'];
+		$obj->path   = $arr['path'];
+		$obj->status = $arr['status'];
 
 		return $obj;
 	}

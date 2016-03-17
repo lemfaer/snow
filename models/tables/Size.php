@@ -71,11 +71,12 @@ class Size extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id 		= $arr['id'];
-		$obj->name 		= $arr['name'];
-		$obj->status 	= $arr['status'];
+		$obj->id     = $arr['id'];
+		$obj->name   = $arr['name'];
+		$obj->status = $arr['status'];
 
-		$obj->category = Category::findFirst(array("id" => $arr['category_id']));
+		$category      = Category::findFirst(array("id" => $arr['category_id']));
+		$obj->category = $category;
 
 		return $obj;
 	}

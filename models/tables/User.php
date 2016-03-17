@@ -11,6 +11,7 @@ class User extends AbstractTable {
 	private $email;
 	private $login;
 	private $password;
+	private $hash;
 	private $status;
 
 	//getters
@@ -110,13 +111,13 @@ class User extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id			= $arr['id'];
-		$obj->first_name	= $arr['first_name'];
-		$obj->last_name	= $arr['last_name'];
-		$obj->email		= $arr['email'];
-		$obj->login		= $arr['login'];
-		$obj->password		= $arr['password'];
-		$obj->status		= $arr['status'];
+		$obj->id         = $arr['id'];
+		$obj->first_name = $arr['first_name'];
+		$obj->last_name  = $arr['last_name'];
+		$obj->email      = $arr['email'];
+		$obj->login      = $arr['login'];
+		$obj->password   = $arr['password'];
+		$obj->status     = $arr['status'];
 
 		return $obj;
 	}

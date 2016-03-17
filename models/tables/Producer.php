@@ -71,11 +71,12 @@ class Producer extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id 		= $arr['id'];
-		$obj->name 		= $arr['name'];
-		$obj->status 	= $arr['status'];
+		$obj->id     = $arr['id'];
+		$obj->name   = $arr['name'];
+		$obj->status = $arr['status'];
 
-		$obj->image = Image::findFirst(array("id" => $arr['image_id']));
+		$image      = Image::findFirst(array("id" => $arr['image_id']));
+		$obj->image = $image;
 
 		return $obj;
 	}
