@@ -10,16 +10,16 @@ class Image extends AbstractTable {
 	private $status;
 
 	//getters
-	public function getID() {
-		return $this->id;
+	public function getID() : int {
+		return parent::get($this->id);
 	}
 
-	public function getPath() {
-		return $this->path;
+	public function getPath() : string {
+		return parent::get($this->path);
 	}
 
-	public function getStatus() {
-		return $this->status;
+	public function getStatus() : bool {
+		return parent::get($this->status);
 	}
 	//getters end
 

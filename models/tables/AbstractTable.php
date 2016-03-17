@@ -3,8 +3,19 @@
 abstract class AbstractTable extends AbstractRecord {
 
 //main info
-	abstract public function getID();
+	abstract public function getID() : int;
 	abstract protected function setID(int $id) : bool;
+
+	protected function get($prop) { //type of prop
+		if(!isset($prop)) {
+			throw new Exception("Access to null", 1);
+		}
+		return $prop;
+	}
+
+	protected function set($prop, $value, Closure $valMethod) { //void
+
+	}
 //main info end
 
 //construct

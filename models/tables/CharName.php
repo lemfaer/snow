@@ -11,20 +11,20 @@ class CharName extends AbstractTable {
 	private $status;
 
 	//getters
-	public function getID() {
+	public function getID() : int {
 		return $this->id;
 	}
 
-	public function getName() {
-		return $this->name;
+	public function getName() : string {
+		return parent::get($this->name);
 	}
 
-	public function getCategory() {
-		return $this->category;
+	public function getCategory() : Category {
+		return parent::get($this->category);
 	}
 
-	public function getStatus() {
-		return $this->status;
+	public function getStatus() : bool {
+		return parent::get($this->status);
 	}
 	//getters end
 

@@ -18,48 +18,48 @@ class Product extends AbstractTable {
 	private $status;
 
 	//getters
-	public function getID() {
-		return $this->id;
+	public function getID() : int {
+		return parent::get($this->id);
 	}
 
-	public function getName() {
-		return $this->name;
+	public function getName() : string {
+		return parent::get($this->name);
 	}
 
-	public function getProducer() {
-		return $this->producer;
+	public function getProducer() : Producer {
+		return parent::get($this->producer);
 	}
         
-    public function getPrice() {
-    	return $this->price;
+    public function getPrice() : int {
+    	return parent::get($this->price);
     }
 
-    public function getYear() {
-		return $this->year;
+    public function getYear() : int {
+		return parent::get($this->year);
     }
 
-	public function getShortDescription() {
-		return $this->short_description;
+	public function getShortDescription() : string {
+		return parent::get($this->short_description);
 	}
 
-	public function getDescription() {
-		return $this->description;
+	public function getDescription() : string {
+		return parent::get($this->description);
 	}
 
-	public function getCategory() {
-		return $this->category;
+	public function getCategory() : Category {
+		return parent::get($this->category);
 	}
 
-	public function isNew() {
-		return $this->is_new;
+	public function isNew() : bool {
+		return parent::get($this->is_new);
 	}
 
-	public function isRecomended() {
-		return $this->is_recomended;
+	public function isRecomended() : bool {
+		return parent::get($this->is_recomended);
 	}
 
-	public function getStatus() {
-		return $this->status;
+	public function getStatus() : bool {
+		return parent::get($this->status);
 	}
 	//getters end
 

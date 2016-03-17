@@ -13,28 +13,28 @@ class Available extends AbstractTable {
 	private $status;
 
 	//getters
-	public function getID() {
-		return $this->id;
+	public function getID() : int {
+		return parent::get($this->id);
 	}
 
-	public function getCount() {
-		return $this->count;
+	public function getCount() : int {
+		return parent::get($this->count);
 	}
 
-	public function getSize() {
-		return $this->size;
+	public function getSize() : Size {
+		return parent::get($this->size);
 	}
 
-	public function getColor() {
-		return $this->color;
+	public function getColor() : Color {
+		return parent::get($this->color);
 	}
 
-	public function getProduct() {
-		return $this->product;
+	public function getProduct() : Product {
+		return parent::get($this->product);
 	}
 
-	public function getStatus() {
-		return $this->status;
+	public function getStatus() : bool {
+		return parent::get($this->status);
 	}
 	//getters end
 

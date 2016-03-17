@@ -15,36 +15,36 @@ class Category extends AbstractTable {
 	private $status;
 
 	//getters
-	public function getID() {
-		return $this->id;
+	public function getID() : int {
+		return parent::get($this->id);
 	}
 
-	public function getName() {
-		return $this->name;
+	public function getName() : string {
+		return parent::get($this->name);
 	}
 
-	public function getShortName() {
-		return $this->short_name;
+	public function getShortName() : string {
+		return parent::get($this->short_name);
 	}
 
-	public function getDescription() {
-		return $this->description;
+	public function getDescription() : string {
+		return parent::get($this->description);
 	}
 
-	public function getImage() {
-		return $this->image;
+	public function getImage() : Image {
+		return parent::get($this->image);
 	}
 
-	public function getParent() {
+	public function getParent() { //can be null
 		return $this->parent;
 	}
 
-	public function getSortOrder() {
-		return $this->sort_order;
+	public function getSortOrder() : int {
+		return parent::get($this->sort_order);
 	}
 
-	public function getStatus() {
-		return $this->status;
+	public function getStatus() : bool {
+		return parent::get($this->status);
 	}
 	//getters end
 

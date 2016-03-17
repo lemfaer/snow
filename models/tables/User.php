@@ -15,32 +15,32 @@ class User extends AbstractTable {
 	private $status;
 
 	//getters
-	public function getID() {
-		return $this->id;
+	public function getID() : int {
+		return parent::get($this->id);
 	}
 
-	public function getFirstName() {
-		return $this->first_name;
+	public function getFirstName() : string {
+		return parent::get($this->first_name);
 	}
 
-	public function getLastName() {
-		return $this->last_name;
+	public function getLastName() : string {
+		return parent::get($this->last_name);
 	}
 
-	public function getEmail() {
-		return $this->email;
+	public function getEmail() : string {
+		return parent::get($this->email);
 	}
 
-	public function getLogin() {
-		return $this->login;
+	public function getLogin() : string {
+		return parent::get($this->login);
 	}
 
-	public function getPassword() {
-		return $this->password;
+	public function getPassword() : string {
+		return parent::get($this->password);
 	}
 
-	public function getStatus() {
-		return $this->status;
+	public function getStatus() : bool {
+		return parent::get($this->status);
 	}
 	//getters end
 
