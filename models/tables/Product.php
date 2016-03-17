@@ -212,8 +212,8 @@ class ProductValidator extends AbstractValidator {
 //const
 	const CLASS_NAME = "Product";
 
-	//кириллица, латиница, цифры, пробел, дефис. Начаная с большой БУКВЫ. 2-99 символов
-	const NAME_PATTERN = "/^[A-ZА-ЯЁ][A-Za-zА-Яа-яЁё0-9\- ]{1,98}$/u";
+	//кириллица, латиница, цифры, пробел, дефис. 1-99 символов
+	const NAME_PATTERN = "/^[A-Za-zА-Яа-яЁё0-9\- ]{1,99}$/u";
 
 	const NAME_ERROR		= "Неправильный ввод имени";
 	const PRICE_ERROR		= "Неправильный ввод цены";
