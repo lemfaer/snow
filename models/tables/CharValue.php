@@ -37,7 +37,7 @@ class CharValue extends AbstractTable {
 		return false;
 	}
 
-	public function setName(CharName $name) {
+	public function setName(CharName $name) : bool {
 		if ($this->validator->checkName($name)) {
 			$this->name = $name;
 			return true;
@@ -45,7 +45,7 @@ class CharValue extends AbstractTable {
 		return false;
 	}
 
-	public function setValue(string $value) {
+	public function setValue(string $value) : bool {
 		if ($this->validator->checkValue($value)) {
 			$this->value = $value;
 			return true;
@@ -53,7 +53,7 @@ class CharValue extends AbstractTable {
 		return false;
 	}
 
-	public function setStatus(bool $status) {
+	public function setStatus(bool $status) : bool {
 		if ($this->validator->checkStatus($status)) {
 			$this->status = $status;
 			return true;

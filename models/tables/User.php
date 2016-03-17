@@ -52,7 +52,7 @@ class User extends AbstractTable {
 		return false;
 	}
 
-	public function setFirstName(string $first_name) {
+	public function setFirstName(string $first_name) : bool {
 		if ($this->validator->checkFirstName($first_name)) {
 			$this->first_name = mb_convert_case($first_name, MB_CASE_TITLE, "UTF-8");
 			return true;
@@ -60,7 +60,7 @@ class User extends AbstractTable {
 		return false;
 	}
 
-	public function setLastName(string $last_name) {
+	public function setLastName(string $last_name) : bool {
 		if ($this->validator->checkLastName($last_name)) {
 			$this->last_name = mb_convert_case($last_name, MB_CASE_TITLE, "UTF-8");
 			return true;
@@ -68,7 +68,7 @@ class User extends AbstractTable {
 		return false;
 	}
 
-	public function setEmail(string $email) {
+	public function setEmail(string $email) : bool {
 		if ($this->validator->checkEmail($email)) {
 			$this->email = $email;
 			return true;
@@ -76,7 +76,7 @@ class User extends AbstractTable {
 		return false;
 	}
 
-	public function setLogin(string $login) {
+	public function setLogin(string $login) : bool {
 		if ($this->validator->checkLogin($login)) {
 			$this->login = $login;
 			return true;
@@ -84,7 +84,7 @@ class User extends AbstractTable {
 		return false;
 	}
 
-	public function setPassword(string $password) {
+	public function setPassword(string $password) : bool {
 		if ($this->validator->checkPassword($password)) {
 			$this->password = $password;
 			return true;
@@ -92,7 +92,7 @@ class User extends AbstractTable {
 		return false;
 	}
 
-	public function setStatus(bool $status) {
+	public function setStatus(bool $status) : bool {
 		if ($this->validator->checkStatus($status)) {
 			$this->status = $status;
 			return true;

@@ -57,7 +57,7 @@ class Category extends AbstractTable {
 		return false;
 	}
 
-	public function setName(string $name) {
+	public function setName(string $name) : bool {
 		if ($this->validator->checkName($name)) {
 			$this->name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
 			return true;
@@ -65,7 +65,7 @@ class Category extends AbstractTable {
 		return false;
 	}
 
-	public function setShortName(string $short_name) {
+	public function setShortName(string $short_name) : bool {
 		if ($this->validator->checkShortName($short_name)) {
 			$this->short_name = $short_name;
 			return true;
@@ -73,7 +73,7 @@ class Category extends AbstractTable {
 		return false;
 	}
 
-	public function setDescription(string $description) {
+	public function setDescription(string $description) : bool {
 		if ($this->validator->checkDescription($description)) {
 			$this->description = $description;
 			return true;
@@ -81,7 +81,7 @@ class Category extends AbstractTable {
 		return false;
 	}
 
-	public function setImage(Image $image) {
+	public function setImage(Image $image) : bool {
 		if ($this->validator->checkImage($image)) {
 			$this->image = $image;
 			return true;
@@ -89,7 +89,7 @@ class Category extends AbstractTable {
 		return false;
 	}
 
-	public function setParent(Category $parent = null) {
+	public function setParent(Category $parent = null) : bool {
 		if ($this->validator->checkParent($parent)) {
 			$this->parent = $parent;
 			return true;
@@ -97,7 +97,7 @@ class Category extends AbstractTable {
 		return false;
 	}
 
-	public function setSortOrder(int $sort_order) {
+	public function setSortOrder(int $sort_order) : bool {
 		if ($this->validator->checkSortOrder($sort_order)) {
 			$this->sort_order = $sort_order;
 			return true;
@@ -105,7 +105,7 @@ class Category extends AbstractTable {
 		return false;
 	}
 
-	public function setStatus(bool $status) {
+	public function setStatus(bool $status) : bool {
 		if ($this->validator->checkStatus($status)) {
 			$this->status = $status;
 			return true;

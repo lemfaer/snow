@@ -32,7 +32,7 @@ class Image extends AbstractTable {
 		return false;
 	}
 
-	public function setPath(string $path) {
+	public function setPath(string $path) : bool {
 		if ($this->validator->checkPath($path)) {
 			$this->path = $path;
 			return true;
@@ -40,7 +40,7 @@ class Image extends AbstractTable {
 		return false;
 	}
 
-	public function setStatus(bool $status) {
+	public function setStatus(bool $status) : bool {
 		if ($this->validator->checkStatus($status)) {
 			$this->status = $status;
 			return true;

@@ -37,7 +37,7 @@ class CharName extends AbstractTable {
 		return false;
 	}
 
-	public function setName(string $name) {
+	public function setName(string $name) : bool {
 		if ($this->validator->checkName($name)) {
 			$this->name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
 			return true;
@@ -45,7 +45,7 @@ class CharName extends AbstractTable {
 		return false;
 	}
 
-	public function setCategory(Category $category) {
+	public function setCategory(Category $category) : bool {
 		if ($this->validator->checkCategory($category)) {
 			$this->category = $category;
 			return true;
@@ -53,7 +53,7 @@ class CharName extends AbstractTable {
 		return false;
 	}
 
-	public function setStatus(bool $status) {
+	public function setStatus(bool $status) : bool {
 		if ($this->validator->checkStatus($status)) {
 			$this->status = $status;
 			return true;
