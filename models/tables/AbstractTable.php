@@ -123,7 +123,7 @@ abstract class AbstractTable extends AbstractRecord {
 	public function insert() : bool {
 		if($this->errorInfo() || $this->getID()) {
 			return false;
-		}
+		} // to exception
 
 		$class = get_class($this);
 		$table = $class::TABLE;
@@ -147,6 +147,9 @@ abstract class AbstractTable extends AbstractRecord {
 		$query = "INSERT into $table SET $insert";
 		$result = DB::query($query, $binds);
 
+		$id = DB::getConnection()->lastInsertId();
+		$this->setID($id);
+		
 		return true;
 	}
 
