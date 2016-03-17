@@ -8,7 +8,6 @@ class UserRegisterController {
 	}
 
 	private function checkParams(array $data) : array {
-		new User();
 		$vd = new UserValidator();
 
 		if(!is_array($data[key($data)])) {
@@ -44,7 +43,7 @@ class UserRegisterController {
 				continue;
 			}
 			$method = $valMethod($p['key']);
-			$paramCheck = $vd->$method(mb_strtoupper($p['value']));
+			$paramCheck = ($vd->$method)(mb_strtoupper($p['value']));
 			$result['single'][$p['key']] = $paramCheck;
 			$check = $paramCheck && $check;
 		}
@@ -101,6 +100,18 @@ class UserRegisterController {
 			header("location: /register");
 		}
 		$data = $_POST['regData'];
+
+		$u = new User();
+
+		$u->setFirstName($data['first_name']);
+		$u->setLastName($data['last_name']);
+		$u->setEmail($data['email']);
+		$u->setLogin($data['login']);
+		$u->setPassword($data['password']);
+		$u->setStatus(true);
+		$u->generateHash();
+
+		$u->insert();
 
 		$contentView = ROOT."/views/UserRegisterView/submit.php";
 		require_once(ROOT."/views/template/index.php");
