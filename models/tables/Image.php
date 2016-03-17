@@ -24,28 +24,16 @@ class Image extends AbstractTable {
 	//getters end
 
 	//setters
-	protected function setID(int $id) : bool {
-		if ($this->validator->checkID($id)) {
-			$this->id = $id;
-			return true;
-		}
-		return false;
+	protected function setID(int $id) {
+		$this->id = parent::set($id, $this->validator->checkID);
 	}
 
-	public function setPath(string $path) : bool {
-		if ($this->validator->checkPath($path)) {
-			$this->path = $path;
-			return true;
-		}
-		return false;
+	public function setPath(string $path) {
+		$this->path = parent::set($path, $this->validator->checkPath);
 	}
 
-	public function setStatus(bool $status) : bool {
-		if ($this->validator->checkStatus($status)) {
-			$this->status = $status;
-			return true;
-		}
-		return false;
+	public function setStatus(bool $status) {
+		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end
 //main info end

@@ -29,36 +29,20 @@ class CharValue extends AbstractTable {
 	//getters end
 
 	//setters
-	protected function setID(int $id) : bool {
-		if ($this->validator->checkID($id)) {
-			$this->id = $id;
-			return true;
-		}
-		return false;
+	protected function setID(int $id) {
+		$this->id = parent::set($id, $this->validator->checkID);
 	}
 
-	public function setName(CharName $name) : bool {
-		if ($this->validator->checkName($name)) {
-			$this->name = $name;
-			return true;
-		}
-		return false;
+	public function setName(CharName $name) {
+		$this->name = parent::set($name, $this->validator->checkName);
 	}
 
-	public function setValue(string $value) : bool {
-		if ($this->validator->checkValue($value)) {
-			$this->value = $value;
-			return true;
-		}
-		return false;
+	public function setValue(string $value) {
+		$this->value = parent::set($value, $this->validator->checkValue);
 	}
 
-	public function setStatus(bool $status) : bool {
-		if ($this->validator->checkStatus($status)) {
-			$this->status = $status;
-			return true;
-		}
-		return false;
+	public function setStatus(bool $status) {
+		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end
 //main info end

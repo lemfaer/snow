@@ -4,7 +4,7 @@ abstract class AbstractTable extends AbstractRecord {
 
 //main info
 	abstract public function getID() : int;
-	abstract protected function setID(int $id) : bool;
+	abstract protected function setID(int $id);
 
 	protected function get($prop) { //type of prop
 		if(!isset($prop)) {
@@ -13,8 +13,11 @@ abstract class AbstractTable extends AbstractRecord {
 		return $prop;
 	}
 
-	protected function set($prop, $value, Closure $valMethod) { //void
-
+	protected function set($value, Closure $valueCheckMethod) { //type of value
+		if(!$valueCheckMethod($value)) {
+			throw new Exception("Wrond data", 1);
+		}
+		return $value;
 	}
 //main info end
 

@@ -29,36 +29,20 @@ class Size extends AbstractTable {
 	//getters end
 
 	//setters
-	protected function setID(int $id) : bool {
-		if ($this->validator->checkID($id)) {
-			$this->id = $id;
-			return true;
-		}
-		return false;
+	protected function setID(int $id) {
+		$this->id = parent::set($id, $this->validator->checkID);
 	}
 
-	public function setName(string $name) : bool {
-		if ($this->validator->checkName($name)) {
-			$this->name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
-			return true;
-		}
-		return false;
+	public function setName(string $name) {
+		$this->name = parent::set($name, $this->validator->checkName);
 	}
 
-	public function setCategory(Category $category) : bool {
-		if ($this->validator->checkCategory($category)) {
-			$this->category = $category;
-			return true;
-		}
-		return false;
+	public function setCategory(Category $category) {
+		$this->category = parent::set($category, $this->validator->checkCategory);
 	}
 
-	public function setStatus(bool $status) : bool {
-		if ($this->validator->checkStatus($status)) {
-			$this->status = $status;
-			return true;
-		}
-		return false;
+	public function setStatus(bool $status) {
+		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end
 //main info end

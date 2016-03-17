@@ -64,92 +64,49 @@ class Product extends AbstractTable {
 	//getters end
 
 	//setters
-	protected function setID(int $id) : bool {
-		if ($this->validator->checkID($id)) {
-			$this->id = $id;
-			return true;
-		}
-		return false;
+	protected function setID(int $id) {
+		$this->id = parent::set($id, $this->validator->checkID);
 	}
 
-	public function setName(string $name) : bool {
-		if ($this->validator->checkName($name)) {
-			$this->name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
-			return true;
-		}
-		return false;
+	public function setName(string $name) {
+		$this->name = parent::set($name, $this->validator->checkName);
 	}
 
-	public function setProducer(Producer $producer) : bool {
-		if ($this->validator->checkProducer($producer)) {
-			$this->producer = $producer;
-			return true;
-		}
-		return false;
+	public function setProducer(Producer $producer) {
+		$this->producer = parent::set($producer, $this->validator->checkProducer);
 	}
 
-	public function setPrice(int $price) : bool {
-		if ($this->validator->checkPrice($price)) {
-			$this->price = $price;
-			return true;
-		}
-		return false;
+	public function setPrice(int $price) {
+		$this->price = parent::set($price, $this->validator->checkPrice);
 	}
 
-	public function setYear(int $year) : bool {
-		if ($this->validator->checkYear($year)) {
-			$this->year = $year;
-			return true;
-		}
-		return false;
+	public function setYear(int $year) {
+		$this->year = parent::set($year, $this->validator->checkYear);
 	}
 
-	public function setShortDescription(string $short_description) : bool {
-		if ($this->validator->checkShortDescription($short_description)) {
-			$this->short_description = $short_description;
-			return true;
-		}
-		return false;
+	public function setShortDescription(string $short_description) {
+		$this->short_description = parent::set($short_description, 
+			$this->validator->checkShortDescription);
 	}
 
-	public function setDescription(string $description) : bool {
-		if ($this->validator->checkDescription($description)) {
-			$this->description = $description;
-			return true;
-		}
-		return false;
+	public function setDescription(string $description) {
+		$this->description = parent::set($description, $this->validator->checkDescription);
 	}
 
-	public function setCategory(Category $category) : bool {
-		if ($this->validator->checkCategory($category)) {
-			$this->category = $category;
-			return true;
-		}
-		return false;
+	public function setCategory(Category $category) {
+		$this->category = parent::set($category, $this->validator->checkCategory);
 	}
 
-	public function setNew(bool $is_new) : bool {
-		if ($this->validator->checkNew($is_new)) {
-			$this->is_new = $is_new;
-			return true;
-		}
-		return false;
+	public function setNew(bool $is_new) {
+		$this->is_new = parent::set($is_new, $this->validator->checkNew);
 	}
 
-	public function setRecomended(bool $is_recomended) : bool {
-		if ($this->validator->checkRecomended($is_recomended)) {
-			$this->is_recomended = $is_recomended;
-			return true;
-		}
-		return false;
+	public function setRecomended(bool $is_recomended) {
+		$this->is_recomended = parent::set($is_recomended, $this->validator->checkRecomended);
 	}
 
-	public function setStatus(bool $status) : bool {
-		if ($this->validator->checkStatus($status)) {
-			$this->status = $status;
-			return true;
-		}
-		return false;
+	public function setStatus(bool $status) {
+		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end
 //main info end

@@ -50,59 +50,32 @@ class User extends AbstractTable {
 
 	//setters
 	protected function setID(int $id) : bool {
-		if ($this->validator->checkID($id)) {
-			$this->id = $id;
-			return true;
-		}
-		return false;
+		$this->id = parent::set($id, $this->validator->checkID);
 	}
 
 	public function setFirstName(string $first_name) : bool {
-		if ($this->validator->checkFirstName($first_name)) {
-			$this->first_name = mb_convert_case($first_name, MB_CASE_TITLE, "UTF-8");
-			return true;
-		}
-		return false;
+		$this->first_name = parent::set($first_name, $this->validator->checkFirstName);
 	}
 
 	public function setLastName(string $last_name) : bool {
-		if ($this->validator->checkLastName($last_name)) {
-			$this->last_name = mb_convert_case($last_name, MB_CASE_TITLE, "UTF-8");
-			return true;
-		}
-		return false;
+		$this->last_name = parent::set($last_name, $this->validator->checkLastName);
 	}
 
 	public function setEmail(string $email) : bool {
-		if ($this->validator->checkEmail($email)) {
-			$this->email = $email;
-			return true;
-		}
-		return false;
+		$this->email = parent::set($email, $this->validator->checkEmail);
 	}
 
 	public function setLogin(string $login) : bool {
-		if ($this->validator->checkLogin($login)) {
-			$this->login = $login;
-			return true;
-		}
-		return false;
+		$this->login = parent::set($login, $this->validator->checkLogin);
 	}
 
 	public function setPassword(string $password) : bool {
-		if ($this->validator->checkPassword($password)) {
-			$this->password = md5(md5($password));
-			return true;
-		}
-		return false;
+		$password = parent::set($password, $this->validator->checkPassword);
+		$this->password = md5(md5($password));
 	}
 
 	public function setStatus(bool $status) : bool {
-		if ($this->validator->checkStatus($status)) {
-			$this->status = $status;
-			return true;
-		}
-		return false;
+		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end
 

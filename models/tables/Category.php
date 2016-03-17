@@ -49,68 +49,40 @@ class Category extends AbstractTable {
 	//getters end
 
 	//setters
-	protected function setID(int $id) : bool {
-		if ($this->validator->checkID($id)) {
-			$this->id = $id;
-			return true;
-		}
-		return false;
+	protected function setID(int $id) {
+		$this->id = parent::set($id, $this->validator->checkID);
 	}
 
-	public function setName(string $name) : bool {
-		if ($this->validator->checkName($name)) {
-			$this->name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
-			return true;
-		}
-		return false;
+	public function setName(string $name) {
+		$this->name = parent::set($name, $this->validator->checkName);
 	}
 
-	public function setShortName(string $short_name) : bool {
-		if ($this->validator->checkShortName($short_name)) {
-			$this->short_name = $short_name;
-			return true;
-		}
-		return false;
+	public function setShortName(string $short_name) {
+		$this->short_name = parent::set($short_name, $this->validator->checkShortName);
 	}
 
-	public function setDescription(string $description) : bool {
-		if ($this->validator->checkDescription($description)) {
-			$this->description = $description;
-			return true;
-		}
-		return false;
+	public function setDescription(string $description) {
+		$this->description = parent::set($description, $this->validator->checkDescription);
 	}
 
-	public function setImage(Image $image) : bool {
-		if ($this->validator->checkImage($image)) {
-			$this->image = $image;
-			return true;
-		}
-		return false;
+	public function setImage(Image $image) {
+		$this->image = parent::set($image, $this->validator->checkImage);
 	}
 
-	public function setParent(Category $parent = null) : bool {
-		if ($this->validator->checkParent($parent)) {
-			$this->parent = $parent;
-			return true;
+	public function setParent(Category $parent = null) {
+		if(!is_null($parent)) { // can be null
+			$this->parent = parent::set($parent, $this->validator->checkParent);
+		} else {
+			$this->parent = null;
 		}
-		return false;
 	}
 
-	public function setSortOrder(int $sort_order) : bool {
-		if ($this->validator->checkSortOrder($sort_order)) {
-			$this->sort_order = $sort_order;
-			return true;
-		}
-		return false;
+	public function setSortOrder(int $sort_order) {
+		$this->sort_order = parent::set($sort_order, $this->validator->checkSortOrder);
 	}
 
-	public function setStatus(bool $status) : bool {
-		if ($this->validator->checkStatus($status)) {
-			$this->status = $status;
-			return true;
-		}
-		return false;
+	public function setStatus(bool $status) {
+		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end;
 //main info end

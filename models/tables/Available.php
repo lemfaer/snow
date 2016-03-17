@@ -39,52 +39,28 @@ class Available extends AbstractTable {
 	//getters end
 
 	//setters
-	protected function setID(int $id) : bool {
-		if ($this->validator->checkID($id)) {
-			$this->id = $id;
-			return true;
-		}
-		return false;
+	protected function setID(int $id) {
+		$this->id = parent::set($id, $this->validator->checkID);
 	}
 
-	public function setCount(int $count) : bool {
-		if ($this->validator->checkCount($count)) {
-			$this->count = $count;
-			return true;
-		}
-		return false;
+	public function setCount(int $count) {
+		$this->count = parent::set($count, $this->validator->checkCount);
 	}
 
-	public function setSize(Size $size) : bool {
-		if ($this->validator->checkSize($size)) {
-			$this->size = $size;
-			return true;
-		}
-		return false;
+	public function setSize(Size $size) {
+		$this->size = parent::set($size, $this->validator->checkSize);
 	}
 
-	public function setColor(Color $color) : bool {
-		if ($this->validator->checkColor($color)) {
-			$this->color = $color;
-			return true;
-		}
-		return false;
+	public function setColor(Color $color) {
+		$this->color = parent::set($color, $this->validator->checkColor);
 	}
 
-	public function setProduct(Product $product) : bool {
-		if ($this->validator->checkProduct($product)) {
-			$this->product = $product;
-			return true;
-		}
-		return false;
+	public function setProduct(Product $product) {
+		$this->product = parent::set($product, $this->validator->checkProduct);
 	}
 
-	public function setStatus(bool $status) : bool {
-		if($this->validator->checkStatus($status)) {
-			$this->status = $status;
-			return true;
-		}
-		return false;
+	public function setStatus(bool $status) {
+		$this->status = parent::set($status, $this->validator->checkStatus);
 	} 
 	//setters end
 //main info end
