@@ -22,6 +22,7 @@ class Producer extends AbstractTable {
 
 	//setters
 	public function setName(string $name) {
+		$name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
 		$this->name = parent::set($name, $this->validator->checkName);
 	}
 

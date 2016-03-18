@@ -26,6 +26,7 @@ class CharValue extends AbstractTable {
 	}
 
 	public function setValue(string $value) {
+		$value = mb_convert_case($value, MB_CASE_TITLE, "UTF-8");
 		$this->value = parent::set($value, $this->validator->checkValue);
 	}
 	//setters end

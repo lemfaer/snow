@@ -42,14 +42,17 @@ class User extends AbstractTable {
 
 	//setters
 	public function setFirstName(string $first_name) : bool {
+		$first_name = mb_convert_case($first_name, MB_CASE_TITLE, "UTF-8");
 		$this->first_name = parent::set($first_name, $this->validator->checkFirstName);
 	}
 
 	public function setLastName(string $last_name) : bool {
+		$last_name = mb_convert_case($last_name, MB_CASE_TITLE, "UTF-8");
 		$this->last_name = parent::set($last_name, $this->validator->checkLastName);
 	}
 
 	public function setEmail(string $email) : bool {
+		$name = mb_convert_case($name, MB_CASE_LOWER, "UTF-8");
 		$this->email = parent::set($email, $this->validator->checkEmail);
 	}
 

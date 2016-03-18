@@ -22,6 +22,7 @@ class Size extends AbstractTable {
 
 	//setters
 	public function setName(string $name) {
+		$name = mb_convert_case($name, MB_CASE_UPPER, "UTF-8");
 		$this->name = parent::set($name, $this->validator->checkName);
 	}
 
