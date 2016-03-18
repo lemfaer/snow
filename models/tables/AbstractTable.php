@@ -35,6 +35,47 @@ abstract class AbstractTable extends AbstractRecord {
 		}
 		return $value;
 	}
+
+	public function isNull() : bool {
+		$bool = true;
+
+		//no id check here
+
+		//properties check
+		$func = function($name, $value) use(&$bool) {
+			$bool = $bool && is_null($value);
+		};
+		self::reflect($func);
+
+		//status check
+		$bool = $bool && is_null($this->status);
+
+		return $bool;
+	}
+
+	public function isSaved() : bool {
+		if(is_null($this->id) || $this->isNull()) {
+			return false;
+		}
+
+		$class = get_class($this);
+		try {
+			$obj = $class::findFirst(array("id" => $this->id));
+		} catch(Exception $e) { //typeof exception
+			return false;
+		}
+		
+		$bool = true;
+		$rc = new ReflectionClass($obj);
+		$func = function($name, $value) use($rc, $obj, &$bool) {
+			$prop = $rc->getProperty($name);
+			$prop->setAccessible(true);
+			$bool = $bool && $value === $prop->getValue($obj);
+		};
+		self::reflect($func);
+
+		return $bool;
+	}
 //main info end
 
 //construct
@@ -136,10 +177,13 @@ abstract class AbstractTable extends AbstractRecord {
 		return $objectList;
 	}
 
-	public function insert() : bool {
-		if($this->errorInfo() || $this->getID()) {
-			return false;
-		} // to exception
+	public function insert() {
+		if($this->isSaved() || $this->isNull()) {
+			throw new Exception();
+		} 
+		if($this->errorInfo()) {
+			throw new Exception("bad logic");
+		}
 
 		$class = get_class($this);
 		$table = $class::TABLE;
