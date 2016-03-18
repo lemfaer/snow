@@ -10,8 +10,9 @@ class ColorValidator extends AbstractTableValidator {
 	//Символ #, цифры, a,b,c,d,e. 7 символов
 	const VALUE_PATTERN = "/^#[0-9aAbBcCdDeE]{6}$/";
 
-	const NAME_ERROR = "Неправильный ввод имени";
-	const VALUE_ERROR = "Неправильный ввод значения";
+	const NAME_ERROR          = "Неправильный ввод имени";
+	const VALUE_INVALID_ERROR = "Неправильный ввод значения";
+	const VALUE_EXISTS_ERROR  = "Такой цвет уже существует";
 //const end
 
 //closures
@@ -28,8 +29,15 @@ class ColorValidator extends AbstractTableValidator {
 		};
 
 		$this->checkValue = function(string $value) : bool {
-			$error = array("value" => self::VALUE_ERROR);
-			return parent::checkString($value, self::VALUE_PATTERN, $error);
+			$bool = false;
+			$error = array("value" => self::VALUE_INVALID_ERROR);
+			if(preg_match(self::VALUE_PATTERN, $value)) {
+				$error = array("value" => self::VALUE_EXISTS_ERROR);
+				if(!Color::findCount(array("value" => $value))) {
+					$bool = true;
+				}
+			}
+			return parent::log($bool, $error);
 		};
 	}
 
