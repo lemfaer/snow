@@ -5,20 +5,16 @@ class Category extends AbstractTable {
 	const TABLE = "category";
 
 //main info
-	private $id;
+	//protected $id
 	private $name;
 	private $short_name;
 	private $description;
 	private $image; //class
 	private $parent; //class
 	private $sort_order;
-	private $status;
+	//protected $status
 
 	//getters
-	public function getID() : int {
-		return parent::get($this->id);
-	}
-
 	public function getName() : string {
 		return parent::get($this->name);
 	}
@@ -42,17 +38,9 @@ class Category extends AbstractTable {
 	public function getSortOrder() : int {
 		return parent::get($this->sort_order);
 	}
-
-	public function getStatus() : bool {
-		return parent::get($this->status);
-	}
 	//getters end
 
 	//setters
-	protected function setID(int $id) {
-		$this->id = parent::set($id, $this->validator->checkID);
-	}
-
 	public function setName(string $name) {
 		$this->name = parent::set($name, $this->validator->checkName);
 	}
@@ -79,10 +67,6 @@ class Category extends AbstractTable {
 
 	public function setSortOrder(int $sort_order) {
 		$this->sort_order = parent::set($sort_order, $this->validator->checkSortOrder);
-	}
-
-	public function setStatus(bool $status) {
-		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end;
 //main info end

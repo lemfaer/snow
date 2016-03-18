@@ -5,18 +5,14 @@ class Available extends AbstractTable {
 	const TABLE = "available";
 
 //main info
-	private $id;
+	//protected $id
 	private $count;
 	private $size; //class
 	private $color; //class
 	private $product; //class
-	private $status;
+	//protected $status
 
 	//getters
-	public function getID() : int {
-		return parent::get($this->id);
-	}
-
 	public function getCount() : int {
 		return parent::get($this->count);
 	}
@@ -32,17 +28,9 @@ class Available extends AbstractTable {
 	public function getProduct() : Product {
 		return parent::get($this->product);
 	}
-
-	public function getStatus() : bool {
-		return parent::get($this->status);
-	}
 	//getters end
 
 	//setters
-	protected function setID(int $id) {
-		$this->id = parent::set($id, $this->validator->checkID);
-	}
-
 	public function setCount(int $count) {
 		$this->count = parent::set($count, $this->validator->checkCount);
 	}
@@ -58,10 +46,6 @@ class Available extends AbstractTable {
 	public function setProduct(Product $product) {
 		$this->product = parent::set($product, $this->validator->checkProduct);
 	}
-
-	public function setStatus(bool $status) {
-		$this->status = parent::set($status, $this->validator->checkStatus);
-	} 
 	//setters end
 //main info end
 

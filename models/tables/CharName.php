@@ -5,16 +5,12 @@ class CharName extends AbstractTable {
 	const TABLE = "char_name";
 
 //main info
-	private $id;
+	//protected $id
 	private $name;
 	private $category; //class
-	private $status;
+	//protected $status
 
 	//getters
-	public function getID() : int {
-		return $this->id;
-	}
-
 	public function getName() : string {
 		return parent::get($this->name);
 	}
@@ -22,27 +18,15 @@ class CharName extends AbstractTable {
 	public function getCategory() : Category {
 		return parent::get($this->category);
 	}
-
-	public function getStatus() : bool {
-		return parent::get($this->status);
-	}
 	//getters end
 
 	//setters
-	protected function setID(int $id) {
-		$this->id = parent::set($id, $this->validator->checkID);
-	}
-
 	public function setName(string $name) {
 		$this->name = parent::set($name, $this->validator->checkName);
 	}
 
 	public function setCategory(Category $category) {
 		$this->category = parent::set($category, $this->validator->checkCategory);
-	}
-
-	public function setStatus(bool $status) {
-		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end
 //main info end

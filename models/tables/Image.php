@@ -5,35 +5,19 @@ class Image extends AbstractTable {
 	const TABLE = "image";
 
 //main info
-	private $id;
+	//protected $id
 	private $path;
-	private $status;
+	//protected $status
 
 	//getters
-	public function getID() : int {
-		return parent::get($this->id);
-	}
-
 	public function getPath() : string {
 		return parent::get($this->path);
-	}
-
-	public function getStatus() : bool {
-		return parent::get($this->status);
 	}
 	//getters end
 
 	//setters
-	protected function setID(int $id) {
-		$this->id = parent::set($id, $this->validator->checkID);
-	}
-
 	public function setPath(string $path) {
 		$this->path = parent::set($path, $this->validator->checkPath);
-	}
-
-	public function setStatus(bool $status) {
-		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end
 //main info end

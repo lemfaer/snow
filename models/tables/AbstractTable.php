@@ -3,8 +3,24 @@
 abstract class AbstractTable extends AbstractRecord {
 
 //main info
-	abstract public function getID() : int;
-	abstract protected function setID(int $id);
+	protected $id;
+	protected $status;
+
+	public function getID() : int {
+		return self::get($this->id);
+	}
+
+	public function getStatus() : bool {
+		return self::get($this->status);
+	}
+
+	protected function setID(int $id) { //void
+		$this->id = self::set($id, $this->validator->checkID);
+	}
+
+	public function setStatus(bool $status) { //void
+		$this->status = self::set($status, $this->validator->checkStatus);
+	}
 
 	protected function get($prop) { //type of prop
 		if(!isset($prop)) {

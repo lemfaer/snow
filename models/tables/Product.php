@@ -5,7 +5,7 @@ class Product extends AbstractTable {
 	const TABLE = "product";
 
 //main info
-	private $id;
+	//protected $id
 	private $name;
 	private $producer; //class
 	private $price;
@@ -15,13 +15,9 @@ class Product extends AbstractTable {
 	private $category; //class
 	private $is_new;
 	private $is_recomended;
-	private $status;
+	//protected $status
 
 	//getters
-	public function getID() : int {
-		return parent::get($this->id);
-	}
-
 	public function getName() : string {
 		return parent::get($this->name);
 	}
@@ -57,17 +53,9 @@ class Product extends AbstractTable {
 	public function isRecomended() : bool {
 		return parent::get($this->is_recomended);
 	}
-
-	public function getStatus() : bool {
-		return parent::get($this->status);
-	}
 	//getters end
 
 	//setters
-	protected function setID(int $id) {
-		$this->id = parent::set($id, $this->validator->checkID);
-	}
-
 	public function setName(string $name) {
 		$this->name = parent::set($name, $this->validator->checkName);
 	}
@@ -103,10 +91,6 @@ class Product extends AbstractTable {
 
 	public function setRecomended(bool $is_recomended) {
 		$this->is_recomended = parent::set($is_recomended, $this->validator->checkRecomended);
-	}
-
-	public function setStatus(bool $status) {
-		$this->status = parent::set($status, $this->validator->checkStatus);
 	}
 	//setters end
 //main info end
