@@ -7,7 +7,7 @@ class Size extends AbstractTable {
 //main info
 	//protected $id
 	private $name;
-	private $category;
+	private $category; //class
 	//protected $status
 
 	//getters

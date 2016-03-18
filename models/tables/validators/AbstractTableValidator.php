@@ -18,8 +18,8 @@ abstract class AbstractTableValidator extends AbstractValidator{
 //getter end 
 
 //closures
-	private $checkID;
-	private $checkStatus;
+	protected $checkID;
+	protected $checkStatus;
 //closures end
 
 //construct

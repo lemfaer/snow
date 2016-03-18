@@ -21,10 +21,10 @@ abstract class AbstractRecord {
 
 	abstract public static function findAll(array $whereArr, string $order = "id ASC", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array;
 
-	abstract public function insert() : bool;
+	abstract public function insert();
 
-	abstract public function update() : bool;
+	abstract public function update();
 
-	abstract public function delete() : bool;
+	abstract public function delete();
 
 }

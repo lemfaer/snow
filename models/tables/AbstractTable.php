@@ -194,12 +194,10 @@ abstract class AbstractTable extends AbstractRecord {
 				$name = $name."_id";
 				$value = $value->getID();
 			}
-			if($name === "id") {
-				return;
-			}
 			$insertArr[$name] = $value;
 		};
 		self::reflect($func);
+		$insertArr['status'] = $this->status; 
 
 		$insert = self::buildInsert($insertArr);
 		$binds = self::buildBinds($insertArr);
@@ -213,18 +211,18 @@ abstract class AbstractTable extends AbstractRecord {
 		return true;
 	}
 
-	public function update() : bool {
+	public function update() {
 
 	}
 
-	public function delete() : bool {
+	public function delete() {
 		
 	}
 //active record functions end
 
 //get array
 	public function getArray() : array {
-		$arr = array();
+		$arr['id'] = $this->id;
 		$func = function($name, $value) use(&$arr) {
 			if($value instanceof self) {
 				$value = $value->getArray();
@@ -232,6 +230,7 @@ abstract class AbstractTable extends AbstractRecord {
 			$arr[$name] = $value;
 		};
 		self::reflect($func);
+		$arr['status'] = $this->status;
 		return $arr;
 	}
 //get array end

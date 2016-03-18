@@ -99,7 +99,7 @@ class Product extends AbstractTable {
 //available
 	public function isAvailable() : bool {
 		$avCount = Available::findCount(array("product_id" => $this->id));
-		return $avCount == true;
+		return $avCount > 0;
 	}
 //available end
 
