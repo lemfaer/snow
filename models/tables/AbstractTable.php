@@ -37,18 +37,18 @@ abstract class AbstractTable extends AbstractRecord {
 	}
 
 	public function isNull() : bool {
-		$bool = true;
+		$bool = false;
 
 		//no id check here
 
 		//properties check
 		$func = function($name, $value) use(&$bool) {
-			$bool = $bool && is_null($value);
+			$bool = $bool || is_null($value);
 		};
 		self::reflect($func);
 
 		//status check
-		$bool = $bool && is_null($this->status);
+		$bool = $bool || is_null($this->status);
 
 		return $bool;
 	}
