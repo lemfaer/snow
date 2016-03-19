@@ -22,16 +22,16 @@ abstract class AbstractTable extends AbstractRecord {
 		$this->status = self::set($status, $this->validator->checkStatus);
 	}
 
-	protected function get($prop) { //type of prop
-		if(!isset($prop)) {
-			throw new Exception("Access to null", 1);
+	protected function get($prop, $null = false) { //type of prop
+		if(is_null($prop) && !$null) {
+			throw new NullAccessException();
 		}
 		return $prop;
 	}
 
-	protected function set($value, Closure $valueCheckMethod) { //type of value
-		if(!$valueCheckMethod($value)) {
-			throw new Exception("Wrond data", 1);
+	protected function set($value, Closure $checkMethod) { //type of value
+		if(!$checkMethod($value)) {
+			throw new WrongDataException($value);
 		}
 		return $value;
 	}
@@ -61,8 +61,8 @@ abstract class AbstractTable extends AbstractRecord {
 		$class = get_class($this);
 		try {
 			$obj = $class::findFirst(array("id" => $this->id));
-		} catch(Exception $e) { //typeof exception
-			return false;
+		} catch(QueryException $e) {
+			throw new BadLogicException("object with id must be in database");
 		}
 		
 		$bool = true;
@@ -130,7 +130,11 @@ abstract class AbstractTable extends AbstractRecord {
 
 		$query = "SELECT count(*) FROM $table 
 			$where";
-		$result = DB::query($query, $binds);
+		try {
+			$result = DB::query($query, $binds);
+		} catch(QueryException $e) {
+			throw new RecordSelectException($e);
+		}
 
 		$result = $result->fetch();
 		return array_shift($result);
@@ -147,7 +151,11 @@ abstract class AbstractTable extends AbstractRecord {
 			$where
 			ORDER BY id ASC
 			LIMIT 1";
-		$result = DB::query($query, $binds);
+		try {
+			$result = DB::query($query, $binds);
+		} catch(QueryException $e) {
+			throw new RecordSelectException($e);
+		}
 		
 		$arr = $result->fetch();
 		$object = $class::withArray($arr);
@@ -167,7 +175,11 @@ abstract class AbstractTable extends AbstractRecord {
 			ORDER BY $order 
 			LIMIT $limit 
 			OFFSET $offset";
-		$result = DB::query($query, $binds);
+		try {
+			$result = DB::query($query, $binds);
+		} catch(QueryException $e) {
+			throw new RecordSelectException($e);
+		}
 
 		$objectList = $result->fetchAll();
 		foreach ($objectList as $key => $value) {
@@ -178,11 +190,8 @@ abstract class AbstractTable extends AbstractRecord {
 	}
 
 	public function insert() {
-		if($this->isSaved() || $this->isNull()) {
-			throw new Exception();
-		} 
-		if($this->errorInfo()) {
-			throw new Exception("bad logic");
+		if(isset($this->id) || $this->isNull() || $this->errorInfo()) {
+			throw new WrongDataException();
 		}
 
 		$class = get_class($this);
@@ -203,7 +212,11 @@ abstract class AbstractTable extends AbstractRecord {
 		$binds = self::buildBinds($insertArr);
 
 		$query = "INSERT into $table SET $insert";
-		$result = DB::query($query, $binds);
+		try {
+			$result = DB::query($query, $binds);
+		} catch(QueryException $e) {
+			throw new RecordInsertException($e);
+		}
 
 		$id = DB::getConnection()->lastInsertId();
 		$this->setID($id);

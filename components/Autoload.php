@@ -6,6 +6,7 @@
 			"/components/",
 			"/controllers/", 
 			"/models/", 
+			"/models/exceptions/",
 			"/models/tables/", 
 			"/models/tables/validators/",
 		);

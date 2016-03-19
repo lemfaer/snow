@@ -22,7 +22,10 @@
 
 			if(!is_object($result) || !$result->rowCount()) {
 				$dev = implode(", ", $db->errorInfo()); //dev
-				throw new Exception("404 db: $dev", 1);
+				foreach ($binds as $key => $value) {
+					$query = str_replace($key, $value, $query);
+				}
+				throw new QueryException($query, "db: $dev");
 			}
 
 			$result->setFetchMode(PDO::FETCH_ASSOC);
