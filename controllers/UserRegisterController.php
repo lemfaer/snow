@@ -7,92 +7,17 @@ class UserRegisterController {
 		require_once(ROOT."/views/template/index.php");
 	}
 
-	private function checkParams(array $data) : array {
-		$vd = new UserValidator();
-
-		if(!is_array($data[key($data)])) {
-			$data = array($data);
-		}
-
-		$valMethod = function(string $key) : string {
-			switch ($key) {
-				case "first_name":
-					$vdMethod = "checkFirstName";
-					break;
-				case "last_name":
-					$vdMethod = "checkLastName";
-					break;
-				case "email":
-					$vdMethod = "checkEmail";
-					break;
-				case "login":
-					$vdMethod = "checkLogin";
-					break;
-				case "password":
-					$vdMethod = "checkPassword";
-					break;
-				default:
-					die("wrong data");
-			}
-			return $vdMethod;
-		};
-
-		$check = true;
-		foreach ($data as $p) {
-			if(!is_array($p)) {
-				continue;
-			}
-			$method = $valMethod($p['key']);
-			$paramCheck = ($vd->$method)(mb_strtoupper($p['value']));
-			$result['single'][$p['key']] = $paramCheck;
-			$check = $paramCheck && $check;
-		}
-
-		$result['error'] = $vd->errorInfo();
-		$result['success'] = $check;
-
-		return $result;
-	}
-
-	private function checkCaptcha(string $captcha) : array {
-		$secret = "6Ld9xhoTAAAAAI7mXt9KS07zbyxsZbG1aORIURm4";
-			
-		$postfields = http_build_query(array(
-			"secret" => $secret,
-			"response" => $captcha
-		));
-
-		$ch = curl_init();
-		$opt = array(
-			CURLOPT_URL => "https://www.google.com/recaptcha/api/siteverify",
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => $postfields,
-			CURLOPT_SSL_VERIFYPEER => false,
-			CURLOPT_RETURNTRANSFER => true
-		);
-		curl_setopt_array($ch, $opt);
-
-		return json_decode(curl_exec($ch), true);
-	}
-
 	public function actionCheck() {
 		if(!isset($_POST['regData'])) {
 			header("location: /register");
 		}
 		$data = $_POST['regData'];
 		
-		if(isset($data['captcha'])) {
-			$captcha = $this->checkCaptcha($data['captcha']);
-			unset($data['captcha']);
-
-			$result = $this->checkParams($data);
-			$result['captcha'] = $captcha;
-			$result['success'] = $result['success'] && $captcha['success'];
-		} else {
-			$result = $this->checkParams($data);
+		try {
+			echo Register::check($data);
+		} catch(WrongDataException $e) {
+			die($e->getMessage().", привет=)");
 		}
-
-		echo json_encode($result);
 	}
 
 	public function actionSubmit() {
@@ -101,19 +26,13 @@ class UserRegisterController {
 		}
 		$data = $_POST['regData'];
 
-		$u = new User();
+		try {
+			Register::submit($data);
+			$contentView = ROOT."/views/UserRegisterView/success.php";
+		} catch(WrongDataException $e) {
+			$contentView = ROOT."/views/UserRegisterView/error.php";
+		}
 
-		$u->setFirstName($data['first_name']);
-		$u->setLastName($data['last_name']);
-		$u->setEmail($data['email']);
-		$u->setLogin($data['login']);
-		$u->setPassword($data['password']);
-		$u->setStatus(true);
-		$u->generateHash();
-
-		$u->insert();
-
-		$contentView = ROOT."/views/UserRegisterView/submit.php";
 		require_once(ROOT."/views/template/index.php");
 	}
 

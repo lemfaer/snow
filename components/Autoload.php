@@ -7,6 +7,7 @@
 			"/controllers/", 
 			"/models/", 
 			"/models/exceptions/",
+			"/models/forms/",
 			"/models/tables/", 
 			"/models/tables/validators/",
 		);

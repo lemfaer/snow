@@ -21,10 +21,12 @@ jQuery(document).ready(function($) {
 
 	$(".check.ajax").on("focusout", function(event) {
 		event.preventDefault();
-		regData = {
-			"key"   : $(this).attr("id").replace("reg-check-", ''),
-			"value" : $(this).val(),
-		}
+		
+		var key = $(this).attr("id").replace("reg-check-", '');
+		var value = $(this).val();
+		regData = {};
+		regData[key] = value;
+
 		$.post("/register/check", {regData : regData}, function(data) {
 			checkResult(data);
 		}, "json");
@@ -36,11 +38,10 @@ jQuery(document).ready(function($) {
 
 		var regData = {};
 		$(".check.ajax").each(function(index, elem) {
-			regData[index] = {};
-			regData[index].key   = $(elem).attr("id").replace("reg-check-", '');
-			regData[index].value = $(elem).val();
+			var key = $(elem).attr("id").replace("reg-check-", '');
+			var value = $(elem).val();
+			regData[key] = value;
 		});
-
 		regData.captcha = grecaptcha.getResponse();
 
 		$.post("/register/check", {regData : regData}, function(data) {

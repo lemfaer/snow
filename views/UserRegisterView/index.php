@@ -11,21 +11,21 @@
 					<div>
 						<span>Имя<label></label></span>
 						<input type="text" name="regData[first_name]" class="check ajax" 
-							id="reg-check-first_name" required>
+							id="reg-check-first_name" autocomplete="off" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
 						<span>Фамилия<label></label></span>
 						<input type="text" name="regData[last_name]" class="check ajax"
-							id="reg-check-last_name" required> 
+							id="reg-check-last_name" autocomplete="off" required> 
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
 						<span>Email<label></label></span>
 						<input type="text" name="regData[email]" class="check ajax"
-							id="reg-check-email" required> 
+							id="reg-check-email" autocomplete="off" required> 
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
@@ -40,20 +40,21 @@
 					<div>
 						<span>Логин<label></label></span>
 						<input type="text" name="regData[login]" class="check ajax"
-							id="reg-check-login" required>
+							id="reg-check-login" autocomplete="off" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
 						<span>Пароль<label></label></span>
 						<input type="password" name="regData[password]" class="check ajax"
-							id="reg-check-password" required>
+							id="reg-check-password" autocomplete="off" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>
 					<div>
 						<span>Подтвердите Пароль<label></label></span>
-						<input type="password" id="cpass" class="check" required>
+						<input type="password" id="cpass" class="check" 
+							autocomplete="off" required>
 						<i class="reg-status"></i>
 						<i class="reg-text"></i>
 					</div>

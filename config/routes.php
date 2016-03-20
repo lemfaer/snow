@@ -13,7 +13,11 @@
 
 		"register" => "userRegister/index",
 		"register/check" => "userRegister/check",
-		"register/submit" => "userRegister/submit",  
+		"register/submit" => "userRegister/submit",
+
+		"login" => "userLogin/index",
+		"login/check" => "userLogin/check",
+		"login/submit" => "userLogin/submit",
 
 		"test" => "test/test",
 	);

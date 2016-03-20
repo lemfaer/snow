@@ -21,6 +21,7 @@
 
 <!-- js links -->
 	<script type="text/javascript" src="/template/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/template/js/jquery.md5.js"></script>
 	<script type="text/javascript" src="/template/js/jquery.fancybox.js"></script>
 	<script type="text/javascript" src="/template/js/jquery.flexisel.js"></script>
 	<script type="text/javascript" src="/template/js/jquery.magnific-popur.js"></script>
