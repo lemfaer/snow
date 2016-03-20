@@ -99,12 +99,12 @@ abstract class AbstractTable extends AbstractRecord {
 		return $where;
 	}
 
-	private static function buildInsert(array $insertArr) : string {
+	private static function buildSet(array $insertArr) : string {
 		$insert = array();
 		foreach ($insertArr as $key => $value) {
 			$insert[] = "$key = :$key";
 		}
-		$insert = implode(", ", $insert);
+		$insert = "SET ".implode(", ", $insert);
 
 		return $insert;
 	}
@@ -208,10 +208,10 @@ abstract class AbstractTable extends AbstractRecord {
 		self::reflect($func);
 		$insertArr['status'] = $this->status; 
 
-		$insert = self::buildInsert($insertArr);
+		$set = self::buildSet($insertArr);
 		$binds = self::buildBinds($insertArr);
 
-		$query = "INSERT into $table SET $insert";
+		$query = "INSERT into $table $set";
 		try {
 			$result = DB::query($query, $binds);
 		} catch(QueryException $e) {
@@ -225,7 +225,36 @@ abstract class AbstractTable extends AbstractRecord {
 	}
 
 	public function update() {
+		if(is_null($this->id) || $this->isNull() || $this->errorInfo()) {
+			throw new WrongDataException();
+		}
 
+		$class = get_class($this);
+		$table = $class::TABLE;
+
+		$updateArr = array();
+		$func = function($name, $value) use(&$updateArr) {
+			if($value instanceof self) {
+				$name = $name."_id";
+				$value = $value->getID();
+			}
+			$updateArr[$name] = $value;
+		};
+		self::reflect($func);
+
+		$set = self::buildSet($insertArr);
+		$binds = self::buildBinds($updateArr);
+
+		$query = "UPDATE $table $set WHERE id = '$this->id'";
+		try {
+			$result = DB::query($query, $binds);
+		} catch(QueryException $e) {
+			throw new RecordUpdateException($e);
+		}
+
+		if(!$this->isSaved()) {
+			throw new BadLogicException("object must be updated here");
+		}
 	}
 
 	public function delete() {
