@@ -10,7 +10,7 @@
 				</h3>
 
 				<?php 
-					while($category) {
+					while(!($category instanceof NullCategory)) {
 						$breadcrumb[$category->link()] = $category->getName();
 						$category = $category->getParent();
 					}

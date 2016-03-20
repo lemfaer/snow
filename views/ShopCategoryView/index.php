@@ -9,7 +9,7 @@
 				
 				<?php if($category): ?>
 					<?php 
-						while($category) {
+						while(!($category instanceof NullCategory)) {
 							$breadcrumb[$category->link()] = $category->getName();
 							$category = $category->getParent();
 						}

@@ -31,8 +31,8 @@ class Category extends AbstractTable {
 		return parent::get($this->image);
 	}
 
-	public function getParent() { //can be null
-		return $this->parent;
+	public function getParent() : self {
+		return parent::get($this->parent);
 	}
 
 	public function getSortOrder() : int {
@@ -58,12 +58,8 @@ class Category extends AbstractTable {
 		$this->image = parent::set($image, $this->validator->checkImage);
 	}
 
-	public function setParent(Category $parent = null) {
-		if(!is_null($parent)) { // can be null
-			$this->parent = parent::set($parent, $this->validator->checkParent);
-		} else {
-			$this->parent = null;
-		}
+	public function setParent(Category $parent) {
+		$this->parent = parent::set($parent, $this->validator->checkParent);
 	}
 
 	public function setSortOrder(int $sort_order) {
@@ -75,7 +71,7 @@ class Category extends AbstractTable {
 //link
 	public function link() : string {
 		$arr = array();
-		for($i = $this; $i !== null; $i = $i->parent) {
+		for($i = $this; $i instanceof NullCategory; $i = $i->parent) {
 			$arr[] = $i->short_name;
 		}
 		$arr = array_reverse($arr);
@@ -88,9 +84,14 @@ class Category extends AbstractTable {
 //construct
 	public function __construct() {
 		$this->validator = new CategoryValidator();
+		$this->parent = new NullCategory();
 	}
 
 	protected static function withArray(array $arr) : AbstractTable {
+		if(!$arr['id']) {
+			return new NullCategory();
+		}
+		
 		$obj = new self();
 
 		$obj->id          = (int)    $arr['id'];
@@ -105,7 +106,7 @@ class Category extends AbstractTable {
 
 		$parent = ($arr['parent_id']) 
 			? (Category::findFirst(array("id" => $arr['parent_id'])))
-			: (null);
+			: (new NullCategory());
 		$obj->parent = $parent;
 		
 		return $obj;
@@ -126,5 +127,50 @@ class Category extends AbstractTable {
 		return $id;
 	}
 //static functions end
+
+}
+
+final class NullCategory extends Category {
+
+	public function __construct() {
+		$this->validator = new class extends AbstractValidator {
+			public function __get($name) {
+				throw new NullAccessException();
+			}
+
+			public function errorInfo() : array {
+				throw new NullAccessException();
+			}
+		};
+		$this->id = 0;
+	}
+
+	public function getID() : int {
+		return $this->id;
+	}
+
+	public function isNull() : bool {
+		return true;
+	}
+
+	public function isSaved() : bool {
+		return true;
+	}
+
+	public function getArray() : array {
+		return array("id" => $this->id);
+	}
+
+	public function insert() {
+		throw new NullAccessException();
+	}
+
+	public function update() {
+		throw new NullAccessException();
+	}
+
+	public function delete() {
+		throw new NullAccessException();
+	}
 
 }

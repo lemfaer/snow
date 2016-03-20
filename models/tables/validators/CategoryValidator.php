@@ -49,9 +49,9 @@ class CategoryValidator extends AbstractTableValidator {
 			return parent::checkObject($image, $error);
 		};
 
-		$this->checkParent = function(Category $parent = null) : bool {
+		$this->checkParent = function(Category $parent) : bool {
 			$error = array("parent" => self::PARENT_ERROR);
-			if(is_null($parent)) {
+			if($parent instanceof NullCategory) {
 				return parent::log(true, $error);
 			}
 			return parent::checkObject($parent, $error);
