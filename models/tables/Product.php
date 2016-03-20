@@ -127,15 +127,15 @@ class Product extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id                = $arr['id'];
-		$obj->name              = $arr['name'];
-		$obj->price             = $arr['price'];
-		$obj->year              = $arr['year'];
-		$obj->short_description = $arr['short_description'];
-		$obj->description       = $arr['description'];
-		$obj->is_new            = $arr['is_new'];
-		$obj->is_recomended     = $arr['is_recomended'];
-		$obj->status            = $arr['status'];
+		$obj->id                = (int)    $arr['id'];
+		$obj->name              = (string) $arr['name'];
+		$obj->price             = (int)    $arr['price'];
+		$obj->year              = (int)    $arr['year'];
+		$obj->short_description = (string) $arr['short_description'];
+		$obj->description       = (string) $arr['description'];
+		$obj->is_new            = (bool)   $arr['is_new'];
+		$obj->is_recomended     = (bool)   $arr['is_recomended'];
+		$obj->status            = (bool)   $arr['status'];
 
 		$category      = Category::findFirst(array("id" => $arr['category_id']));
 		$obj->category = $category; //class

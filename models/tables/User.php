@@ -91,13 +91,13 @@ class User extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id         = $arr['id'];
-		$obj->first_name = $arr['first_name'];
-		$obj->last_name  = $arr['last_name'];
-		$obj->email      = $arr['email'];
-		$obj->login      = $arr['login'];
-		$obj->password   = $arr['password'];
-		$obj->status     = $arr['status'];
+		$obj->id         = (int)    $arr['id'];
+		$obj->first_name = (string) $arr['first_name'];
+		$obj->last_name  = (string) $arr['last_name'];
+		$obj->email      = (string) $arr['email'];
+		$obj->login      = (string) $arr['login'];
+		$obj->password   = (string) $arr['password'];
+		$obj->status     = (bool)   $arr['status'];
 
 		return $obj;
 	}

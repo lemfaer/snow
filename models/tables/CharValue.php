@@ -40,9 +40,9 @@ class CharValue extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id     = $arr['id'];
-		$obj->value  = $arr['value'];
-		$obj->status = $arr['status'];
+		$obj->id     = (int)    $arr['id'];
+		$obj->value  = (string) $arr['value'];
+		$obj->status = (bool)   $arr['status'];
 
 		$name      = CharName::findFirst(array("id" => $arr['name_id']));
 		$obj->name = $name;

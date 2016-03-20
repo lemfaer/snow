@@ -93,12 +93,12 @@ class Category extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id          = $arr['id'];
-		$obj->name        = $arr['name'];
-		$obj->short_name  = $arr['short_name'];
-		$obj->description = $arr['description'];
-		$obj->sort_order  = $arr['sort_order'];
-		$obj->status      = $arr['status'];
+		$obj->id          = (int)    $arr['id'];
+		$obj->name        = (string) $arr['name'];
+		$obj->short_name  = (string) $arr['short_name'];
+		$obj->description = (string) $arr['description'];
+		$obj->sort_order  = (int)    $arr['sort_order'];
+		$obj->status      = (bool)   $arr['status'];
 
 		$image      = Image::findFirst(array("id" => $arr['image_id']));
 		$obj->image = $image;

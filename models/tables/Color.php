@@ -41,10 +41,10 @@ class Color extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id     = $arr['id'];
-		$obj->name   = $arr['name'];
-		$obj->value  = $arr['value'];
-		$obj->status = $arr['status'];
+		$obj->id     = (int)    $arr['id'];
+		$obj->name   = (string) $arr['name'];
+		$obj->value  = (string) $arr['value'];
+		$obj->status = (bool)   $arr['status'];
 
 		return $obj;
 	}
