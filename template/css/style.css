@@ -440,7 +440,9 @@ li.list_desc h4 a:hover{
 	background:#555;
 }
 .check_button{
-	float:left;
+	/*float:left;*/
+	position: relative;
+	left: 25%;
 }
 .check_button a{
 	color:#fff;

@@ -52,7 +52,7 @@ class User extends AbstractTable {
 	}
 
 	public function setEmail(string $email) {
-		$name = mb_convert_case($name, MB_CASE_LOWER, "UTF-8");
+		$email = mb_convert_case($email, MB_CASE_LOWER, "UTF-8");
 		$this->email = parent::set($email, $this->validator->checkEmail);
 	}
 

@@ -41,10 +41,8 @@ abstract class AbstractValidator {
 		return self::log(preg_match($pattern, $str) === 1, $error);
 	}
 
-	protected function checkObject(AbstractRecord $obj, array $error) : bool {
-		$class = get_class($obj);
-		$id = $obj->getID();
-		return self::log($class::findCount(array("id" => $id)) > 0, $error);
+	protected function checkObject(AbstractTable $obj, array $error) : bool {
+		return self::log($obj->isSaved(), $error);
 	} 
 //standart check end
 

@@ -31,7 +31,7 @@ abstract class AbstractTable extends AbstractRecord {
 
 	protected function set($value, Closure $checkMethod) { //type of value
 		if(!$checkMethod($value)) {
-			throw new WrongDataException($value);
+			throw new WrongDataException($value, implode(", ", $this->errorInfo()));
 		}
 		return $value;
 	}
@@ -60,7 +60,7 @@ abstract class AbstractTable extends AbstractRecord {
 
 		$class = get_class($this);
 		try {
-			$obj = $class::findFirst(array("id" => $this->id));
+			$obj = $class::findFirst(array("id" => $this->id), !$this->getStatus());
 		} catch(QueryException $e) {
 			throw new BadLogicException("object with id must be in database");
 		}
@@ -70,7 +70,14 @@ abstract class AbstractTable extends AbstractRecord {
 		$func = function($name, $value) use($rc, $obj, &$bool) {
 			$prop = $rc->getProperty($name);
 			$prop->setAccessible(true);
-			$bool = $bool && $value === $prop->getValue($obj);
+			$valueDB = $prop->getValue($obj);
+			
+			if($value instanceof self and $valueDB instanceof self) {
+				$value = $value->getID();
+				$valueDB = $valueDB->getID();
+			}
+
+			$bool = $bool && $value === $valueDB;
 		};
 		self::reflect($func);
 
@@ -219,9 +226,11 @@ abstract class AbstractTable extends AbstractRecord {
 		}
 
 		$id = DB::getConnection()->lastInsertId();
-		$this->setID($id);
-		
-		return true;
+		$this->id = $id;
+
+		if(!$this->isSaved()) {
+			throw new BadLogicException("object must be inserted here");
+		}
 	}
 
 	public function update() {
