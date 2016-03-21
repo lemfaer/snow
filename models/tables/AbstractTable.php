@@ -61,8 +61,8 @@ abstract class AbstractTable extends AbstractRecord {
 		$class = get_class($this);
 		try {
 			$obj = $class::findFirst(array("id" => $this->id), !$this->getStatus());
-		} catch(QueryException $e) {
-			throw new BadLogicException("object with id must be in database");
+		} catch(QueryEmptyResultException $e) {
+			throw new UncheckedQueryException("object with id must be in db", $e);
 		}
 		
 		$bool = true;
@@ -139,8 +139,8 @@ abstract class AbstractTable extends AbstractRecord {
 			$where";
 		try {
 			$result = DB::query($query, $binds);
-		} catch(QueryException $e) {
-			throw new RecordSelectException($e);
+		} catch(QueryEmptyResultException $e) {
+			throw new UncheckedQueryException("findCount must return smth", $e);
 		}
 
 		$result = $result->fetch();
@@ -160,8 +160,8 @@ abstract class AbstractTable extends AbstractRecord {
 			LIMIT 1";
 		try {
 			$result = DB::query($query, $binds);
-		} catch(QueryException $e) {
-			throw new RecordSelectException($e);
+		} catch(QueryEmptyResultException $e) {
+			throw new RecordNotFoundException($e);
 		}
 		
 		$arr = $result->fetch();
@@ -184,8 +184,8 @@ abstract class AbstractTable extends AbstractRecord {
 			OFFSET $offset";
 		try {
 			$result = DB::query($query, $binds);
-		} catch(QueryException $e) {
-			throw new RecordSelectException($e);
+		} catch(QueryEmptyResultException $e) {
+			throw new RecordNotFoundException($e);
 		}
 
 		$objectList = $result->fetchAll();
@@ -221,15 +221,15 @@ abstract class AbstractTable extends AbstractRecord {
 		$query = "INSERT into $table $set";
 		try {
 			$result = DB::query($query, $binds);
-		} catch(QueryException $e) {
-			throw new RecordInsertException($e);
+		} catch(QueryEmptyResultException $e) {
+			throw new UncheckedQueryException("insert must return smth", $e);
 		}
 
 		$id = DB::getConnection()->lastInsertId();
 		$this->id = $id;
 
 		if(!$this->isSaved()) {
-			throw new BadLogicException("object must be inserted here");
+			throw new UncheckedLogicException("object must be inserted here");
 		}
 	}
 
@@ -257,12 +257,12 @@ abstract class AbstractTable extends AbstractRecord {
 		$query = "UPDATE $table $set WHERE id = '$this->id'";
 		try {
 			$result = DB::query($query, $binds);
-		} catch(QueryException $e) {
-			throw new RecordUpdateException($e);
+		} catch(QueryEmptyResultException $e) {
+			throw new UncheckedQueryException("update must return smth", $e);
 		}
 
 		if(!$this->isSaved()) {
-			throw new BadLogicException("object must be updated here");
+			throw new UncheckedLogicException("object must be updated here");
 		}
 	}
 

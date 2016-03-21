@@ -20,12 +20,15 @@
 			$result = $db->prepare($query);
 			$result->execute($binds);
 
-			if(!is_object($result) || !$result->rowCount()) {
-				$dev = implode(", ", $db->errorInfo()); //dev
+			if((int)$result->errorInfo()[0]) {
+				throw new UncheckedQueryException("DB error: ".implode(", ", $result->errorInfo()));
+			}
+
+			if(!$result->rowCount()) {
 				foreach ($binds as $key => $value) {
 					$query = str_replace($key, $value, $query);
 				}
-				throw new QueryException($query, "db: $dev");
+				throw new QueryEmptyResultException($query);
 			}
 
 			$result->setFetchMode(PDO::FETCH_ASSOC);
