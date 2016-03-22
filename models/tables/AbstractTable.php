@@ -1,41 +1,106 @@
 <?php
-
+/**
+ * Класс описывает структуру классов-таблиц
+ * 
+ * Класс описывает структуру и поведение классов представляющих 
+ * таблицы в базе данных. Класс реализует абстрактные методы
+ * findCount, findFirst, findAll, insert, update, delete
+ * для поиска, добавления, обновления, и удаления нужных записей 
+ * 
+ * @package  models_tables
+ * @author   Alan Smithee
+ * @abstract
+ */
 abstract class AbstractTable extends AbstractRecord {
 
 //main info
+	/**
+	 * @var int  $id     Уникальный идентификатор, обязательное поле таблицы
+	 * @var bool $status Статус, обязательное поле таблицы
+	 */
 	protected $id;
 	protected $status;
 
+	/**
+	 * Возвращает идентификатор записи
+	 * 
+	 * @throws NullAccessException поле не заполнено
+	 * @return int идентификатор
+	 */
 	public function getID() : int {
 		return self::get($this->id);
 	}
 
+	/**
+	 * Возвращает статус записи
+	 * 
+	 * @throws NullAccessException поле не заполнено
+	 * @return bool статус
+	 */
 	public function getStatus() : bool {
 		return self::get($this->status);
 	}
 
-	protected function setID(int $id) { //void
+	/**
+	 * Устанавливает идентификатор записи
+	 * 
+	 * @param int $id идентификатор записи
+	 * @throws WrongDataException передано неправильное значение
+	 * @return void
+	 */
+	protected function setID(int $id) {
 		$this->id = self::set($id, $this->validator->checkID);
 	}
 
-	public function setStatus(bool $status) { //void
+	/**
+	 * Устанавливает идентификатор записи
+	 * 
+	 * @param bool $status статус записи
+	 * @throws WrongDataException передано неправильное значение
+	 * @return void
+	 */
+	public function setStatus(bool $status) {
 		$this->status = self::set($status, $this->validator->checkStatus);
 	}
 
-	protected function get($prop, $null = false) { //type of prop
-		if(is_null($prop) && !$null) {
+	/**
+	 * Выполняет действия перед возвращением свойств
+	 * 
+	 * @param mixed $prop 
+	 * @throws NullAccessException поле не заполнено
+	 * @return mixed (type of $prop) переданное свойство
+	 */
+	protected function get($prop) {
+		if(!isset($prop)) {
 			throw new NullAccessException();
 		}
 		return $prop;
 	}
 
-	protected function set($value, Closure $checkMethod) { //type of value
+	/**
+	 * Выполняет действия перед установкой значений в свойства
+	 * 
+	 * @param mixed $value переданное значение
+	 * @param Closure $checkMethod метод для проверки переданного значения
+	 * @throws WrongDataException передано неправильное значение
+	 * @return mixed (type of $value) переданное значение
+	 */
+	protected function set($value, Closure $checkMethod) {
 		if(!$checkMethod($value)) {
 			throw new WrongDataException($value, implode(", ", $this->errorInfo()));
 		}
 		return $value;
 	}
 
+	/**
+	 * Проверяет заполнены ли свойства объекта значениями отличными от null
+	 * Проверка исключает индентификатор объекта
+	 * 
+	 * Возвращает true если одно или несколько свойств не заполнены
+	 * Возвращает false если все свойства(не включая идентификатор заполнены)
+	 * 
+	 * @return bool заполнен ли объект
+	 */
 	public function isNull() : bool {
 		$bool = false;
 
@@ -53,12 +118,21 @@ abstract class AbstractTable extends AbstractRecord {
 		return $bool;
 	}
 
+	/**
+	 * Проверяет сохраненен ли объект в базе данных
+	 * 
+	 * Возвращает true если свойства обьекта совпадают со значениями в базе данных
+	 * Возвращает false усли одно или несколько свойств не совпадают со значениями в базе данных
+	 * 
+	 * @return bool сохранен ли объект
+	 */
 	public function isSaved() : bool {
 		if(is_null($this->id) || $this->isNull()) {
 			return false;
 		}
 
 		$class = get_class($this);
+
 		try {
 			$obj = $class::findFirst(array("id" => $this->id), !$this->getStatus());
 		} catch(QueryEmptyResultException $e) {
@@ -86,10 +160,23 @@ abstract class AbstractTable extends AbstractRecord {
 //main info end
 
 //construct
+	/**
+	 * Конструктор
+	 * 
+	 * @param array $arr массив полученный из базы данных
+	 * @return AbstractTable обьект класса
+	 */
 	abstract protected static function withArray(array $arr) : self;
 //construct end
 
 //active record functions
+	/**
+	 * Формирует составную часть запроса WHERE
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @return string составная часть запроса WHERE
+	 */
 	private static function buildWhere(array $whereArr, bool $nullStatus) : string {
 		$where = array();
 		foreach ($whereArr as $key => $value) {
@@ -106,6 +193,12 @@ abstract class AbstractTable extends AbstractRecord {
 		return $where;
 	}
 
+	/**
+	 * Формирует составную часть запроса SET
+	 * 
+	 * @param array $whereArr параметры запроса вставки/удаления
+	 * @return string составная часть запроса SET
+	 */
 	private static function buildSet(array $insertArr) : string {
 		$insert = array();
 		foreach ($insertArr as $key => $value) {
@@ -116,6 +209,12 @@ abstract class AbstractTable extends AbstractRecord {
 		return $insert;
 	}
 
+	/**
+	 * Формирует массив привязки параметров запроса к переменным
+	 * 
+	 * @param array $arr параметры запроса
+	 * @return array массив привязки параметров запроса к переменным
+	 */
 	private static function buildBinds(array $arr) : array {
 		$binds = array();
 		foreach ($arr as $key => $value) {
@@ -128,6 +227,13 @@ abstract class AbstractTable extends AbstractRecord {
 		return $binds;
 	} 
 
+	/**
+	 * Находит количество записей по параметрам
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @return int количество найденных записей
+	 */
 	public static function findCount(array $whereArr = array(), bool $nullStatus = false) : int {
 		$class = get_called_class();
 		$table = $class::TABLE;
@@ -137,6 +243,7 @@ abstract class AbstractTable extends AbstractRecord {
 
 		$query = "SELECT count(*) FROM $table 
 			$where";
+			
 		try {
 			$result = DB::query($query, $binds);
 		} catch(QueryEmptyResultException $e) {
@@ -147,6 +254,14 @@ abstract class AbstractTable extends AbstractRecord {
 		return array_shift($result);
 	}
 
+	/**
+	 * Находит первую запись по параметрам
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @throws RecordNotFoundException запись не найдена
+	 * @return AbstractRecord первая запись
+	 */
 	public static function findFirst(array $whereArr = array(), bool $nullStatus = false) : AbstractRecord {
 		$class = get_called_class();
 		$table = $class::TABLE;
@@ -170,6 +285,14 @@ abstract class AbstractTable extends AbstractRecord {
 		return $object;
 	}
 
+	/**
+	 * Находит все записи по параметрам
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @throws RecordNotFoundException записи не найдены
+	 * @return array<AbstractRecord> записи
+	 */
 	public static function findAll(array $whereArr, string $order = "id ASC", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
 		$class = get_called_class();
 		$table = $class::TABLE;
@@ -196,6 +319,12 @@ abstract class AbstractTable extends AbstractRecord {
 		return $objectList;
 	}
 
+	/**
+	 * Добавляет запись в базу данных на основе свойств обьекта
+	 * 
+	 * @throws WrongDataException неправильные свойства обьекта
+	 * @return void
+	 */
 	public function insert() {
 		if(isset($this->id) || $this->isNull() || $this->errorInfo()) {
 			throw new WrongDataException();
@@ -219,6 +348,7 @@ abstract class AbstractTable extends AbstractRecord {
 		$binds = self::buildBinds($insertArr);
 
 		$query = "INSERT into $table $set";
+
 		try {
 			$result = DB::query($query, $binds);
 		} catch(QueryEmptyResultException $e) {
@@ -233,6 +363,12 @@ abstract class AbstractTable extends AbstractRecord {
 		}
 	}
 
+	/**
+	 * Обновляет запись в базе данных на основе свойств обьекта
+	 * 
+	 * @throws WrongDataException неправильные свойства обьекта
+	 * @return void
+	 */
 	public function update() {
 		if(is_null($this->id) || $this->isNull() || $this->errorInfo()) {
 			throw new WrongDataException();
@@ -255,6 +391,7 @@ abstract class AbstractTable extends AbstractRecord {
 		$binds = self::buildBinds($updateArr);
 
 		$query = "UPDATE $table $set WHERE id = '$this->id'";
+
 		try {
 			$result = DB::query($query, $binds);
 		} catch(QueryEmptyResultException $e) {
@@ -266,12 +403,24 @@ abstract class AbstractTable extends AbstractRecord {
 		}
 	}
 
+	/**
+	 * Удаляет запись из базы данных на основе свойств обьекта
+	 * 
+	 * @throws WrongDataException неправильные свойства обьекта
+	 * @return void
+	 */
 	public function delete() {
 		
 	}
 //active record functions end
 
 //get array
+	/**
+	 * Возвращает сформированный на основе свойств обьекта массив
+	 * для получения информации о записи
+	 * 
+	 * @return array массив на основе свойств обьекта
+	 */
 	public function getArray() : array {
 		$arr['id'] = $this->id;
 		$func = function($name, $value) use(&$arr) {
@@ -287,6 +436,13 @@ abstract class AbstractTable extends AbstractRecord {
 //get array end
 
 //reflection
+	/**
+	 * Отражает приватные свойства наследуемых классов(поля таблицы)
+	 * и вызывает передаваемую функцию с параметрами(string $name, string @value)
+	 * 
+	 * @param Closure функция обратного вызова
+	 * @return void
+	 */
 	private function reflect(Closure $func) {
 		$rc = new ReflectionClass($this);
 		foreach ($rc->getProperties() as $prop) {
