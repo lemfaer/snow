@@ -302,7 +302,7 @@ ul.icon1 {
 }
 .icon1 ul a {    
 	_height: 10px; /*IE6 only*/
-	/*white-space: nowrap;*/
+	white-space: nowrap;
 	float: none;
 	text-transform: none;
 }
@@ -2196,16 +2196,19 @@ h4.m_11 {
     text-align: center;
 }
 
-.op-label:hover span{
+.op-label:hover span {
 	border-color: #8c8c8c;
 }
-.op-radio:checked + .op-label span{
+.op-radio.required:enabled + .op-label span {
+	border-color: red;
+}
+.op-radio:checked + .op-label span {
 	border-color: #40ae32;
 }
-.op-radio:disabled + .op-label{
+.op-radio:disabled + .op-label {
 	opacity: 0.2;
 }
-.op-radio:disabled + .op-label:hover span{
+.op-radio:disabled + .op-label:hover span {
 	border-color: #e2e2e2;
 	cursor: default;
 }
@@ -2239,4 +2242,8 @@ h4.m_11 {
 .check_button a {
 	display: inline-block;
 	margin: 0;
+}
+
+.list_img:hover {
+	
 }
