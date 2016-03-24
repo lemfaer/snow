@@ -6,15 +6,34 @@ class CartController {
 
 	}
 
-	public function actionGet($id) {
+	public function actionMini() {
+		if(!isset($_POST['mini'])) {
+			header("location: /cart");
+		}
+
 		try {
-			$one = Cart::getOne($id); // view var
-			View::empty("CartView/get.php");
+			$cart = Cart::getCart();
+			View::empty("CartView/mini.php", compact("cart"));
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("data from view must be valide", $e);
 		} catch(CartNotExistsException $e) {
 			throw new UncheckedLogicException("data must be added to cart first", $e);
 		}
+	}
+
+	public function actionAddOptions() {
+		if(!isset($_POST['opt'])) {
+			header("location: /cart");
+		}
+
+		try {
+			$id = Available::findFirst($_POST['opt'])->getID();
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data from view must be in db", $e);
+		}
+
+		$_POST['add'] = true;
+		$this->actionAdd($id);
 	}
 
 	public function actionInc($id) {

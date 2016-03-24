@@ -11,11 +11,12 @@
 
 		"product/([0-9]+)" => "shopProduct/index/$1",
 
-		"cart/" => "cart/index",
-		"cart/get/([0-9]+)" => "cart/get/$1",
+		"cart" => "cart/index",
+		"cart/mini" => "cart/mini",
 		"cart/inc/([0-9]+)" => "cart/inc/$1",
 		"cart/dec/([0-9]+)" => "cart/dec/$1",
 		"cart/add/([0-9]+)" => "cart/add/$1",
+		"cart/add/options"  => "cart/addOptions",
 		"cart/delete/([0-9]+)" => "cart/delete/$1",
 
 		"register" => "userRegister/index",
