@@ -20,7 +20,7 @@ final class Login extends AbstractForm {
 	 */
 	private static function findUser(array $data) : User {
 		if(!isset($data['elo']) || !isset($data['password'])) {
-			throw new WrongDataException($data);
+			throw new WrongDataException($data, "not set email/login or password");
 		}
 
 		$elo = $data['elo'];
@@ -31,7 +31,12 @@ final class Login extends AbstractForm {
 			"password" => $password,
 		);
 
-		return User::findFirst($where);
+		try {
+			$user = User::findFirst($where);
+		} catch(RecordNotFoundException $e) {
+			throw new WrongDataException($data, "user no found", $e);
+		}
+		return $user;
 	}
 
 	/**
@@ -44,7 +49,7 @@ final class Login extends AbstractForm {
 		try {
 			$user = self::findUser($data);
 			$bool = true;
-		} catch(RecordSelectException $e) {
+		} catch(WrongDataException $e) {
 			$bool = false;
 		}
 		$result['success'] = $bool;
@@ -61,12 +66,18 @@ final class Login extends AbstractForm {
 	 * @return void
 	 */
 	public static function submit(array $data) {
+		$user = self::findUser($data);
+		$user->generateHash();
+			
 		try {
-			$user = self::findUser($data);
-		} catch(RecordSelectException $e) {
-			throw new WrongDataException($data);
+			$user->update();
+		} catch(WrongDataException $e) {
+			throw new WrongDataException($data, null, $e);
 		}
 
+		//set cookie 30 days
+		setcookie("id",   $user->getID(),   time() + 60 * 60 * 24 * 30);
+		setcookie("hash", $user->getHash(), time() + 60 * 60 * 24 * 30);
 	}
 
 }
