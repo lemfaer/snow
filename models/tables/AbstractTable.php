@@ -108,12 +108,12 @@ abstract class AbstractTable extends AbstractRecord {
 
 		//properties check
 		$func = function($name, $value) use(&$bool) {
-			$bool = $bool || is_null($value);
+			$bool = $bool || !isset($value);
 		};
 		self::reflect($func);
 
 		//status check
-		$bool = $bool || is_null($this->status);
+		$bool = $bool || !isset($this->status);
 
 		return $bool;
 	}
@@ -127,7 +127,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @return bool сохранен ли объект
 	 */
 	public function isSaved() : bool {
-		if(is_null($this->id) || $this->isNull()) {
+		if(!isset($this->id) || $this->isNull()) {
 			return false;
 		}
 
@@ -370,7 +370,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @return void
 	 */
 	public function update() {
-		if(is_null($this->id) || $this->isNull() || $this->errorInfo()) {
+		if(!isset($this->id) || $this->isNull() || $this->errorInfo() || $this->isSaved()) {
 			throw new WrongDataException();
 		}
 
