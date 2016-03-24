@@ -51,6 +51,7 @@ final class Cart {
 			$_SESSION['cart'] = $_SESSION['cart'] ?? array();
 			$arr = $_SESSION['cart'];
 
+			$cart = array();
 			foreach ($arr as $id => $count) {
 				try {
 					$cart[] = array(

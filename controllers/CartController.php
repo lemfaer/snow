@@ -37,8 +37,11 @@ class CartController {
 	}
 
 	public function actionInc($id) {
-		$bool = true;
+		// if(!isset($_POST['inc'])) {
+		// 	header("location: /cart");
+		// }
 
+		$bool = true;
 		try {
 			Cart::inc($id);
 		} catch(WrongDataException $e) {
@@ -53,8 +56,11 @@ class CartController {
 	}
 
 	public function actionDec($id) {
-		$bool = true;
+		// if(!isset($_POST['dec'])) {
+		// 	header("location: /cart");
+		// }
 
+		$bool = true;
 		try {
 			Cart::dec($id);
 		} catch(WrongDataException $e) {
@@ -67,8 +73,11 @@ class CartController {
 	}
 
 	public function actionAdd($id) {
-		$bool = true;
+		// if(!isset($_POST['add'])) {
+		// 	header("location: /cart");
+		// }
 
+		$bool = true;
 		try {
 			Cart::add($id);
 		} catch(WrongDataException $e) {
@@ -81,10 +90,13 @@ class CartController {
 	}
 
 	public function actionDelete($id) {
-		$bool = true;
+		// if(!isset($_POST['delete'])) {
+		// 	header("location: /cart");
+		// }
 
+		$bool = true;
 		try {
-			Cart::dec($id);
+			Cart::delete($id);
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("data from view must be valide", $e);
 		} catch(CartNotExistsException $e) {
