@@ -2,8 +2,6 @@
 	<div class="shop_top">
 		<div class="container">
 
-			<?php $productList = array_chunk($productList, 4); ?>
-
 			<div style="margin-bottom: 20px">
 				<h3 class="m_2" style="margin-bottom: 1%">
 					<?php echo $category->getName(); ?>
@@ -28,43 +26,42 @@
 				</ul>
 			</div>
 
-			<?php foreach ($productList as $value) :?>
-				<div class="row shop_box-top">
+			<div class="row shop_box-top">
 
-					<?php foreach($value as $product): ?>
-						<div class="col-md-3 shop_box">
-							<a href="/product/<?php echo $product->getID(); ?>">
-								<img src="<?php echo $product->getImage()->link() ?>" class="img-responsive" alt=""/>
-								<?php if($product->isNew()): ?>
-									<span class="new-box">
-										<span class="new-label">New</span>
-									</span>
-								<?php endif; ?>
-								<div class="shop_desc">
-									<h3><a href="/product/<?php echo $product->getID(); ?>">
-										<?php echo $product->getProducer()->getName()
-											.' '.$product->getName()
-											.' '.$product->getYear(); ?>
-									</a></h3>
-									<p><?php echo $product->getShortDescription(); ?></p>
-									<span class="actual">
-										$<?php echo $product->getPrice(); ?>
-									</span><br>
-									<ul class="buttons">
-										<li class="shop_btn">
-											<a href="/product/<?php echo $product->getID(); ?>">
-												Read More
-											</a>
-										</li>
-										<div class="clear"> </div>
-									</ul>
-								</div>
-							</a>
-						</div>
-					<?php endforeach; ?>
+				<?php foreach($productList as $product): ?>
+					<?php $isNew     = $product->isNew(); ?>
+					<?php $price     = '$'.$product->getPrice(); ?>
+					<?php $image     = $product->getImage()->link(); ?> 
+					<?php $link      = "/product/".$product->getID(); ?>
+					<?php $shortDesc = $product->getShortDescription(); ?>
+					<?php $name      = $product->getProducer()->getName()
+						.' '.$product->getName()
+						.' '.$product->getYear(); ?>
 
-				</div>
-			<?php endforeach; ?>
+					<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 shop_box">
+						<a href="<?= $link; ?>">
+							<img src="<?= $image ?>" class="img-responsive" alt=""/>
+							<?php if($isNew): ?>
+								<span class="new-box">
+									<span class="new-label">New</span>
+								</span>
+							<?php endif; ?>
+							<div class="shop_desc">
+								<h3><a href="<?= $link; ?>"><?= $name; ?></a></h3>
+								<p><?= $shortDesc; ?></p>
+								<span class="actual"><?= $price; ?></span><br>
+								<ul class="buttons">
+									<li class="shop_btn">
+										<a href="<?= $link; ?>">Read More</a>
+									</li>
+									<div class="clear"> </div>
+								</ul>
+							</div>
+						</a>
+					</div>
+				<?php endforeach; ?>
+
+			</div>
 
 			<?php echo $pagination->get(); ?>
 

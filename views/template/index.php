@@ -96,7 +96,7 @@
 <div class="header">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
+			<!-- <div class="col-md-12"> -->
 				<div class="header-left">
 					<div class="logo">
 						<a href="index.html"><img src="/template/images/logo.png" alt=""/></a>
@@ -111,7 +111,7 @@
 							<li><a href="shop.html">Events</a></li>
 							<li><a href="experiance.html">Experiance</a></li>
 							<li><a href="shop.html">Company</a></li>
-							<li><a href="contact.html">Contact</a></li>								
+							<li><a href="contact.html">Contact</a></li>
 							<div class="clear"></div>
 						</ul>
 						
@@ -199,7 +199,7 @@
 
 					<div class="clear"></div>
 				</div>
-			</div>
+			<!-- </div> -->
 		</div>
 	</div>
 </div>

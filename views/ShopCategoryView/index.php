@@ -25,30 +25,27 @@
 				<?php endif; ?>
 			</div>
 
-			<?php $categoryList = array_chunk($categoryList, 3); ?>
+			<div class="row ex_box">
 
-			<?php foreach($categoryList as $value): ?>
-				<div class="row ex_box">
-
-					<?php foreach($value as $category): ?>
-						<div class="col-md-4 team1">
-							<div class="img_section magnifier2">
-								<a class="fancybox" 
-									href="<?php echo $_SERVER['REQUEST_URI'].'/'.$category->getShortName(); ?>"
-									data-fancybox-group="gallery">
-									<img src="<?php echo $category->getImage()->link(); ?>" class="img-responsive" alt="">
-									<span> </span>
-									<div class="img_section_txt">
-										<?php echo $category->getName(); ?>
-									</div>
-								</a>
-							</div>
-						</div>
-					<?php endforeach; ?>
+				<?php foreach($categoryList as $category): ?>
+					<?php $name  = $category->getName(); ?>
+					<?php $image = $category->getImage()->link(); ?>
+					<?php $link  = rtrim($_SERVER['REQUEST_URI'], '/')
+						.'/'.$category->getShortName(); ?>
 					
-			    </div>
-			<?php endforeach; ?>
+					<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 team1">
+						<div class="img_section magnifier2">
+							<a class="fancybox" href="<?= $link; ?>" data-fancybox-group="gallery">
+								<img src="<?= $image; ?>" class="img-responsive" alt="">
+								<span> </span>
+								<div class="img_section_txt"><?= $name; ?></div>
+							</a>
+						</div>
+					</div>
 
+				<?php endforeach; ?>
+					
+			</div>
 		</div>
 	</div>
 </div>
