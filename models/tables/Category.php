@@ -59,7 +59,13 @@ class Category extends AbstractTable {
 	}
 
 	public function setParent(Category $parent) {
-		$this->parent = parent::set($parent, $this->validator->checkParent);
+		if(parent::set($parent, $this->validator->checkParent)) {
+			if(($this->validator->checkParentID)($parent, $this->id)) {
+				$this->parent = $parent; 
+			} else {
+				throw new WrongDataException($parent);
+			}
+		}
 	}
 
 	public function setSortOrder(int $sort_order) {

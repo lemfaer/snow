@@ -23,6 +23,7 @@ class CategoryValidator extends AbstractTableValidator {
 	private $checkDescription;
 	private $checkImage;
 	private $checkParent;
+	private $checkParentID;
 	private $checkSortOrder;
 //closures end
 	
@@ -55,6 +56,19 @@ class CategoryValidator extends AbstractTableValidator {
 				return parent::log(true, $error);
 			}
 			return parent::checkObject($parent, $error);
+		};
+
+		$this->checkParentID = function(Category $parent, int $id) : bool {
+			$error = array("parent" => self::PARENT_ERROR);
+			$bool = true;
+			$pum = $parent;
+			while(!($pum instanceof NullCategory)) {
+				if($id === $pum->getID()) {
+					$bool = false;
+				}
+				$pum = $pum->getParent();
+			}
+			return parent::log($bool, $error);
 		};
 
 		$this->checkSortOrder = function(int $sort_order) : bool {
