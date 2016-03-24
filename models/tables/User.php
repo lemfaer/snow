@@ -97,6 +97,7 @@ class User extends AbstractTable {
 		$obj->email      = (string) $arr['email'];
 		$obj->login      = (string) $arr['login'];
 		$obj->password   = (string) $arr['password'];
+		$obj->hash       = (string) $arr['hash'];
 		$obj->status     = (bool)   $arr['status'];
 
 		return $obj;

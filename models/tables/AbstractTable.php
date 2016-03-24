@@ -387,7 +387,7 @@ abstract class AbstractTable extends AbstractRecord {
 		};
 		self::reflect($func);
 
-		$set = self::buildSet($insertArr);
+		$set = self::buildSet($updateArr);
 		$binds = self::buildBinds($updateArr);
 
 		$query = "UPDATE $table $set WHERE id = '$this->id'";

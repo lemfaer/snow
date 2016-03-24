@@ -14,7 +14,8 @@ jQuery(document).ready(function($) {
 
 		$.post("/login/check", {loginData : loginData}, function(data) {
 			if(data.success) {
-				//dom.submit();
+				$("#modlgn_passwd").val(loginData.password);
+				dom.submit();
 			} else {
 				console.log(data['error']);
 			}
