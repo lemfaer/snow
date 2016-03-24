@@ -12,8 +12,7 @@
 			// print_r($categoryList);
 			// echo "</pre>";
 
-			$contentView = ROOT."/views/ShopCategoryView/index.php";
-			require_once(ROOT."/views/template/index.php");
+			View::template("ShopCategoryView/index.php", compact("category", "categoryList"));
 		}
 
 		public function actionRedirect($shortName1, $shortName2) {

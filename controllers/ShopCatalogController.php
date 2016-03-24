@@ -23,8 +23,8 @@
 			// print_r($productList);
 			// echo "</pre>";
 
-			$contentView = ROOT."/views/ShopCatalogView/index.php";
-			require_once(ROOT."/views/template/index.php");
+			View::template("ShopCatalogView/index.php", 
+				compact("category", "productList", "pagination"));
 		}
 
 	}

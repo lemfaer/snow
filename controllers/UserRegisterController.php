@@ -3,8 +3,7 @@
 class UserRegisterController {
 
 	public function actionIndex() {
-		$contentView = ROOT."/views/UserRegisterView/index.php";
-		require_once(ROOT."/views/template/index.php");
+		View::template("UserRegisterView/index.php");
 	}
 
 	public function actionCheck() {
@@ -28,12 +27,10 @@ class UserRegisterController {
 
 		try {
 			Register::submit($data);
-			$contentView = ROOT."/views/UserRegisterView/success.php";
+			View::template("UserRegisterView/success.php");
 		} catch(WrongDataException $e) {
-			$contentView = ROOT."/views/UserRegisterView/error.php";
+			View::template("UserRegisterView/error.php");
 		}
-
-		require_once(ROOT."/views/template/index.php");
 	}
 
 }

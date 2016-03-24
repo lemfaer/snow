@@ -13,8 +13,7 @@
 			// print_r($recomendedList);
 			// echo "</pre>";
 
-			$contentView = ROOT."/views/ShopProductView/index.php";
-			require_once(ROOT."/views/template/index.php");
+			View::template("ShopProductView/index.php", compact("productItem", "recomendedList"));
 		}
 
 	}

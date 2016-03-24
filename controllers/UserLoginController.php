@@ -3,8 +3,7 @@
 class UserLoginController {
 
 	public function actionIndex() {
-		$contentView = ROOT."/views/UserLoginView/index.php";
-		require_once(ROOT."/views/template/index.php");
+		View::template("UserLoginView/index.php");
 	}
 
 	public function actionCheck() {
@@ -22,7 +21,12 @@ class UserLoginController {
 		}
 		$data = $_POST['loginData'];
 
-		print_r($data);
+		try {
+			Login::submit($data);
+			header("location: /category");
+		} catch(WrongDataException $e) {
+			View::template("UserLoginView/error.php");
+		}
 	}
 
 }
