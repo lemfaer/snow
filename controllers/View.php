@@ -2,19 +2,34 @@
 
 class View {
 
-	public static function template(string $contentView, array $compact = array()) {
-		$contentView = ROOT."/views/".$contentView;
+	const HTML_COMMENT_PATTERN = "/<!--(.*?)-->/";
+
+	public static function template(string $contentPath, array $compact = array()) {
+		$contentPath = ROOT."/views/".$contentPath;
+
+		$head    = file_get_contents(ROOT."/views/template/head.php");
+		$header  = file_get_contents(ROOT."/views/template/header.php");
+		$content = file_get_contents($contentPath);
+		$footer  = file_get_contents(ROOT."/views/template/footer.php");
+
+		$code = $head.$header.$content.$footer;
+		$code = preg_replace(self::HTML_COMMENT_PATTERN, '', $code);
+
 		$cart = Cart::getCart();
 		extract($compact);
 
-		require_once(ROOT."/views/template/index.php");
+		eval("?>".$code);
 	}
 
-	public static function empty(string $contentView, array $compact = array()) {
-		$contentView = ROOT."/views/".$contentView;
+	public static function empty(string $contentPath, array $compact = array()) {
+		$contentPath = ROOT."/views/".$contentPath;
+		$content = file_get_contents($contentPath);
+		
+		$content = preg_replace(self::HTML_COMMENT_PATTERN, '', $content);
+
 		extract($compact);
 
-		require_once($contentView);
+		eval("?>".$content);
 	}
 
 }
