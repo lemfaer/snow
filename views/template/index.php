@@ -123,14 +123,55 @@
 						<li>
 							<a class="active-icon c1" href="#"> </a>
 							<ul class="sub-icon1 list">
+								
+								<?php foreach ($cart as $one): ?>
+									<?php $product = $one['available']->getProduct(); ?>
+									<?php $count   = $one['count']; ?>
+
+									<?php $price = '$'.$product->getPrice(); ?>
+									<?php $image = $product->getImage()->link(); ?>
+									<?php $link  = "/product/".$product->getID(); ?>
+									<?php $name  = $product->getProducer()->getName()
+										." ".$product->getName()
+										." ".$product->getYear(); ?>
+
+									<li>
+										<div class="list_img">
+											<img src=<?= $image; ?> alt=""/>
+										</div>
+										<div class="list_desc">
+											<h4><a href="<?= $link; ?>"><?= $name; ?></a></h4>
+											<div>
+												<font class="mc-price"><?= $price; ?></font>
+												<?php if ($count > 1): ?>
+													<font class="mc-price">x</font>
+													<font class="mc-price"><?= $count; ?></font>
+												<?php endif; ?>
+											</div>
+										</div>
+									</li>
+								<?php endforeach; ?>
+								
 								<div class="clear"></div>
-								<li class="list_img"><img src="/template/images/1.jpg" alt=""/></li>
-								<li class="list_desc">
-									<h4><a href="#">velit esse molestie</a></h4>
-									<span class="actual">1x$12.00</span>
-								</li>
 								<div class="login_buttons">
-									<div class="check_button"><a href="checkout.html">Check out</a></div>
+									<div class="check_button">
+										<a href="checkout.html">Check out</a>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="clear"></div>
+							</ul>
+						</li>
+					</ul>
+					<ul class="icon1 sub-icon1 profile_img">
+						<li>
+							<a class="active-icon c1" href="#"> </a>
+							<ul class="sub-icon1 list">
+								<div class="clear"></div>
+								<div class="login_buttons">
+									<div class="check_button">
+										<a href="checkout.html">Check out</a>
+									</div>
 									<div class="clear"></div>
 								</div>
 								<div class="clear"></div>
