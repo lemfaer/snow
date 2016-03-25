@@ -39,7 +39,7 @@
 							<div class="clear"></div>
 							<div class="login_buttons">
 								<div class="check_button">
-									<a href="checkout.html">Check out</a>
+									<a href="/cart">Корзина</a>
 								</div>
 								<div class="clear"></div>
 							</div>

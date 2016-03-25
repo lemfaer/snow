@@ -3,7 +3,7 @@
 class CartController {
 
 	public function actionIndex() {
-
+		View::template("CartView/index.php");
 	}
 
 	public function actionMini() {
