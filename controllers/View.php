@@ -21,4 +21,10 @@ class View {
 		eval("?>".$content);
 	}
 
+	public static function admin(string $contentPath, array $compact = array()) {
+		$code = file_get_contents(ROOT."/views/admin/template/index.php");
+		$code = preg_replace(self::HTML_COMMENT_PATTERN, '', $code);
+		eval("?>".$code);
+	}
+
 }
