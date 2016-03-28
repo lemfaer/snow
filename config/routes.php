@@ -30,4 +30,6 @@
 		"login/submit" => "login/submit",
 
 		"test" => "test/test",
+
+		"admin" => "admin/index",
 	);
