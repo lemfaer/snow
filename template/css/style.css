@@ -2276,9 +2276,9 @@ a.continue,a.order {
     color: #fff;
     text-decoration: none;
     display: block;
-    font-weight: 600;
+    font-weight: 400;
     text-align: center;
-    margin-bottom: 2em;
+    margin-bottom: 1rem;
     font-family: 'Pathway Gothic One';
     text-transform: uppercase;
     cursor: pointer;
@@ -2288,7 +2288,7 @@ a.continue:hover, a.order:hover{
     transition: 0.5s all;
 }
 a.order{
-    margin: 15px 0;
+    margin: 1rem 0;
 }
 .price-details h3 {
     color: #100b0b;
@@ -2454,12 +2454,24 @@ input#amount {
 		background: url(../images/remove.png);
 	}
 
-	.up-icon {
+	.remove-icon:hover {
+		background: url(../images/removehover.png);
+	}
+
+	.up-icon, .qty-up.disabled a:hover {
 		background: url(../images/up.png);
 	}
 
-	.down-icon {
+	.up-icon:hover {
+		background: url(../images/uphover.png);
+	}
+
+	.down-icon, .qty-down.disabled a:hover {
 		background: url(../images/down.png);
+	}
+
+	.down-icon:hover {
+		background: url(../images/downhover.png);
 	}
 /* ICONS END */
 
@@ -2519,6 +2531,10 @@ ul.qty li.name a {
 
 .qty-up.disabled a, .qty-down.disabled a {
 	cursor: default;
+}
+
+.qty-up.disabled a:hover, .qty-down.disabled a:hover {
+
 }
 
 .qty-field input {
