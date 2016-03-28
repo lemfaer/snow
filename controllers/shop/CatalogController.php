@@ -1,6 +1,6 @@
 <?php
 
-	class ShopCatalogController {
+	class CatalogController {
 
 		const LIMIT_PRODUCT_LIST = 12;
 		const SORT_ORDER = "id DESC";
@@ -23,7 +23,7 @@
 			// print_r($productList);
 			// echo "</pre>";
 
-			View::template("ShopCatalogView/index.php", 
+			View::template("shop/catalog/index.php", 
 				compact("category", "productList", "pagination"));
 		}
 

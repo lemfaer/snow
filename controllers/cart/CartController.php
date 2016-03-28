@@ -2,8 +2,9 @@
 
 class CartController {
 
+//view
 	public function actionIndex() {
-		View::template("CartView/index.php");
+		View::template("cart/full/index.php");
 	}
 
 	public function actionMini() {
@@ -13,14 +14,41 @@ class CartController {
 
 		try {
 			$cart = Cart::getCart();
-			View::empty("CartView/mini.php", compact("cart"));
+			View::empty("cart/mini/mini.php", compact("cart"));
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("data from view must be valide", $e);
 		} catch(CartNotExistsException $e) {
 			throw new UncheckedLogicException("data must be added to cart first", $e);
 		}
 	}
+//view end
 
+//calculation
+	public function actionSubTotal() {
+		if(!isset($_POST['id'])) {
+			header("location: /cart");
+		}
+		$id = $_POST['id'];
+		try {
+			$subTotal = Cart::subTotal($id);
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("data from view must be valide", $e);
+		}
+
+		echo '$'.$subTotal;
+	}
+
+	public function actionTotal() {
+		if(!isset($_POST['total'])) {
+			header("location: /cart");
+		}
+		$total = Cart::total();
+
+		echo '$'.$total;
+	}
+//calculation end
+
+//add, inc/dec, delete
 	public function actionAddOptions() {
 		if(!isset($_POST['opt'])) {
 			header("location: /cart");
@@ -32,50 +60,51 @@ class CartController {
 			throw new UncheckedLogicException("data from view must be in db", $e);
 		}
 
-		$_POST['add'] = true;
-		$this->actionAdd($id);
+		$_POST['id'] = $id;
+		$this->actionAdd();
 	}
 
-	public function actionInc($id) {
-		// if(!isset($_POST['inc'])) {
-		// 	header("location: /cart");
-		// }
+	public function actionInc() {
+		if(!isset($_POST['id'])) {
+			header("location: /cart");
+		}
+		$id = $_POST['id'];
 
-		$bool = true;
 		try {
 			Cart::inc($id);
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("data from view must be valide", $e);
 		} catch(CartNotExistsException $e) {
 			throw new UncheckedLogicException("data must be added to cart first", $e);
-		} catch(CartNotAvailableException $e) {
-			$bool = false;
-		}
+		} catch(CartNotAvailableException $e) {}
 
-		echo json_encode($bool);
+		$count = Cart::getCount($id); //exceptions there --^
+		echo json_encode($count);
 	}
 
-	public function actionDec($id) {
-		// if(!isset($_POST['dec'])) {
-		// 	header("location: /cart");
-		// }
+	public function actionDec() {
+		if(!isset($_POST['id'])) {
+			header("location: /cart");
+		}
+		$id = $_POST['id'];
 
-		$bool = true;
 		try {
 			Cart::dec($id);
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("data from view must be valide", $e);
 		} catch(CartNotExistsException $e) {
 			throw new UncheckedLogicException("data must be added to cart first", $e);
-		}
+		} catch(CartNotAvailableException $e) {}
 
-		echo json_encode($bool);
+		$count = Cart::getCount($id); //exceptions there --^
+		echo json_encode($count);
 	}
 
-	public function actionAdd($id) {
-		// if(!isset($_POST['add'])) {
-		// 	header("location: /cart");
-		// }
+	public function actionAdd() {
+		if(!isset($_POST['id'])) {
+			header("location: /cart");
+		}
+		$id = $_POST['id'];
 
 		$bool = true;
 		try {
@@ -89,10 +118,11 @@ class CartController {
 		echo json_encode($bool);
 	}
 
-	public function actionDelete($id) {
-		// if(!isset($_POST['delete'])) {
-		// 	header("location: /cart");
-		// }
+	public function actionDelete() {
+		if(!isset($_POST['delete'])) {
+			header("location: /cart");
+		}
+		$id = $_POST['id'];
 
 		$bool = true;
 		try {
@@ -105,5 +135,6 @@ class CartController {
 
 		echo json_encode($bool);
 	}
+//add, inc/dec, delete end
 
 }

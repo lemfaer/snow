@@ -2,30 +2,32 @@
 
 	return array(
 
-		"category" => "shopCategory/index",
-		"category/([a-z]+)" => "shopCategory/index/$1",
-		"category/([a-z]+)/([a-z]+)" => "shopCategory/redirect/$1/$2",
+		"category" => "category/index",
+		"category/([a-z]+)" => "category/index/$1",
+		"category/([a-z]+)/([a-z]+)" => "category/redirect/$1/$2",
 
-		"products/([0-9]+)" => "shopCatalog/index/$1",
-		"products/([0-9]+)/page-([0-9]+)" => "shopCatalog/index/$1/$2",
+		"products/([0-9]+)" => "catalog/index/$1",
+		"products/([0-9]+)/page-([0-9]+)" => "catalog/index/$1/$2",
 
-		"product/([0-9]+)" => "shopProduct/index/$1",
+		"product/([0-9]+)" => "product/index/$1",
 
 		"cart" => "cart/index",
 		"cart/mini" => "cart/mini",
-		"cart/inc/([0-9]+)" => "cart/inc/$1",
-		"cart/dec/([0-9]+)" => "cart/dec/$1",
-		"cart/add/([0-9]+)" => "cart/add/$1",
+		"cart/inc" => "cart/inc",
+		"cart/dec" => "cart/dec",
+		"cart/add" => "cart/add",
 		"cart/add/options"  => "cart/addOptions",
-		"cart/delete/([0-9]+)" => "cart/delete/$1",
+		"cart/delete" => "cart/delete",
+		"cart/subtotal" => "cart/subTotal",
+		"cart/total" => "cart/total",
 
-		"register" => "userRegister/index",
-		"register/check" => "userRegister/check",
-		"register/submit" => "userRegister/submit",
+		"register" => "register/index",
+		"register/check" => "register/check",
+		"register/submit" => "register/submit",
 
-		"login" => "userLogin/index",
-		"login/check" => "userLogin/check",
-		"login/submit" => "userLogin/submit",
+		"login" => "login/index",
+		"login/check" => "login/check",
+		"login/submit" => "login/submit",
 
 		"test" => "test/test",
 	);

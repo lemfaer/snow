@@ -1,6 +1,6 @@
-<!-- REQUIRE -->
+<!-- REQUIRED -->
 	<!-- $cart -->
-<!-- REQUIRE END -->
+<!-- REQUIRED END -->
 
 <?php foreach ($cart as $one): ?>
 	<?php $product = $one['available']->getProduct(); ?>

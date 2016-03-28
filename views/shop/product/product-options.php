@@ -5,7 +5,7 @@
 <?php $sizeList  = $productItem->getSizeList(); ?>
 <?php $colorList = $productItem->getColorList(); ?>
 
-<script type="text/javascript" src="/views/ShopProductView/product-options.js"></script>
+<script type="text/javascript" src="/views/shop/product/product-options.js"></script>
 
 <form class="product-options">
 								

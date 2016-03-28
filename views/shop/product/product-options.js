@@ -96,13 +96,7 @@ jQuery(document).ready(function($) {
 
 		var request = {"opt": request};
 		$.post("/cart/add/options", request, function(data) {
-			if(data) {
-				$.post("/cart/mini", {"mini": null}, function(data) {
-					$("#mini-cart").html(data);
-				});
-			} else {
-
-			}
+			mini.update();
 		});
 
 	});

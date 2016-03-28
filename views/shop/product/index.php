@@ -1,4 +1,3 @@
-
 <!-- REQUIRED -->
 	<!-- $productItem    -->
 	<!-- $recomendedList -->
@@ -108,7 +107,8 @@
 						<div class="box-info-product">
 							<p class="price2"><?= $pPrice; ?></p>
 
-							<?php require_once(ROOT."/views/ShopProductView/product-options.php"); ?>
+							<?php View::empty("shop/product/product-options.php",
+								compact("productItem")); ?>
 						</div>
 					</div>
 				<?php endif; ?>

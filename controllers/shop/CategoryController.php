@@ -1,6 +1,6 @@
 <?php 
 
-	class ShopCategoryController {
+	class CategoryController {
 
 		public function actionIndex($shortName = null) {
 			$categoryID = Category::getIDByShortNameArray(array($shortName));
@@ -12,7 +12,7 @@
 			// print_r($categoryList);
 			// echo "</pre>";
 
-			View::template("ShopCategoryView/index.php", compact("category", "categoryList"));
+			View::template("shop/category/index.php", compact("category", "categoryList"));
 		}
 
 		public function actionRedirect($shortName1, $shortName2) {

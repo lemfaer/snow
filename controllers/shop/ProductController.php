@@ -1,6 +1,6 @@
 <?php
 
-	class ShopProductController {
+	class ProductController {
 
 		public function actionIndex($productID) {
 			$productItem = ProductItem::findFirst(array("id" => $productID));
@@ -13,7 +13,7 @@
 			// print_r($recomendedList);
 			// echo "</pre>";
 
-			View::template("ShopProductView/index.php", compact("productItem", "recomendedList"));
+			View::template("shop/product/index.php", compact("productItem", "recomendedList"));
 		}
 
 	}
