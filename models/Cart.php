@@ -39,6 +39,22 @@ final class Cart {
 	}
 
 	/**
+	 * Возвращает количество экземпляров продукта в корзине по идентификатору
+	 * 
+	 * @param int $id идентификатор available
+	 * @throws WrongDataException передан неправильный продукт
+	 * @return int количество экземпляров продукта
+	 */
+	public static function getCount(int $id) : int {
+		try {
+			$one = self::getOne($id);
+			return $one['count'];
+		} catch(CartNotExistsException $e) {
+			return 0;
+		}
+	}
+
+	/**
 	 * Инициализирует и возвращает корзину
 	 * 
 	 * Инициализирует и возвращает массив содержащий описание продукта
@@ -72,7 +88,46 @@ final class Cart {
 	}
 //cart end
 
-//add, delete
+//calculation
+	/**
+	 * Разчитывает промежуточную цену продукта
+	 * 
+	 * @param int $id идентификатор available
+	 * @throws WrongDataException передан неправильный продукт
+	 * @return int промежуточная цена
+	 */
+	public static function subTotal($id) : int {
+		try {
+			$one   = self::getOne($id);
+		} catch(CartNotExistsException $e) {
+			return 0;
+		}
+		$count = $one['count'];
+		$price = $one['available']->getProduct()->getPrice();
+		$subTotal = $count * $price;
+
+		return $subTotal;
+	}
+
+	/**
+	 * Разчитывает цену товаров в корзине
+	 * 
+	 * @return int цена товаров в корзине
+	 */
+	public static function total() : int {
+		$cart = self::getCart();
+		$total = 0;
+		foreach ($cart as $one) {
+			$count = $one['count'];
+			$price = $one['available']->getProduct()->getPrice();
+			$total += $count * $price;
+		}
+
+		return $total;
+	}
+//calculation end
+
+//check
 	/**
 	 * Проверяет наличие продукта в бд, количество доступных экземпляров
 	 * 
@@ -106,7 +161,7 @@ final class Cart {
 		self::checkAvailable($id);
 		$count = Available::findFirst(array("id" => $id))->getCount();
 		if(!isset($_SESSION['cart'][$id])) {
-			throw new UncheckedLogicException("product must be in cart",
+			throw new CartNotExistsException("product must be in cart",
 				new WrongDataException($id, "product not in cart"));
 		}
 		if($_SESSION['cart'][$id] < 1) {
@@ -118,7 +173,9 @@ final class Cart {
 				new WrongDataException($_SESSION['cart'][$id], "count > available($count)"));
 		}
 	}
+//check end
 
+//add, delete
 	/**
 	 * Увеличивает количество продукта в корзине на 1
 	 * 
@@ -164,16 +221,10 @@ final class Cart {
 	 * @return void
 	 */
 	public static function add(int $id) {
-		self::checkAvailable($id);
-
-		if(!isset($_SESSION['cart'][$id])) {
+		try {
+			self::inc($id);
+		} catch(CartNotExistsException $e) {
 			$_SESSION['cart'][$id] = 1;
-		} else {
-			try {
-				self::inc($id);
-			} catch(CartNotExistsException $e) {
-				throw new UncheckedLogicException("cart[id] must be inited", $e);
-			}
 		}
 	}
 
