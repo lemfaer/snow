@@ -13,6 +13,7 @@
 			"/models/exceptions/checked/",
 			"/models/exceptions/unchecked/",
 			"/models/forms/",
+			"/models/forms/admin/",
 			"/models/items/",
 			"/models/tables/", 
 			"/models/tables/validators/",

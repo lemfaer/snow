@@ -29,7 +29,16 @@
 		"login/check"  => "login/check",
 		"login/submit" => "login/submit",
 
+
+		//admin
 		"test" => "test/test",
 
 		"admin" => "admin/index",
+
+		"admin/([a-z]+)" => "admin/read/$1",
+		"admin/([a-z]+)/create" => "admin/create/$1",
+		"admin/([a-z]+)/read"   => "admin/read/$1",
+		"admin/([a-z]+)/update/([0-9]+)" => "admin/update/$1/$2",
+		"admin/([a-z]+)/delete/([0-9]+)" => "admin/delete/$1/$2",
+
 	);
