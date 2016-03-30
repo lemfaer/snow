@@ -8,7 +8,7 @@ class ColorValidator extends AbstractTableValidator {
 	//кириллица, латиница, цифры, пробел, дефис. 1-99 символов
 	const NAME_PATTERN = "/^[A-Za-zА-Яа-яЁё0-9\- ]{1,99}$/u";
 	//Символ #, цифры, a,b,c,d,e. 7 символов
-	const VALUE_PATTERN = "/^#[0-9aAbBcCdDeE]{6}$/";
+	const VALUE_PATTERN = "/^#[0-9aAbBcCdDeEfF]{6}$/";
 
 	const NAME_ERROR          = "Неправильный ввод имени";
 	const VALUE_INVALID_ERROR = "Неправильный ввод значения";
