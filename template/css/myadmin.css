@@ -1,0 +1,26 @@
+.form-group.has-success label, .form-group.has-error label {
+	color: inherit;
+}
+.form-group.has-success label.control-label {
+	color: #00a65a;
+}
+.form-group.has-error label.control-label {
+	color: #dd4b39;
+}
+
+.form-group label.control-label {
+	display: none;
+}
+.form-group.has-success label.control-label, .form-group.has-error label.control-label {
+	display: block;
+}
+
+.field-header {
+	display: block;
+}
+
+.ad_update {
+	display: inline-block;
+	cursor: pointer;
+	float: right;
+}

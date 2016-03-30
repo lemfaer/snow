@@ -41,4 +41,7 @@
 		"admin/([a-z]+)/update/([0-9]+)" => "admin/update/$1/$2",
 		"admin/([a-z]+)/delete/([0-9]+)" => "admin/delete/$1/$2",
 
+		"admin/([a-z]+)/crup/check"  => "admin/CRUPCheck/$1",
+		"admin/([a-z]+)/crup/submit" => "admin/CRUPSubmit/$1",
+
 	);
