@@ -105,6 +105,11 @@ class ProductItem extends AbstractRecord {
 			$id = $this->product->getID();
 			$availableList = Available::findAll(array("product_id" => $id), 
 				"id ASC", self::LIMIT_MAX);
+			foreach ($availableList as $key => $av) {
+				if($av->getCount() < 1) {
+					unset($availableList[$key]);
+				}
+			}
 		}
 
 		$this->availableList = $availableList;
