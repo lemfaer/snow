@@ -54,7 +54,7 @@ class UserValidator extends AbstractTableValidator {
 			$error = array("email" => self::EMAIL_INVALID_ERROR);
 			if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				$error = array("email" => self::EMAIL_EXIST_ERROR);
-				if(!User::findCount(array("email" => $email))) {
+				if(!(User::findCount(array("email" => $email), true) > 0)) {
 					$bool = true;
 				}
 			}
@@ -66,7 +66,7 @@ class UserValidator extends AbstractTableValidator {
 			$error = array("login" => self::LOGIN_INVALID_ERROR);
 			if(preg_match(self::LOGIN_PATTERN, $login)) {
 				$error = array("login" => self::LOGIN_EXIST_ERROR);
-				if(!User::findCount(array("login" => $login))) {
+				if(!(User::findCount(array("login" => $login), true) > 0)) {
 					$bool = true;
 				}
 			}

@@ -33,7 +33,7 @@ class ColorValidator extends AbstractTableValidator {
 			$error = array("value" => self::VALUE_INVALID_ERROR);
 			if(preg_match(self::VALUE_PATTERN, $value)) {
 				$error = array("value" => self::VALUE_EXISTS_ERROR);
-				if(!Color::findCount(array("value" => $value))) {
+				if(!(Color::findCount(array("value" => $value), true) > 0)) {
 					$bool = true;
 				}
 			}

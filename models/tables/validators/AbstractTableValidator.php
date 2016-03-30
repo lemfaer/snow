@@ -27,7 +27,7 @@ abstract class AbstractTableValidator extends AbstractValidator{
 		$this->checkID = function(int $id) : bool {
 			$class = get_called_class()::CLASS_NAME;
 			$error = array("id" => self::ID_ERROR);
-			return self::log($class::findCount(array("id" => $id)) > 0, $error);
+			return self::log($class::findCount(array("id" => $id), true) > 0, $error);
 		};
 
 		$this->checkStatus = function(bool $status) : bool {
