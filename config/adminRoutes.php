@@ -2,5 +2,6 @@
 
 return array(
 
+	"color" => "Color",
 
 );
