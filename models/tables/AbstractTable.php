@@ -188,7 +188,7 @@ abstract class AbstractTable extends AbstractRecord {
 		}
 
 		(!$nullStatus) ? ($where[] = "status = '1'") : (null);
-		$where = ($where = implode(" AND ", $where)) ? ("WHERE ".$where) : (null);
+		$where = ($where = implode(" AND ", $where)) ? ("WHERE ".$where) : ("");
 
 		return $where;
 	}
@@ -293,7 +293,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @throws RecordNotFoundException записи не найдены
 	 * @return array<AbstractRecord> записи
 	 */
-	public static function findAll(array $whereArr, string $order = "id ASC", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
+	public static function findAll(array $whereArr = array(), string $order = "id ASC", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
 		$class = get_called_class();
 		$table = $class::TABLE;
 
