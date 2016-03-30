@@ -33,9 +33,11 @@ jQuery(document).ready(function($) {
 
 		if(val < min) {
 			$(qty).siblings(".pr-remove").click();
-		} else if(val === min) {
+		} 
+		if(val === min) {
 			$(qtyDown).addClass("disabled")
-		} else if(val === max) {
+		} 
+		if(val === max) {
 			$(qtyUp).addClass("disabled");
 		}
 	}
