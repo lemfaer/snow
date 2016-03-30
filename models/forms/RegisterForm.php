@@ -52,7 +52,7 @@ final class RegisterForm extends AbstractForm {
 		return json_decode(curl_exec($ch), true);
 	}
 
-	static function check(array $data) : string {
+	public static function check(array $data) : string {
 		if(isset($data['captcha'])) {
 			$captcha = self::checkCaptcha($data['captcha']);
 			unset($data['captcha']);
@@ -68,7 +68,7 @@ final class RegisterForm extends AbstractForm {
 		return json_encode($result);
 	}
 
-	static function submit(array $data) {
+	public static function submit(array $data) {
 		$u = new User();
 
 		$u->setFirstName($data['first_name']);
