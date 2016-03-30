@@ -43,23 +43,23 @@ class Category extends AbstractTable {
 	//setters
 	public function setName(string $name) {
 		$name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
-		$this->name = parent::set($name, $this->validator->checkName);
+		$this->name = parent::set($name, "checkName");
 	}
 
 	public function setShortName(string $short_name) {
-		$this->short_name = parent::set($short_name, $this->validator->checkShortName);
+		$this->short_name = parent::set($short_name, "checkShortName");
 	}
 
 	public function setDescription(string $description) {
-		$this->description = parent::set($description, $this->validator->checkDescription);
+		$this->description = parent::set($description, "checkDescription");
 	}
 
 	public function setImage(Image $image) {
-		$this->image = parent::set($image, $this->validator->checkImage);
+		$this->image = parent::set($image, "checkImage");
 	}
 
 	public function setParent(Category $parent) {
-		if(parent::set($parent, $this->validator->checkParent)) {
+		if(parent::set($parent, "checkParent")) {
 			if(($this->validator->checkParentID)($parent, $this->id)) {
 				$this->parent = $parent; 
 			} else {
@@ -69,7 +69,7 @@ class Category extends AbstractTable {
 	}
 
 	public function setSortOrder(int $sort_order) {
-		$this->sort_order = parent::set($sort_order, $this->validator->checkSortOrder);
+		$this->sort_order = parent::set($sort_order, "checkSortOrder");
 	}
 	//setters end;
 //main info end

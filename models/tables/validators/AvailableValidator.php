@@ -9,36 +9,27 @@ class AvailableValidator extends AbstractTableValidator {
 	const COUNT_ERROR = "Неправильный ввод количества товаров";
 //const end
 
-//closures
-	private $checkCount;
-	private $checkSize;
-	private $checkColor;
-	private $checkProduct;
-//closures end
-
-	public function __construct() {
-		parent::__construct();
-
-		$this->checkCount = function(int $count) : bool {
-			$error = array("count" => self::COUNT_ERROR);
-			$bool = $count < self::COUNT_LIMIT;
-			return parent::log($bool, $error);
-		};
-
-		$this->checkSize = function(Size $size) : bool {
-			$error = array("size" => parent::SIZE_OBJECT_ERROR);
-			return parent::checkObject($size, $error);
-		};
-
-		$this->checkColor = function(Color $color) : bool {
-			$error = array("color" => parent::COLOR_OBJECT_ERROR);
-			return parent::checkObject($color, $error);
-		};
-
-		$this->checkProduct = function(Product $product) : bool {
-			$error = array("product" => parent::PRODUCT_OBJECT_ERROR);
-			return parent::checkObject($product, $error);
-		};
+//validate methods
+	public function checkCount(int $count) : bool {
+		$error = array("count" => self::COUNT_ERROR);
+		$bool = $count < self::COUNT_LIMIT;
+		return parent::log($bool, $error);
 	}
+
+	public function checkSize(Size $size) : bool {
+		$error = array("size" => parent::SIZE_OBJECT_ERROR);
+		return parent::checkObject($size, $error);
+	}
+
+	public function checkColor(Color $color) : bool {
+		$error = array("color" => parent::COLOR_OBJECT_ERROR);
+		return parent::checkObject($color, $error);
+	}
+
+	public function checkProduct(Product $product) : bool {
+		$error = array("product" => parent::PRODUCT_OBJECT_ERROR);
+		return parent::checkObject($product, $error);
+	}
+//validate methods end
 	
 }

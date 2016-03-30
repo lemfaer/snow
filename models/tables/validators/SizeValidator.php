@@ -11,23 +11,16 @@ class SizeValidator extends AbstractTableValidator {
 	const NAME_ERROR = "Неправильный ввод имени";
 //const end
 
-//closure
-	private $checkName;
-	private $checkCategory;
-//closure end
-
-	public function __construct() {
-		parent::__construct();
-
-		$this->checkName = function(string $name) : bool {
-			$error = array("name" => self::NAME_ERROR);
-			return parent::checkString($name, self::NAME_PATTERN, $error);
-		};
-		
-		$this->checkCategory = function(Category $category) : bool {
-			$error = array("category" => parent::CATEGORY_OBJECT_ERROR);
-			return parent::checkObject($category, $error);
-		};
+//validate methods
+	public function checkName(string $name) : bool {
+		$error = array("name" => self::NAME_ERROR);
+		return parent::checkString($name, self::NAME_PATTERN, $error);
 	}
+
+	public function checkCategory(Category $category) : bool {
+		$error = array("category" => parent::CATEGORY_OBJECT_ERROR);
+		return parent::checkObject($category, $error);
+	}
+//validate methods end
 
 }

@@ -32,19 +32,19 @@ class Available extends AbstractTable {
 
 	//setters
 	public function setCount(int $count) {
-		$this->count = parent::set($count, $this->validator->checkCount);
+		$this->count = parent::set($count, "checkCount");
 	}
 
 	public function setSize(Size $size) {
-		$this->size = parent::set($size, $this->validator->checkSize);
+		$this->size = parent::set($size, "checkSize");
 	}
 
 	public function setColor(Color $color) {
-		$this->color = parent::set($color, $this->validator->checkColor);
+		$this->color = parent::set($color, "checkColor");
 	}
 
 	public function setProduct(Product $product) {
-		$this->product = parent::set($product, $this->validator->checkProduct);
+		$this->product = parent::set($product, "checkProduct");
 	}
 	//setters end
 //main info end

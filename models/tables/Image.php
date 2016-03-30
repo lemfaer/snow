@@ -17,7 +17,7 @@ class Image extends AbstractTable {
 
 	//setters
 	public function setPath(string $path) {
-		$this->path = parent::set($path, $this->validator->checkPath);
+		$this->path = parent::set($path, "checkPath");
 	}
 	//setters end
 //main info end

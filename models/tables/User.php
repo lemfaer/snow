@@ -43,25 +43,25 @@ class User extends AbstractTable {
 	//setters
 	public function setFirstName(string $first_name) {
 		$first_name = mb_convert_case($first_name, MB_CASE_TITLE, "UTF-8");
-		$this->first_name = parent::set($first_name, $this->validator->checkFirstName);
+		$this->first_name = parent::set($first_name, "checkFirstName");
 	}
 
 	public function setLastName(string $last_name) {
 		$last_name = mb_convert_case($last_name, MB_CASE_TITLE, "UTF-8");
-		$this->last_name = parent::set($last_name, $this->validator->checkLastName);
+		$this->last_name = parent::set($last_name, "checkLastName");
 	}
 
 	public function setEmail(string $email) {
 		$email = mb_convert_case($email, MB_CASE_LOWER, "UTF-8");
-		$this->email = parent::set($email, $this->validator->checkEmail);
+		$this->email = parent::set($email, "checkEmail");
 	}
 
 	public function setLogin(string $login) {
-		$this->login = parent::set($login, $this->validator->checkLogin);
+		$this->login = parent::set($login, "checkLogin");
 	}
 
 	public function setPassword(string $password) {
-		$password = parent::set($password, $this->validator->checkPassword);
+		$password = parent::set($password, "checkPassword");
 		$this->password = md5(md5($password));
 	}
 	//setters end

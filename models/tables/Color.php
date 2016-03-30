@@ -23,12 +23,12 @@ class Color extends AbstractTable {
 	//setters
 	public function setName(string $name) {
 		$name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
-		$this->name = parent::set($name, $this->validator->checkName);
+		$this->name = parent::set($name, "checkName");
 	}
 
 	public function setValue(string $value) {
 		$value = mb_convert_case($value, MB_CASE_UPPER, "UTF-8");
-		$this->value = parent::set($value, $this->validator->checkValue);
+		$this->value = parent::set($value, "checkValue");
 	}
 	//setters end
 //main info end

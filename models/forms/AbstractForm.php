@@ -26,7 +26,7 @@ abstract class AbstractForm {
 		$check = true;
 		foreach ($data as $key => $value) {
 			$method = $valMethod($key);
-			$paramCheck = ($validator->$method)($value);
+			$paramCheck = $validator->$method($value);
 			$result['single'][$key] = $paramCheck;
 			$check = $paramCheck && $check;
 		}

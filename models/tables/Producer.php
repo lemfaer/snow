@@ -23,11 +23,11 @@ class Producer extends AbstractTable {
 	//setters
 	public function setName(string $name) {
 		$name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
-		$this->name = parent::set($name, $this->validator->checkName);
+		$this->name = parent::set($name, "checkName");
 	}
 
 	public function setImage(Image $image) {
-		$this->image = parent::set($image, $this->validator->checkImage);
+		$this->image = parent::set($image, "checkImage");
 	}
 	//setters end
 //main info end

@@ -23,11 +23,11 @@ class CharName extends AbstractTable {
 	//setters
 	public function setName(string $name) {
 		$name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
-		$this->name = parent::set($name, $this->validator->checkName);
+		$this->name = parent::set($name, "checkName");
 	}
 
 	public function setCategory(Category $category) {
-		$this->category = parent::set($category, $this->validator->checkCategory);
+		$this->category = parent::set($category, "checkCategory");
 	}
 	//setters end
 //main info end

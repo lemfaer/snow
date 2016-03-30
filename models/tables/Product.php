@@ -58,40 +58,40 @@ class Product extends AbstractTable {
 	//setters
 	public function setName(string $name) {
 		$name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
-		$this->name = parent::set($name, $this->validator->checkName);
+		$this->name = parent::set($name, "checkName");
 	}
 
 	public function setProducer(Producer $producer) {
-		$this->producer = parent::set($producer, $this->validator->checkProducer);
+		$this->producer = parent::set($producer, "checkProducer");
 	}
 
 	public function setPrice(int $price) {
-		$this->price = parent::set($price, $this->validator->checkPrice);
+		$this->price = parent::set($price, "checkPrice");
 	}
 
 	public function setYear(int $year) {
-		$this->year = parent::set($year, $this->validator->checkYear);
+		$this->year = parent::set($year, "checkYear");
 	}
 
 	public function setShortDescription(string $short_description) {
 		$this->short_description = parent::set($short_description, 
-			$this->validator->checkShortDescription);
+			"checkShortDescription");
 	}
 
 	public function setDescription(string $description) {
-		$this->description = parent::set($description, $this->validator->checkDescription);
+		$this->description = parent::set($description, "checkDescription");
 	}
 
 	public function setCategory(Category $category) {
-		$this->category = parent::set($category, $this->validator->checkCategory);
+		$this->category = parent::set($category, "checkCategory");
 	}
 
 	public function setNew(bool $is_new) {
-		$this->is_new = parent::set($is_new, $this->validator->checkNew);
+		$this->is_new = parent::set($is_new, "checkNew");
 	}
 
 	public function setRecomended(bool $is_recomended) {
-		$this->is_recomended = parent::set($is_recomended, $this->validator->checkRecomended);
+		$this->is_recomended = parent::set($is_recomended, "checkRecomended");
 	}
 	//setters end
 //main info end

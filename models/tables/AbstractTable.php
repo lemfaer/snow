@@ -81,12 +81,12 @@ abstract class AbstractTable extends AbstractRecord {
 	 * Выполняет действия перед установкой значений в свойства
 	 * 
 	 * @param mixed $value переданное значение
-	 * @param Closure $checkMethod метод для проверки переданного значения
+	 * @param string $checkMethod метод для проверки переданного значения
 	 * @throws WrongDataException передано неправильное значение
 	 * @return mixed (type of $value) переданное значение
 	 */
-	protected function set($value, Closure $checkMethod) {
-		if(!$checkMethod($value)) {
+	protected function set($value, string $checkMethod) {
+		if(!$this->validator->$checkMethod($value)) {
 			throw new WrongDataException($value, implode(", ", $this->errorInfo()));
 		}
 		return $value;
