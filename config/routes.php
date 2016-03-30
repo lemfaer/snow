@@ -11,22 +11,22 @@
 
 		"product/([0-9]+)" => "product/index/$1",
 
-		"cart" => "cart/index",
-		"cart/mini" => "cart/mini",
-		"cart/inc" => "cart/inc",
-		"cart/dec" => "cart/dec",
-		"cart/add" => "cart/add",
-		"cart/add/options"  => "cart/addOptions",
+		"cart"        => "cart/index",
+		"cart/inc"    => "cart/inc",
+		"cart/dec"    => "cart/dec",
+		"cart/add"    => "cart/add",
+		"cart/mini"   => "cart/mini",
+		"cart/total"  => "cart/total",
 		"cart/delete" => "cart/delete",
 		"cart/subtotal" => "cart/subTotal",
-		"cart/total" => "cart/total",
+		"cart/add/options"  => "cart/addOptions",
 
-		"register" => "register/index",
-		"register/check" => "register/check",
+		"register"        => "register/index",
+		"register/check"  => "register/check",
 		"register/submit" => "register/submit",
 
-		"login" => "login/index",
-		"login/check" => "login/check",
+		"login"        => "login/index",
+		"login/check"  => "login/check",
 		"login/submit" => "login/submit",
 
 		"test" => "test/test",
