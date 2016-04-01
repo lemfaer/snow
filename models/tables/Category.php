@@ -146,6 +146,10 @@ final class NullCategory extends Category {
 		return $this->id;
 	}
 
+	public function getName() : string {
+		return "no";
+	}
+
 	public function isNull() : bool {
 		return true;
 	}
@@ -154,8 +158,12 @@ final class NullCategory extends Category {
 		return true;
 	}
 
-	public function getArray() : array {
-		return array("id" => $this->id);
+	protected function get($prop) {
+		throw new NullAccessException();
+	}
+
+	protected function set($value, string $checkMethod) {
+		throw new NullAccessException();
 	}
 
 	public function insert() {
@@ -168,6 +176,10 @@ final class NullCategory extends Category {
 
 	public function delete() {
 		throw new NullAccessException();
+	}
+
+	public function getArray() : array {
+		return array("id" => $this->id);
 	}
 
 }
