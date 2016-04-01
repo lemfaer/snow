@@ -1,0 +1,117 @@
+<!-- PLUGINS -->
+	<!-- iCheck for checkboxes and radio inputs -->
+	<link rel="stylesheet" href="/template/iCheck/all.css">
+	<script src="/template/iCheck/icheck.min.js"></script>
+	<!-- Select2 -->
+	<link rel="stylesheet" href="/template/css/select2.min.css">
+	<script src="/template/js/select2.full.min.js"></script>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+				checkboxClass: 'icheckbox_minimal-blue',
+				radioClass: 'iradio_minimal-blue'
+			});
+		});
+		jQuery(document).ready(function($) {
+			$(".select2").select2();
+		});
+	</script>
+<!-- PLUGINS END -->
+
+<script type="text/javascript" src="/views/admin/crup.js"></script>
+<script type="text/javascript">crup.name = "size";</script>
+<script type="text/javascript" src="/views/admin/size/sizecrup.js"></script>
+
+<section class="content-header">
+	<h1>
+		Size Create
+		<small>Добавление новой записи в таблицу Size</small>
+	</h1>
+</section>
+
+<section class="content">
+<div class="col-lg-8 col-md-9 col-sm-12 col-xs-12">
+	<div class="box box-default">
+		<div class="box-header with-border">
+			<h3 class="box-title">Size</h3>
+			<div class="box-tools pull-right">
+				<button class="btn btn-box-tool" data-widget="remove" 
+					onclick="window.location.href = '/admin/size/'">
+					<i class="fa fa-remove"></i>
+				</button>
+			</div>
+		</div>
+
+		<div class="box-body">
+		<form id="ad-size" action="/admin/size/crup/submit" method="post">
+			
+			<div class="form-group ajax">
+				<div class="field-header">
+					<label>Категория</label>
+				</div>
+				<select id="ad-size-category" 
+					class="form-control select2"
+					required
+					style="width: 100%;">
+					<option></option>
+				</select>
+			</div>
+
+			<div class="form-group ajax">
+				<div class="field-header">
+					<label>Подкатегория</label>
+				</div>
+				<select name="size[category]" 
+					id="ad-size-subcategory" 
+					class="form-control select2"
+					required
+					style="width: 100%;">
+					<option></option>
+				</select>
+			</div>
+
+			<div class="form-group ajax">
+				<div class="field-header">
+					<label>Название</label>
+				</div>
+				<input type="text" 
+					name="size[name]"
+					id="ad-size-name" 
+					class="form-control" 
+					placeholder="Введите название"
+					required>
+				<label class="control-label" for="ad-size-name">
+					<i class="ico fa fa-check"></i> 
+					<font class="message">Ошибка</font>
+				</label>
+			</div>
+
+			<div class="form-group">
+				<div class="field-header">
+					<label>Статус</label>
+				</div>
+				<label>
+					<input type="checkbox" 
+						class="minimal"
+						id="ad-status" 
+						checked>
+					Включен
+					<input type="hidden"
+						id="ad-status-text"
+						name="size[status]"
+						value="true">
+				</label>
+			</div>
+
+			<button class="btn btn-success"
+				form="ad-size" 
+				type="submit" 
+				style="float: right;">
+				Сохранить
+			</button>
+		</form>
+		</div>
+	</div>
+</div>
+</section>
