@@ -60,7 +60,7 @@ class Category extends AbstractTable {
 
 	public function setParent(Category $parent) {
 		if(parent::set($parent, "checkParent")) {
-			if(($this->validator->checkParentID)($parent, $this->id)) {
+			if($this->validator->checkParentID($parent, $this->id)) {
 				$this->parent = $parent; 
 			} else {
 				throw new WrongDataException($parent);
@@ -139,15 +139,6 @@ class Category extends AbstractTable {
 final class NullCategory extends Category {
 
 	public function __construct() {
-		$this->validator = new class extends AbstractValidator {
-			public function __get($name) {
-				throw new NullAccessException();
-			}
-
-			public function errorInfo() : array {
-				throw new NullAccessException();
-			}
-		};
 		$this->id = 0;
 	}
 

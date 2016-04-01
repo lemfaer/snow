@@ -49,7 +49,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @return void
 	 */
 	protected function setID(int $id) {
-		$this->id = self::set($id, $this->validator->checkID);
+		$this->id = self::set($id, "checkID");
 	}
 
 	/**
@@ -60,7 +60,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @return void
 	 */
 	public function setStatus(bool $status) {
-		$this->status = self::set($status, $this->validator->checkStatus);
+		$this->status = self::set($status, "checkStatus");
 	}
 
 	/**
