@@ -16,10 +16,8 @@
 	});
 </script>
 
-<script type="text/javascript" src="/views/admin/adminform.js"></script>
-<script type="text/javascript">
-	adminForm.name = "color";
-</script>
+<script type="text/javascript" src="/views/admin/crup.js"></script>
+<script type="text/javascript">crup.name = "color";</script>
 
 <section class="content-header">
 	<h1>

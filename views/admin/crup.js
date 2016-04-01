@@ -1,11 +1,11 @@
-var adminForm = {
-	"name" : null,
+var crup = {
+	name: null,
 };
 
 jQuery(document).ready(function($) {
 
 	function checkResult(data) {
-		var name = adminForm.name;
+		var name = crup.name;
 		$.each(data.single, function(key, value) {
 			var input  = $("#ad-" + name + '-' + key);
 			var fgroup = $(input).parents(".form-group");
@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
 		event.preventDefault();
 		var input = $(this).find(".form-control");
 		
-		var name = adminForm.name;
+		var name = crup.name;
 		var link = "/admin/" + name + "/crup/check";
 
 		var key = $(input).attr("id").replace("ad-" + name + '-', '');
@@ -52,21 +52,27 @@ jQuery(document).ready(function($) {
 		}, "json");
 	});
 
-	$("#ad-" + adminForm.name).submit(function(event) {
+	$("#ad-" + crup.name).submit(function(event) {
 		var dom = this;
 		event.preventDefault();
 
-		var name = adminForm.name;
+		var name = crup.name;
 		var link = "/admin/" + name + "/crup/check";
 
 		var data = {};
 		data[name] = {};
+
+		$("#ad-status").iCheck("update");
+		var status = $("#ad-status").prop("checked");
+		$("#ad-status-text").val(status);
+
 		$(".form-group.ajax").each(function(index, elem) {
 			var input = $(elem).find(".form-control");
 			var key = $(input).attr("id").replace("ad-" + name + '-', '');
 			var value = $(input).val();
 			data[name][key] = value;
 		});
+		data[name].status = status; 
 
 		$.post(link, data, function(data) {
 			if(data.success) {
@@ -81,11 +87,6 @@ jQuery(document).ready(function($) {
 		var input  = $(fgroup).find(".form-control");
 		var text   = $(this).find("font.up_message");
 		var ico    = $(this).find("i.up_ico");
-
-		console.log("enab" + $(input).prop("enabled"));
-		console.log("disab" + $(input).prop("disabled"));
-
-		console.log("atr" + $(input).attr("disabled"));
 
 		if($(input).prop("disabled")) {
 			$(input).prop("disabled", false);
