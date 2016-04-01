@@ -134,7 +134,7 @@ abstract class AbstractTable extends AbstractRecord {
 		$class = get_class($this);
 
 		try {
-			$obj = $class::findFirst(array("id" => $this->id), !$this->getStatus());
+			$obj = $class::findFirst(array("id" => $this->id), true);
 		} catch(QueryEmptyResultException $e) {
 			throw new UncheckedQueryException("object with id must be in db", $e);
 		}
@@ -154,6 +154,9 @@ abstract class AbstractTable extends AbstractRecord {
 			$bool = $bool && $value === $valueDB;
 		};
 		self::reflect($func);
+
+		//status check
+		$bool = $bool && $this->status === $obj->status;
 
 		return $bool;
 	}
@@ -409,6 +412,7 @@ abstract class AbstractTable extends AbstractRecord {
 			$updateArr[$name] = $value;
 		};
 		self::reflect($func);
+		$updateArr["status"] = $this->status;
 
 		$set = self::buildSet($updateArr);
 		$binds = self::buildBinds($updateArr);
