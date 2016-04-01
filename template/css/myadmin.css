@@ -24,3 +24,16 @@
 	cursor: pointer;
 	float: right;
 }
+
+.ad-add-link {
+	float: right;
+}
+.ad-update-link, .ad-delete-link {
+	cursor: pointer;
+}
+.ad-delete-link {
+	color: #dd4b39;
+}
+.ad-delete-link:hover {
+	color: #f97d6d;
+}

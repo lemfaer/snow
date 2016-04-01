@@ -14,13 +14,14 @@
 	</script>
 <!-- PLUGINS END -->
 
+<script type="text/javascript" src="/views/admin/read.js"></script>
+<script type="text/javascript">read.name = "color";</script>
+
 <section class="content-header">
 	<h1>
 		Color Read
 		<small>Просмотр записей из таблицы Color</small>
-		<button class="btn btn-success" 
-			style="float: right;" 
-			onclick="window.location.href = '/admin/color/create';">
+		<button class="btn btn-success ad-add-link">
 			Добавить запись
 		</button>
 	</h1>
@@ -49,25 +50,22 @@
 						<?php $name   = $color->getName(); ?>
 						<?php $value  = $color->getValue(); ?>
 						<?php $status = $color->getStatus() ? "enabled" : "disabled"; ?>
-
-						<?php $updateLink = "/admin/color/update/$id"; ?>
-						<?php $deleteLink = "/admin/color/delete/$id"; ?>
+						
 						<tr>
 							<td><?= $id; ?></td>
 							<td><?= $name; ?></td>
 							<td><?= $value; ?></td>
 							<td><?= $status; ?></td>
 							<td style="width: 1px;">
-								<a href="<?= $updateLink; ?>">
-									<i class="fa fa-edit"></i>
-									Изменить
+								<a class="ad-update-link" data-id="<?= $id; ?>">
+									<i class="fa fa-edit"></i> Изменить
 								</a>
 							</td>
 							<td style="width: 1px;">
-								<a href="<?= $deleteLink; ?>" style="color: #dd4b39;">
-									<i class="fa fa-remove"></i>
-									Удалить
-								</a></td>
+								<a class="ad-delete-link" data-id="<?= $id; ?>">
+									<i class="fa fa-remove"></i> Удалить
+								</a>
+							</td>
 							</tr>
 					<?php endforeach ?>
 				</tbody>
