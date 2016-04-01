@@ -54,7 +54,7 @@ final class CRUPColorForm extends AbstractCRUPForm {
 	public static function create(array $data) {
 		$name   = $data['name'];
 		$value  = $data['value'];
-		$status = isset($data['status']);
+		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
 			$c = new Color();
@@ -77,17 +77,18 @@ final class CRUPColorForm extends AbstractCRUPForm {
 	 */
 	public static function update(array $data) {
 		$id     = $data['id'];
-		$name   = $data['name'];
-		$value  = $data['value'];
-		$status = isset($data['status']);
+		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$c = Color::findFirst(array("id" => $id));
-			$c->setName($name);
-			$c->setValue($value);
+			$c = Color::findFirst(array("id" => $id), true);
 			$c->setStatus($status);
 
-			$c->update();
+			isset($data['name'])  ? ($c->setName($data['name']))   : (null);
+			isset($data['value']) ? ($c->setValue($data['value'])) : (null);
+
+			if(!$c->isSaved()) {
+				$c->update();
+			}
 		} catch(RecordNotFoundException $e) {
 			throw new WrongDataException($data, "wrong id", $e);
 		} catch(WrongDataException $e) {
