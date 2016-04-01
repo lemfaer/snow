@@ -327,7 +327,17 @@ abstract class AbstractTable extends AbstractRecord {
 	 */
 	public function insert() {
 		if(isset($this->id) || $this->isNull() || $this->errorInfo()) {
-			throw new WrongDataException();
+			if(isset($this->id)) {
+				throw new WrongDataException($this, "id is set already");
+			}
+			if($this->isNull()) {
+				throw new WrongDataException($this, "object not filled");
+			}
+			if($error = $this->errorInfo()) {
+				throw new WrongDataException($this, "object filled with errors: "
+					.implode(", ", $error));
+			}
+			throw new UncheckedLogicException("all options checked here");
 		}
 
 		$class = get_class($this);
@@ -371,7 +381,20 @@ abstract class AbstractTable extends AbstractRecord {
 	 */
 	public function update() {
 		if(!isset($this->id) || $this->isNull() || $this->errorInfo() || $this->isSaved()) {
-			throw new WrongDataException();
+			if(!isset($this->id)) {
+				throw new WrongDataException($this, "id not set");
+			}
+			if($this->isNull()) {
+				throw new WrongDataException($this, "object not filled");
+			}
+			if($error = $this->errorInfo()) {
+				throw new WrongDataException($this, "object filled with errors: "
+					.implode(", ", $error));
+			}
+			if($this->isSaved()) {
+				throw new WrongDataException($this, "object already saved");
+			}
+			throw new UncheckedLogicException("all options checked here");
 		}
 
 		$class = get_class($this);
