@@ -2,7 +2,7 @@
 	<!-- $colorList -->
 <!-- REQUIRED END -->
 
-<!-- DataTables -->
+<!-- PLUGINS -->
 	<link rel="stylesheet" href="/template/css/dataTables.bootstrap.css">
 
 	<script src="/template/js/jquery.dataTables.min.js"></script>
@@ -12,7 +12,7 @@
 			$("#datatable").DataTable();
 		});
 	</script>
-<!-- DataTables end -->
+<!-- PLUGINS END -->
 
 <section class="content-header">
 	<h1>

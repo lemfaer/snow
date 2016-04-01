@@ -2,33 +2,33 @@
 	<!-- $color -->
 <!-- REQUIRED END -->
 
+<!-- PLUGINS -->
+	<!-- bootstrap color picker -->
+	<link rel="stylesheet" href="/template/colorpicker/bootstrap-colorpicker.min.css">
+	<script src="/template/colorpicker/bootstrap-colorpicker.min.js"></script>
+	<!-- iCheck for checkboxes and radio inputs -->
+	<link rel="stylesheet" href="/template/iCheck/all.css">
+	<script src="/template/iCheck/icheck.min.js"></script>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$("#colorpicker").colorpicker();
+
+			$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+				checkboxClass: 'icheckbox_minimal-blue',
+				radioClass: 'iradio_minimal-blue'
+			});
+		});
+	</script>
+<!-- PLUGINS END -->
+
+<script type="text/javascript" src="/views/admin/crup.js"></script>
+<script type="text/javascript">crup.name = "color";</script>
+
 <?php $id     = $color->getID(); ?>
 <?php $name   = $color->getName(); ?>
 <?php $value  = $color->getValue(); ?>
 <?php $status = $color->getStatus(); ?>
-
-<!-- bootstrap color picker -->
-<link rel="stylesheet" href="/template/colorpicker/bootstrap-colorpicker.min.css">
-<script src="/template/colorpicker/bootstrap-colorpicker.min.js"></script>
-<!-- iCheck for checkboxes and radio inputs -->
-<link rel="stylesheet" href="/template/iCheck/all.css">
-<script src="/template/iCheck/icheck.min.js"></script>
-
-<script type="text/javascript">
-	jQuery(document).ready(function($) {
-		$("#colorpicker").colorpicker();
-
-		$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-			checkboxClass: 'icheckbox_minimal-blue',
-			radioClass: 'iradio_minimal-blue'
-		});
-	});
-</script>
-
-<script type="text/javascript" src="/views/admin/adminform.js"></script>
-<script type="text/javascript">
-	adminForm.name = "color";
-</script>
 
 <section class="content-header">
 	<h1>
@@ -122,11 +122,11 @@
 						name="color[status]"
 						value="true">
 				</label>
-            </div>
+			</div>
 
-            <button class="btn btn-success"
-            	form="ad-color" 
-            	type="submit" 
+			<button class="btn btn-success"
+				form="ad-color" 
+				type="submit" 
 				style="float: right;">
 				Сохранить
 			</button>
