@@ -53,6 +53,12 @@
 		<div class="box-body">
 		<form id="ad-color" action="/admin/color/crup/submit" method="post">
 			<div class="form-group">
+				<input type="hidden"
+					name="color[id]"
+					value="<?= $id; ?>">
+			</div>
+
+			<div class="form-group">
 				<div class="field-header">
 					<label>Название</label>
 					<a class="ad_update">
@@ -108,9 +114,13 @@
 				<label>
 					<input type="checkbox" 
 						class="minimal" 
-						name="color[status]" 
+						id="ad-status" 
 						<?= ($status) ? ("checked") : (null) ?>>
 					Включен
+					<input type="hidden"
+						id="ad-status-text"
+						name="color[status]"
+						value="true">
 				</label>
             </div>
 

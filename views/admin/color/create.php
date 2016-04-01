@@ -84,10 +84,14 @@
 				</div>
 				<label>
 					<input type="checkbox" 
-						class="minimal" 
-						name="color[status]" 
+						class="minimal"
+						id="ad-status" 
 						checked>
 					Включен
+					<input type="hidden"
+						id="ad-status-text"
+						name="color[status]"
+						value="true">
 				</label>
             </div>
 
