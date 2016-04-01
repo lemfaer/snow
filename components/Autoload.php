@@ -5,7 +5,6 @@
 		$pathArray = array(
 			"/components/",
 			"/controllers/",
-			"/controllers/admin/",
 			"/controllers/cart/",
 			"/controllers/shop/",
 			"/controllers/user/",
