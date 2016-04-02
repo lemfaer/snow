@@ -7,12 +7,17 @@
 .form-group.has-error label.control-label {
 	color: #dd4b39;
 }
-
 .form-group label.control-label {
 	display: none;
 }
 .form-group.has-success label.control-label, .form-group.has-error label.control-label {
 	display: block;
+}
+.form-group.has-success .select2-container {
+	border: 1px solid #01b764 !important;
+}
+.form-group.has-error .select2-container {
+	border: 1px solid #ef6958 !important;
 }
 
 .field-header {
