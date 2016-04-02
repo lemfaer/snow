@@ -34,8 +34,7 @@
 		<div class="box-header with-border">
 			<h3 class="box-title">Color</h3>
 			<div class="box-tools pull-right">
-				<button class="btn btn-box-tool" data-widget="remove" 
-					onclick="window.location.href = '/admin/color/'">
+				<button class="btn btn-box-tool ad-read-link" data-widget="remove">
 					<i class="fa fa-remove"></i>
 				</button>
 			</div>

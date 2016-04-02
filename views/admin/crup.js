@@ -107,4 +107,11 @@ jQuery(document).ready(function($) {
 		}
 	});
 
+	$(".ad-read-link").click(function(event) {
+		var name = crup.name;
+		var link = "/admin/" + name;
+
+		window.location.href = link;
+	});
+
 });
