@@ -19,7 +19,11 @@ class CharNameValidator extends AbstractTableValidator {
 
 	public function checkCategory(Category $category) : bool {
 		$error = array("category" => parent::CATEGORY_OBJECT_ERROR);
-		return parent::checkObject($category, $error);
+		if($category instanceof NullCategory) {
+			return parent::log(false, $error);
+		} else {
+			return parent::checkObject($category, $error);
+		}
 	}
 //validate methods end
 
