@@ -59,7 +59,7 @@
 		<form id="ad-size" action="/admin/size/crup/submit" method="post">
 			
 			<!-- ID -->
-			<div class="form-group">
+			<div class="form-group id">
 				<input type="hidden"
 					name="size[id]"
 					value="<?= $id; ?>">

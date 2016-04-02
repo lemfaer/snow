@@ -19,6 +19,9 @@
 .form-group.has-error .select2-container {
 	border: 1px solid #ef6958 !important;
 }
+.form-group.id {
+	margin: 0;
+}
 
 .field-header {
 	display: block;

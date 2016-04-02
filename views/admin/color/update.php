@@ -54,7 +54,7 @@
 		<form id="ad-color" action="/admin/color/crup/submit" method="post">
 
 			<!-- ID -->
-			<div class="form-group">
+			<div class="form-group id">
 				<input type="hidden"
 					name="color[id]"
 					value="<?= $id; ?>">
