@@ -110,13 +110,13 @@ jQuery(document).ready(function($) {
 			$(input).prop("disabled", false);
 			$(text).text("Не менять");
 			$(ico).removeClass("fa-edit");
-			$(ico).addClass("fa-error");
+			$(ico).addClass("fa-remove");
 
 			$(fgroup).addClass("ajax");
 		} else {
 			$(input).prop("disabled", true);
 			$(text).text("Изменить");
-			$(ico).removeClass("fa-error");
+			$(ico).removeClass("fa-remove");
 			$(ico).addClass("fa-edit");
 
 			$(fgroup).removeClass("ajax");
