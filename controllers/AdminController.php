@@ -20,6 +20,7 @@ class AdminController {
 
 //form name
 	private $formNameArr = array(
+		"size"  => "CRUPSizeForm",
 		"color" => "CRUPColorForm",
 	);
 
