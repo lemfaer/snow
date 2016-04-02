@@ -2,33 +2,48 @@ var crup = {
 	name: null,
 };
 
+function checkAjax(input) {
+	var name = crup.name;
+	var link = "/admin/" + name + "/crup/check";
+
+	var key = $(input).attr("id").replace("ad-" + name + '-', '');
+	var value = $(input).val();
+	data = {};
+	data[name] = {};
+	data[name][key] = value;
+
+	$.post(link, data, function(data) {
+		checkResult(data);
+	}, "json");
+}
+
+function checkResult(data) {
+	var name = crup.name;
+	$.each(data.single, function(key, value) {
+		var input  = $("#ad-" + name + '-' + key);
+		var fgroup = $(input).parents(".form-group");
+
+		var text   = $(fgroup).find("font.message");
+		var ico    = $(fgroup).find("i.ico");
+		var status = fgroup;
+
+		if(value) {
+			$(text).text("Успех!");
+			$(status).removeClass("has-error");
+			$(status).addClass("has-success");
+			$(ico).removeClass("fa-remove");
+			$(ico).addClass("fa-check");
+		} else {
+			$(text).text(data.error[key]);
+			$(status).removeClass("has-success");
+			$(status).addClass("has-error");
+			$(ico).removeClass("fa-check");
+			$(ico).addClass("fa-remove");
+		}
+	});
+}
+
 jQuery(document).ready(function($) {
-
-	function checkResult(data) {
-		var name = crup.name;
-		$.each(data.single, function(key, value) {
-			var input  = $("#ad-" + name + '-' + key);
-			var fgroup = $(input).parents(".form-group");
-
-			var text   = $(fgroup).find("font.message");
-			var ico    = $(fgroup).find("i.ico");
-			var status = fgroup;
-
-			if(value) {
-				$(text).text("Успех!");
-				$(status).removeClass("has-error");
-				$(status).addClass("has-success");
-				$(ico).removeClass("fa-error");
-				$(ico).addClass("fa-success");
-			} else {
-				$(text).text(data.error[key]);
-				$(status).removeClass("has-success");
-				$(status).addClass("has-error");
-				$(ico).removeClass("fa-success");
-				$(ico).addClass("fa-error");
-			}
-		});
-	}
 
 	$(".form-group").on("focusout", function(event) {
 		if(!$(this).hasClass("ajax")) {
@@ -37,19 +52,22 @@ jQuery(document).ready(function($) {
 		
 		event.preventDefault();
 		var input = $(this).find(".form-control");
+		if($(input).hasClass("select2")) {
+			return;
+		}
 		
-		var name = crup.name;
-		var link = "/admin/" + name + "/crup/check";
+		checkAjax(input);
+	});
 
-		var key = $(input).attr("id").replace("ad-" + name + '-', '');
-		var value = $(input).val();
-		data = {};
-		data[name] = {};
-		data[name][key] = value;
+	$(".form-group").on("select2:select", function(event) {
+		if(!$(this).hasClass("ajax")) {
+			return;
+		}
 
-		$.post(link, data, function(data) {
-			checkResult(data);
-		}, "json");
+		event.preventDefault();
+		var input = $(this).find(".form-control");
+
+		checkAjax(input);
 	});
 
 	$("#ad-" + crup.name).submit(function(event) {
@@ -75,7 +93,7 @@ jQuery(document).ready(function($) {
 		data[name].status = status; 
 
 		$.post(link, data, function(data) {
-			if(data.success) {
+			if($(".form-group.has-error").length === 0) {
 				dom.submit();
 			}
 			checkResult(data);
