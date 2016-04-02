@@ -40,6 +40,7 @@
 <section class="content">
 <div class="col-lg-8 col-md-9 col-sm-12 col-xs-12">
 	<div class="box box-default">
+
 		<div class="box-header with-border">
 			<h3 class="box-title">Color</h3>
 			<div class="box-tools pull-right">
@@ -51,12 +52,15 @@
 
 		<div class="box-body">
 		<form id="ad-color" action="/admin/color/crup/submit" method="post">
+
+			<!-- ID -->
 			<div class="form-group">
 				<input type="hidden"
 					name="color[id]"
 					value="<?= $id; ?>">
 			</div>
 
+			<!-- Name(Название) -->
 			<div class="form-group">
 				<div class="field-header">
 					<label>Название</label>
@@ -79,6 +83,7 @@
 				</label>
 			</div>
 
+			<!-- Value(Цвет) -->
 			<div class="form-group">
 				<div class="field-header">
 					<label>Цвет</label>
@@ -106,6 +111,7 @@
 				</label>
 			</div>
 
+			<!-- Status(Статус) -->
 			<div class="form-group">
 				<div class="field-header">
 					<label>Статус</label>
@@ -123,6 +129,7 @@
 				</label>
 			</div>
 
+			<!-- Submit -->
 			<button class="btn btn-success"
 				form="ad-color" 
 				type="submit" 

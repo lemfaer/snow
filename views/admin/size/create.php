@@ -33,6 +33,7 @@
 <section class="content">
 <div class="col-lg-8 col-md-9 col-sm-12 col-xs-12">
 	<div class="box box-default">
+	
 		<div class="box-header with-border">
 			<h3 class="box-title">Size</h3>
 			<div class="box-tools pull-right">
@@ -45,6 +46,7 @@
 		<div class="box-body">
 		<form id="ad-size" action="/admin/size/crup/submit" method="post">
 			
+			<!-- Parent(Категория) -->
 			<div class="form-group">
 				<div class="field-header">
 					<label>Категория</label>
@@ -61,6 +63,7 @@
 				</label>
 			</div>
 
+			<!-- Category(Подкатегория) -->
 			<div class="form-group ajax">
 				<div class="field-header">
 					<label>Подкатегория</label>
@@ -78,6 +81,7 @@
 				</label>
 			</div>
 
+			<!-- Name(Название) -->
 			<div class="form-group ajax">
 				<div class="field-header">
 					<label>Название</label>
@@ -94,6 +98,7 @@
 				</label>
 			</div>
 
+			<!-- Status(Статус) -->
 			<div class="form-group">
 				<div class="field-header">
 					<label>Статус</label>
@@ -111,6 +116,7 @@
 				</label>
 			</div>
 
+			<!-- Submit -->
 			<button class="btn btn-success"
 				form="ad-size" 
 				type="submit" 
