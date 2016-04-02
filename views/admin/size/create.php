@@ -21,7 +21,7 @@
 
 <script type="text/javascript" src="/views/admin/crup.js"></script>
 <script type="text/javascript">crup.name = "size";</script>
-<script type="text/javascript" src="/views/admin/size/sizecrup.js"></script>
+<script type="text/javascript" src="/views/admin/inherits.js"></script>
 
 <section class="content-header">
 	<h1>
@@ -45,16 +45,20 @@
 		<div class="box-body">
 		<form id="ad-size" action="/admin/size/crup/submit" method="post">
 			
-			<div class="form-group ajax">
+			<div class="form-group">
 				<div class="field-header">
 					<label>Категория</label>
 				</div>
-				<select id="ad-size-category" 
+				<select id="ad-size-parent" 
 					class="form-control select2"
 					required
 					style="width: 100%;">
 					<option></option>
 				</select>
+				<label class="control-label" for="ad-size-category">
+					<i class="ico fa fa-check"></i> 
+					<font class="message">Ошибка</font>
+				</label>
 			</div>
 
 			<div class="form-group ajax">
@@ -62,12 +66,16 @@
 					<label>Подкатегория</label>
 				</div>
 				<select name="size[category]" 
-					id="ad-size-subcategory" 
+					id="ad-size-category" 
 					class="form-control select2"
 					required
 					style="width: 100%;">
 					<option></option>
 				</select>
+				<label class="control-label" for="ad-size-subcategory">
+					<i class="ico fa fa-check"></i> 
+					<font class="message">Ошибка</font>
+				</label>
 			</div>
 
 			<div class="form-group ajax">
