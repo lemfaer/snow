@@ -39,7 +39,6 @@
 						<th>ID</th>
 						<th>Name</th>
 						<th>Short</th>
-						<th>Description</th>
 						<th>Image</th>
 						<th>Parent</th>
 						<th>Sort</th>
@@ -55,7 +54,6 @@
 						<?php $id     = $category->getID(); ?>
 						<?php $name   = $category->getName(); ?>
 						<?php $short  = $category->getShortName(); ?>
-						<?php $desc   = $category->getDescription(); ?>
 						<?php $image  = $category->getImage()->link(); ?>
 						<?php $parent = $category->getParent()->getName(); ?>
 						<?php $sort   = $category->getSortOrder(); ?>
@@ -65,7 +63,6 @@
 							<td><?= $id; ?></td>
 							<td><?= $name; ?></td>
 							<td><?= $short; ?></td>
-							<td><?= $desc; ?></td>
 							<td><a href="<?= $image; ?>">image</a></td>
 							<td><?= $parent; ?></td>
 							<td><?= $sort; ?></td>
@@ -88,7 +85,6 @@
 						<th>ID</th>
 						<th>Name</th>
 						<th>Short</th>
-						<th>Description</th>
 						<th>Image</th>
 						<th>Parent</th>
 						<th>Sort</th>
