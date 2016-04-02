@@ -73,12 +73,12 @@ final class CRUPSizeForm extends AbstractCRUPForm {
 		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$c = new Size();
-			$c->setName($name);
-			$c->setStatus($status);
-			$c->setCategory($category);
+			$s = new Size();
+			$s->setName($name);
+			$s->setStatus($status);
+			$s->setCategory($category);
 
-			$c->insert();
+			$s->insert();
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}
@@ -96,21 +96,21 @@ final class CRUPSizeForm extends AbstractCRUPForm {
 		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$c = Size::findFirst(array("id" => $id), true);
-			$c->setStatus($status);
+			$s = Size::findFirst(array("id" => $id), true);
+			$s->setStatus($status);
 
-			isset($data['name']) ? ($c->setName($data['name'])) : (null);
+			isset($data['name']) ? ($s->setName($data['name'])) : (null);
 			if(isset($data['category'])) {
 				try {
 					$category = Category::findFirst(array("id" => $data['category']));
 				} catch(RecordNotFoundException $e) {
 					throw new WrongDataException($data['category'], "wrong id", $e);
 				}
-				$c->setCategory($category);
+				$s->setCategory($category);
 			}
 
-			if(!$c->isSaved()) {
-				$c->update();
+			if(!$s->isSaved()) {
+				$s->update();
 			}
 		} catch(RecordNotFoundException $e) {
 			throw new WrongDataException($data, "wrong id", $e);
