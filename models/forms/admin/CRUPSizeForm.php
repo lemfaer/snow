@@ -18,27 +18,16 @@ final class CRUPSizeForm extends AbstractCRUPForm {
 	 * @return string массив в формате json, ответ на ajax запрос
 	 */
 	public static function check(array $data) : string {
-		if(isset($data['category'])) {
-			try {
-				$data['category'] = Category::findFirst(
-					array("id" => $data['category']));
-			} catch(RecordNotFoundException $e) {
-				$data['category'] = new NullCategory();
-			}
-		}
+		$validator    = new SizeValidator();
+		$catValidator = new CategoryValidator();
 
-		$validator = new SizeValidator();
-
-		$method = function(string $key) : string {
+		$method = function(string $key) use(&$catValidator) {
 			switch ($key) {
 				case "id":
 					$m = "checkID";
 					break;
 				case "category":
-					$m = "checkCategory";
-					break;
-				case "subcategory":
-					$m = "checkCategory";
+					$m = array($catValidator, "checkID");
 					break;
 				case "name":
 					$m = "checkName";

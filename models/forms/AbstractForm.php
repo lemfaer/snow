@@ -26,7 +26,11 @@ abstract class AbstractForm {
 		$check = true;
 		foreach ($data as $key => $value) {
 			$method = $valMethod($key);
-			$paramCheck = $validator->$method($value);
+			if(!is_array($method)) {
+				$method = array($validator, $method);
+			}
+			$paramCheck = call_user_func($method, $value);
+
 			$result['single'][$key] = $paramCheck;
 			if(!$paramCheck) {
 				$error = $validator->errorInfo();
