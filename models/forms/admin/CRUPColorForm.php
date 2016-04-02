@@ -14,7 +14,7 @@ final class CRUPColorForm extends AbstractCRUPForm {
 	 * Выполняет валидацию данных полученных из формы Color
 	 * 
 	 * @param array $data массив переданный из формы
-	 * @throws WrongDataException переданы неправильные данные
+	 * @throws WrongDataException переданые данные невозможно проверить
 	 * @return string массив в формате json, ответ на ajax запрос
 	 */
 	public static function check(array $data) : string {
@@ -45,7 +45,7 @@ final class CRUPColorForm extends AbstractCRUPForm {
 	}
 
 	/**
-	 * Сосдает новую запись в базе данных на основе данных из формы
+	 * Сосдает новую запись Color в базе данных на основе данных из формы
 	 * 
 	 * @param array $data массив переданный из формы
 	 * @throws WrongDataException переданы неправильные данные
@@ -69,7 +69,7 @@ final class CRUPColorForm extends AbstractCRUPForm {
 	}
 
 	/**
-	 * Редактирует запись в базе данных на основе данных из формы
+	 * Редактирует запись Color в базе данных на основе данных из формы
 	 * 
 	 * @param array $data массив переданный из формы
 	 * @throws WrongDataException переданы неправильные данные
