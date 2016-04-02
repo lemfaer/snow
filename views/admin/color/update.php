@@ -38,6 +38,7 @@
 </section>
 
 <section class="content">
+<div class="row">
 <div class="col-lg-8 col-md-9 col-sm-12 col-xs-12">
 	<div class="box box-default">
 
@@ -139,5 +140,6 @@
 		</form>
 		</div>
 	</div>
+</div>
 </div>
 </section>
