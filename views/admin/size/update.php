@@ -37,8 +37,8 @@
 
 <section class="content-header">
 	<h1>
-		Size Create
-		<small>Добавление новой записи в таблицу Size</small>
+		Size Update
+		<small>Редактирование записи в таблице Size</small>
 	</h1>
 </section>
 
