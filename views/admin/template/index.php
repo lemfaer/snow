@@ -25,7 +25,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="/template/css/admin.css">
     <link rel="stylesheet" href="/template/css/skin-blue.css">
-    <link rel="stylesheet" href="/template/css/myadmin.css">
 
     <!-- jQuery 2.1.4 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
