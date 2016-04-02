@@ -28,10 +28,13 @@ abstract class AbstractForm {
 			$method = $valMethod($key);
 			$paramCheck = $validator->$method($value);
 			$result['single'][$key] = $paramCheck;
+			if(!$paramCheck) {
+				$error = $validator->errorInfo();
+				$result['error'][$key] = array_pop($error);
+			}
 			$check = $paramCheck && $check;
 		}
 
-		$result['error'] = $validator->errorInfo();
 		$result['success'] = $check;
 
 		return $result;
