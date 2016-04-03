@@ -83,10 +83,6 @@ final class CRUPUserForm extends AbstractCRUPForm {
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}
-
-		if(!$u->isSaved()) {
-			throw new UncheckedLogicException("object must be saved here");
-		}
 	}
 
 	/**
@@ -119,10 +115,6 @@ final class CRUPUserForm extends AbstractCRUPForm {
 			throw new WrongDataException($data, "wrong id", $e);
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
-		}
-
-		if(!$u->isSaved()) {
-			throw new UncheckedLogicException("object must be saved here");
 		}
 	}
 
