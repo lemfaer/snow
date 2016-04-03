@@ -45,7 +45,7 @@ final class CRUPColorForm extends AbstractCRUPForm {
 	}
 
 	/**
-	 * Сосдает новую запись Color в базе данных на основе данных из формы
+	 * Создает новую запись Color в базе данных на основе данных из формы
 	 * 
 	 * @param array $data массив переданный из формы
 	 * @throws WrongDataException переданы неправильные данные

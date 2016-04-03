@@ -54,7 +54,7 @@ final class CRUPUserForm extends AbstractCRUPForm {
 	}
 
 	/**
-	 * Сосдает новую запись User в базе данных на основе данных из формы
+	 * Создает новую запись User в базе данных на основе данных из формы
 	 * 
 	 * @param array $data массив переданный из формы
 	 * @throws WrongDataException переданы неправильные данные

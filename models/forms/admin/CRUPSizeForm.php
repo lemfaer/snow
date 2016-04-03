@@ -46,7 +46,7 @@ final class CRUPSizeForm extends AbstractCRUPForm {
 	}
 
 	/**
-	 * Сосдает новую запись Size в базе данных на основе данных из формы
+	 * Создает новую запись Size в базе данных на основе данных из формы
 	 * 
 	 * @param array $data массив переданный из формы
 	 * @throws WrongDataException переданы неправильные данные

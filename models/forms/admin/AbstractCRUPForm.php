@@ -26,7 +26,7 @@ abstract class AbstractCRUPForm extends AbstractForm {
 	}
 
 	/**
-	 * Сосдает новую запись в базе данных на основе данных из формы
+	 * Создает новую запись в базе данных на основе данных из формы
 	 * 
 	 * @param array $data массив переданный из формы
 	 * @return void
