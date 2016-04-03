@@ -33,6 +33,7 @@ abstract class AbstractForm {
 
 			$result['single'][$key] = $paramCheck;
 			if(!$paramCheck) {
+				$validator = array_shift($method);
 				$error = $validator->errorInfo();
 				$result['error'][$key] = array_pop($error);
 			}
