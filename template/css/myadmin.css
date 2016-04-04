@@ -45,3 +45,14 @@
 .ad-delete-link:hover {
 	color: #f97d6d;
 }
+
+.clones {
+	margin-bottom: 1em;
+}
+.add-clone {
+	display: block;
+	margin: 0 auto;
+}
+.sample {
+	display: none;
+}
