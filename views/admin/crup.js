@@ -45,12 +45,7 @@ function checkResult(data) {
 
 jQuery(document).ready(function($) {
 
-	$(".form-group").on("focusout", function(event) {
-		if(!$(this).hasClass("ajax")) {
-			return;
-		}
-		
-		event.preventDefault();
+	$("form").on("focusout", ".form-group.ajax", function(event) {
 		var input = $(this).find(".form-control");
 		if($(input).hasClass("select2")) {
 			return;
@@ -59,12 +54,7 @@ jQuery(document).ready(function($) {
 		checkAjax(input);
 	});
 
-	$(".form-group").on("select2:select", function(event) {
-		if(!$(this).hasClass("ajax")) {
-			return;
-		}
-
-		event.preventDefault();
+	$("form").on("select2:select", ".form-group.ajax", function(event) {
 		var input = $(this).find(".form-control");
 
 		checkAjax(input);
