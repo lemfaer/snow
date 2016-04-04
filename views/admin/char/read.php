@@ -45,9 +45,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($charList as $char): ?>
-						<?php $cName  = $char->getName(); ?>
-						<?php $cValue = $char->getValue(); ?>
+					<?php foreach ($charList as $cValue): ?>
+						<?php $cName  = $cValue->getName(); ?>
 
 						<?php $id     = $cValue->getID(); ?>
 						<?php $name   = $cName->getName(); ?>

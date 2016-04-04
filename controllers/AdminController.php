@@ -8,7 +8,7 @@ class AdminController {
 		"category" => "Category",
 		"user"     => "User",
 		"producer" => "Producer",
-		"char"     => "Characteristic",
+		"char"     => "CharValue",
 		"size"     => "Size",
 		"color"    => "Color",
 	);
