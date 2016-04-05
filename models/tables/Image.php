@@ -66,4 +66,56 @@ class Image extends AbstractTable {
 	}
 //construct end
 
+//gd
+	private function setImage($im) {
+		$this->create700($im);
+		$this->create135($im);
+		$this->create50($im);
+	}
+
+	private function create700($im) {
+		$im = imagescale($im, 700, 700);
+		$this->path700 = $this->createImage($im);
+	}
+
+	private function create135($im) {
+		$im = imagescale($im, 135, 135);
+		$this->path135 = $this->createImage($im);
+	}
+
+	private function create50($im) {
+		$im = imagescale($im, 50, 50);
+		$this->path50 = $this->createImage($im);
+	}
+
+	private function createImage($im) : string {
+		$dir = substr(md5(microtime()), mt_rand(0, 30), 2).'/'.
+			substr(md5(microtime()), mt_rand(0, 30), 2);
+		$path = ROOT."/images/$dir/";
+		if(!file_exists($path)) {
+			mkdir($path, 0777, true);
+		}
+
+		ob_start();
+		imagejpeg($im);
+		$bin = ob_get_contents();
+		ob_end_clean();
+		$name = md5($bin).".jpg";
+		$path = $path.$name;
+
+		imagejpeg($im, $path);
+		return $path;
+	}
+//gd end
+
+//destruct
+	public function __destruct() {
+		if(!isset($this->id)) { // here must be isSaved
+			unlink($this->path700);
+			unlink($this->path135);
+			unlink($this->path50);
+		}
+	}
+//destruct end
+
 }
