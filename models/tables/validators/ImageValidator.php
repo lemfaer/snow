@@ -10,6 +10,7 @@ class ImageValidator extends AbstractTableValidator {
 
 	const PATH_ERROR = "Указан неправильный путь";
 
+	const IMAGE_TYPE_ERROR = "Передан файл с неправильным расширение";
 	const IMAGE_MIN_XY_ERROR   = "Размер изображения меньше 700x700";
 //const end
 
@@ -26,6 +27,18 @@ class ImageValidator extends AbstractTableValidator {
 		$bool  = (imagesx($im) >= self::IMAGE_MIN_X)
 			&& (imagesy($im) >= self::IMAGE_MIN_Y);
 		return  parent::log($bool, $error);
+	}
+
+	public function checkUploadedFile(array $uf) : bool {
+		$error = array("image" => self::IMAGE_TYPE_ERROR);
+		$type = $uf['type'];
+		if($type !== "image/jpeg") {
+			return parent::log(false, $error);
+		}
+
+		$url = $uf['tmp_name'];
+		$im  = imagecreatefromjpeg($url); 
+		return self::checkImage($im);
 	}
 //validate methods end
 

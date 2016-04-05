@@ -38,6 +38,13 @@ class Image extends AbstractTable {
 		$this->path50 = parent::set($path50, "checkPath");
 	}
 
+	public function setByUploadedFile(array $uf) {
+		$uf = parent::set($uf, "checkUploadedFile");
+		
+		$url = $uf['tmp_name'];
+		$im  = imagecreatefromjpeg($url);
+
+		$this->setImage($im);
 	}
 	//setters end
 //main info end
