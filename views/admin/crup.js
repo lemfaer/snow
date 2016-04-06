@@ -59,6 +59,26 @@ jQuery(document).ready(function($) {
 		}
 	);
 
+	$("#ad-" + crup.name).on("change", 
+		".form-group.ajax .form-control.image", 
+		function(event) {
+			var form = $("#ad-" + crup.name);
+			var data = new FormData(form[0]);
+			var link = "/admin/" + crup.name + "/crup/check";
+			
+			$.ajax({
+				url: link,
+				type: "POST",
+				data: data,
+				dataType: "json",
+				processData: false,
+				contentType: false,
+				success: function(data) {
+					checkResult(data);
+				},
+			});
+		}
+	);
 
 	$("#ad-" + crup.name).submit(function(event) {
 		var dom = this;
@@ -70,6 +90,7 @@ jQuery(document).ready(function($) {
 
 		$(".form-group.ajax .form-control:not(.select2):not(.image)").trigger("focusout");
 		$(".form-group.ajax .form-control.select2").trigger("select2:select");
+		$(".form-group.ajax .form-control.image").trigger("change");
 
 		if($(".form-group.has-error").length === 0) {
 			dom.submit();
