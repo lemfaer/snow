@@ -20,23 +20,30 @@ jQuery(document).ready(function($) {
 	}, "json");
 	
 	$(parent).on("select2:select", function(event) {
+		if($(category).length === 0) {
+			return;
+		}
+
 		var id = $(this).select2("val");
 
+		$(category).html('');
+		$(category).parents(".form-group").removeClass("has-error");
+		$(category).parents(".form-group").removeClass("has-success");
+
 		$.post("/admin/select/inherits", {"parent_id": id}, function(data) {
-			$(category).html('');
 			if(data) {
 				$(category).select2({
 					placeholder: "Выбирите подкатегорию",
 					data: data,
-				});
-				$(category).select2("val", "");
+				}).select2("val", "");;
+
 				if($(category).hasClass("update")) {
 					var id = $(category).attr("data-id");
 					$(category).select2("val", id);
 				}
+			} else {
+				$(category).select2("val", "");
 			}
-			$(category).parents(".form-group").removeClass("has-error");
-			$(category).parents(".form-group").removeClass("has-success");
 		}, "json");
 	});
 
