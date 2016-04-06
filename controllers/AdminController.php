@@ -20,10 +20,11 @@ class AdminController {
 
 //form name
 	private $formNameArr = array(
-		"user"  => "CRUPUserForm",
-		"char"  => "CRUPCharForm",
-		"size"  => "CRUPSizeForm",
-		"color" => "CRUPColorForm",
+		"user"     => "CRUPUserForm",
+		"producer" => "CRUPProducerForm",
+		"char"     => "CRUPCharForm",
+		"size"     => "CRUPSizeForm",
+		"color"    => "CRUPColorForm",
 	);
 
 	private function formName(string $name) : string {
