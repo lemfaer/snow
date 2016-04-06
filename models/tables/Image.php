@@ -51,7 +51,18 @@ class Image extends AbstractTable {
 
 //link
 	public function link() {
-		return $this->path700;
+		$sub = "//images.".$_SERVER['HTTP_HOST'];
+		return $sub.$this->path700;
+	}
+
+	public function link135() {
+		$sub = "//images.".$_SERVER['HTTP_HOST'];
+		return $sub.$this->path135;
+	}
+
+	public function link50() {
+		$sub = "//images.".$_SERVER['HTTP_HOST'];
+		return $sub.$this->path50;
 	}
 //link end
 
