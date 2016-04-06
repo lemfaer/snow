@@ -64,7 +64,7 @@
 					style="width: 100%;">
 					<option></option>
 				</select>
-				<label class="control-label" for="ad-char-category">
+				<label class="control-label" for="ad-char-parent">
 					<i class="ico fa fa-check"></i> 
 					<font class="message">Ошибка</font>
 				</label>
@@ -82,7 +82,7 @@
 					style="width: 100%;">
 					<option></option>
 				</select>
-				<label class="control-label" for="ad-char-subcategory">
+				<label class="control-label" for="ad-char-category">
 					<i class="ico fa fa-check"></i> 
 					<font class="message">Ошибка</font>
 				</label>
