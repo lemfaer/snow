@@ -6,6 +6,7 @@
 
 	//const
 	define("ROOT", dirname(__FILE__));
+	define("IMAGE", "C:\Users\mvjef_000\Desktop\images");
 	require_once(ROOT."/components/Autoload.php");
 
 	session_start();

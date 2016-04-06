@@ -13,15 +13,15 @@ class Image extends AbstractTable {
 
 	//getters
 	public function getPath() : string {
-		return parent::get($this->path700);
+		return IMAGE.parent::get($this->path700);
 	}
 
 	public function getPath135() : string {
-		return parent::get($this->path135);
+		return IMAGE.parent::get($this->path135);
 	}
 
 	public function getPath50() : string {
-		return parent::get($this->path50);
+		return IMAGE.parent::get($this->path50);
 	}
 	//getters end
 
