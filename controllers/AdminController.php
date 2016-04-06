@@ -100,9 +100,14 @@ class AdminController {
 			header("location: /admin/$name");
 		}
 
+		$data = $_POST[$name];
+		if(isset(Files::get()[$name])) {
+			$data['file'] = Files::get()[$name];
+		}
+
 		$form = $this->formName($name);
 		try {
-			echo $form::check($_POST[$name]);
+			echo $form::check($data);
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("wrong data from view", $e);
 		}
@@ -114,9 +119,14 @@ class AdminController {
 			header("location: /admin/$name");
 		}
 
+		$data = $_POST[$name];
+		if(isset(Files::get()[$name])) {
+			$data['file'] = Files::get()[$name];
+		}
+
 		$form = $this->formName($name);
 		try {	
-			$form::submit($_POST[$name]);
+			$form::submit($data);
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("wrong data from view", $e);
 		}
