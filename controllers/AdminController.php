@@ -145,7 +145,7 @@ class AdminController {
 
 		$id = $_POST['parent_id'];  
 		try {
-			$categoryList = Category::findAll(array("parent_id" => $id));
+			$categoryList = Category::findAll(array("parent_id" => $id), "sort_order ASC");
 		} catch(RecordNotFoundException $e) {
 			echo json_encode(false);
 			return;
