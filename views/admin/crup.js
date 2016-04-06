@@ -64,30 +64,16 @@ jQuery(document).ready(function($) {
 		var dom = this;
 		event.preventDefault();
 
-		var name = crup.name;
-		var link = "/admin/" + name + "/crup/check";
-
-		var data = {};
-		data[name] = {};
-
 		$("#ad-status").iCheck("update");
 		var status = $("#ad-status").prop("checked");
 		$("#ad-status-text").val(status);
 
-		$(".form-group.ajax").each(function(index, elem) {
-			var input = $(elem).find(".form-control");
-			var key = $(input).attr("id").replace("ad-" + name + '-', '');
-			var value = $(input).val();
-			data[name][key] = value;
-		});
-		data[name].status = status; 
+		$(".form-group.ajax .form-control:not(.select2):not(.image)").trigger("focusout");
+		$(".form-group.ajax .form-control.select2").trigger("select2:select");
 
-		$.post(link, data, function(data) {
-			if($(".form-group.has-error").length === 0) {
-				dom.submit();
-			}
-			checkResult(data);
-		}, "json");
+		if($(".form-group.has-error").length === 0) {
+			dom.submit();
+		}
 	});
 
 	$(".ad_update").click(function(event) {
