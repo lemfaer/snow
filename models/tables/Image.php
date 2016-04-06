@@ -98,9 +98,11 @@ class Image extends AbstractTable {
 	private function createImage($im) : string {
 		$dir = substr(md5(microtime()), mt_rand(0, 30), 2).'/'.
 			substr(md5(microtime()), mt_rand(0, 30), 2);
-		$path = ROOT."/images/$dir/";
-		if(!file_exists($path)) {
-			mkdir($path, 0777, true);
+		
+		$relPath = "/$dir";
+		$absPath = IMAGE.$relPath;
+		if(!file_exists($absPath)) {
+			mkdir($absPath, 0777, true);
 		}
 
 		ob_start();
@@ -108,10 +110,13 @@ class Image extends AbstractTable {
 		$bin = ob_get_contents();
 		ob_end_clean();
 		$name = md5($bin).".jpg";
-		$path = $path.$name;
 
-		imagejpeg($im, $path);
-		return $path;
+		$relPath = $relPath."/".$name;
+		$absPath = $absPath."/".$name;
+
+		imagejpeg($im, $absPath);
+		
+		return $relPath;
 	}
 //gd end
 
