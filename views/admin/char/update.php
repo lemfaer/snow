@@ -43,8 +43,8 @@
 
 <section class="content-header">
 	<h1>
-		Characteristic Create
-		<small>Добавление новой записи в таблицу Characteristic</small>
+		Characteristic Update
+		<small>Редактирование записи в таблице Characteristic</small>
 	</h1>
 </section>
 
