@@ -45,20 +45,20 @@ function checkResult(data) {
 
 jQuery(document).ready(function($) {
 
-	$("form").on("focusout", ".form-group.ajax", function(event) {
-		var input = $(this).find(".form-control");
-		if($(input).hasClass("select2")) {
-			return;
+	$("#ad-" + crup.name).on("focusout", 
+		".form-group.ajax .form-control:not(.select2):not(.image)", 
+		function(event) {
+			checkAjax(this);
 		}
-		
-		checkAjax(input);
-	});
+	);
 
-	$("form").on("select2:select", ".form-group.ajax", function(event) {
-		var input = $(this).find(".form-control");
+	$("#ad-" + crup.name).on("select2:select", 
+		".form-group.ajax .form-control", 
+		function(event) {
+			checkAjax(this);
+		}
+	);
 
-		checkAjax(input);
-	});
 
 	$("#ad-" + crup.name).submit(function(event) {
 		var dom = this;
