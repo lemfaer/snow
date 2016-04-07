@@ -59,12 +59,15 @@ class Category extends AbstractTable {
 	}
 
 	public function setParent(Category $parent) {
-		if(parent::set($parent, "checkParent")) {
+		$category = parent::set($parent, "checkParent");
+		if(isset($this->id)) {
 			if($this->validator->checkParentID($parent, $this->id)) {
-				$this->parent = $parent; 
+				$this->parent = $parent;
 			} else {
 				throw new WrongDataException($parent);
 			}
+		} else {
+			$this->parent = $parent;
 		}
 	}
 
