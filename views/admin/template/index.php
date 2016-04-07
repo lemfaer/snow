@@ -125,6 +125,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <ul class="sidebar-menu">
             <li class="header">Tables</li>
             <!-- Optionally, you can add icons to the links -->
+            
+            <?php 
+              $url = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
+              $url = array(array_shift($url), array_shift($url));
+              $url = "/".implode("/", $url);
+            ?>
+
             <?php $linkArr = array(
               array("Product",        "/admin/product"),
               array("Category",       "/admin/category"),
@@ -134,8 +141,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
               array("Size",           "/admin/size"),
               array("Color",          "/admin/color"),
             ); ?>
+
             <?php foreach ($linkArr as list($name, $link)): ?>
-              <li>
+              <?php $active = ($url === $link) ? ("active") : (null); ?>
+              <li class="<?= $active; ?>">
                 <a href="<?= $link; ?>">
                   <i class="fa fa-table"></i> 
                   <span><?= $name; ?></span>
