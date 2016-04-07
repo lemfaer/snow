@@ -61,25 +61,26 @@ final class CRUPUserForm extends AbstractCRUPForm {
 	 * @return void
 	 */
 	public static function create(array $data) {
-		$firstName = $data['first_name'];
-		$lastName  = $data['last_name'];
 		$email     = $data['email'];
 		$login     = $data['login'];
-		$password  = $data['password']; 
-		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
+		$password  = $data['password'];
+		$lastName  = $data['last_name'];
+		$firstName = $data['first_name'];
+		$status    = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$u = new User();
-			$u->setFirstName($firstName);
-			$u->setLastName($lastName);
-			$u->setEmail($email);
-			$u->setLogin($login);
-			$u->setPassword($password);
-			$u->setStatus($status);
+			$user = new User();
+			
+			$user->setEmail($email);
+			$user->setLogin($login);
+			$user->setStatus($status);
+			$user->setPassword($password);
+			$user->setLastName($lastName);
+			$user->setFirstName($firstName);
 
-			$u->generateHash();
+			$user->generateHash();
 
-			$u->insert();
+			$user->insert();
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}
@@ -97,22 +98,38 @@ final class CRUPUserForm extends AbstractCRUPForm {
 		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$u = User::findFirst(array("id" => $id), true);
-			$u->setStatus($status);
-
-			isset($data['first_name']) ? ($u->setFirstName($data['first_name'])) : (null);
-			isset($data['last_name'])  ? ($u->setLastName($data['last_name']))   : (null);
-			isset($data['email'])      ? ($u->setEmail($data['email']))          : (null);
-			isset($data['login'])      ? ($u->setLogin($data['login']))          : (null);
-			isset($data['password'])   ? ($u->setPassword($data['password']))    : (null);
-
-			$u->generateHash();
-
-			if(!$u->isSaved()) {
-				$u->update();
+			try {
+				$user = User::findFirst(array("id" => $id), true);
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($id, "wrong id", $e);
 			}
-		} catch(RecordNotFoundException $e) {
-			throw new WrongDataException($data, "wrong id", $e);
+
+			$user->setStatus($status);
+
+			if(isset($data['first_name'])) {
+				$user->setFirstName($data['first_name']);
+			}
+
+			if(isset($data['last_name'])) {
+				$user->setLastName($data['last_name']);
+			}
+
+			if(isset($data['email'])) {
+				$user->setEmail($data['email']);
+			}
+
+			if(isset($data['login'])) {
+				$user->setLogin($data['login']);
+			}
+
+			if(isset($data['password'])) {
+				$user->setPassword($data['password']);
+			}
+
+			if(!$user->isSaved()) {
+				$user->generateHash();
+				$user->update();
+			}
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}

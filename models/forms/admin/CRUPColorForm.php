@@ -57,12 +57,13 @@ final class CRUPColorForm extends AbstractCRUPForm {
 		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$c = new Color();
-			$c->setName($name);
-			$c->setValue($value);
-			$c->setStatus($status);
+			$color = new Color();
 
-			$c->insert();
+			$color->setName($name);
+			$color->setValue($value);
+			$color->setStatus($status);
+
+			$color->insert();
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}
@@ -80,17 +81,25 @@ final class CRUPColorForm extends AbstractCRUPForm {
 		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$c = Color::findFirst(array("id" => $id), true);
-			$c->setStatus($status);
-
-			isset($data['name'])  ? ($c->setName($data['name']))   : (null);
-			isset($data['value']) ? ($c->setValue($data['value'])) : (null);
-
-			if(!$c->isSaved()) {
-				$c->update();
+			try {
+				$color = Color::findFirst(array("id" => $id), true);
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($id, "wrong id", $e);
 			}
-		} catch(RecordNotFoundException $e) {
-			throw new WrongDataException($data, "wrong id", $e);
+
+			$color->setStatus($status);
+
+			if(isset($data['name'])) {
+				$color->setName($data['name']);
+			}
+
+			if(isset($data['value'])) {
+				$color->setValue($data['value']);
+			}
+
+			if(!$color->isSaved()) {
+				$color->update();
+			}
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}

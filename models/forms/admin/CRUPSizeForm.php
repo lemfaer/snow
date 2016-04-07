@@ -53,21 +53,26 @@ final class CRUPSizeForm extends AbstractCRUPForm {
 	 * @return void
 	 */
 	public static function create(array $data) {
-		try {
-			$category = Category::findFirst(array("id" => $data['category']));
-		} catch(RecordNotFoundException $e) {
-			throw new WrongDataException($data['category'], "wrong id", $e);
-		}
-		$name   = $data['name'];
-		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
+		$name       = $data['name'];
+		$categoryID = $data['category'];
+		$status     = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$s = new Size();
-			$s->setName($name);
-			$s->setStatus($status);
-			$s->setCategory($category);
+		//category
+			try {
+				$category = Category::findFirst(array("id" => $categoryID));
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($categoryID, "wrong id", $e);
+			}
+		//category end
 
-			$s->insert();
+			$size= new Size();
+
+			$size->setName($name);
+			$size->setStatus($status);
+			$size->setCategory($category);
+
+			$size->insert();
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}
@@ -85,24 +90,33 @@ final class CRUPSizeForm extends AbstractCRUPForm {
 		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$s = Size::findFirst(array("id" => $id), true);
-			$s->setStatus($status);
+			try {
+				$size = Size::findFirst(array("id" => $id), true);
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($id, "wrong id", $e);
+			}
 
-			isset($data['name']) ? ($s->setName($data['name'])) : (null);
+			$size->setStatus($status);
+
+			if(isset($data['name'])) {
+				$size->setName($data['name']);
+			}
+
 			if(isset($data['category'])) {
+				$categoryID = $data['category'];
+
 				try {
-					$category = Category::findFirst(array("id" => $data['category']));
+					$category = Category::findFirst(array("id" => $categoryID));
 				} catch(RecordNotFoundException $e) {
-					throw new WrongDataException($data['category'], "wrong id", $e);
+					throw new WrongDataException($categoryID, "wrong id", $e);
 				}
-				$s->setCategory($category);
+
+				$size->setCategory($category);
 			}
 
-			if(!$s->isSaved()) {
-				$s->update();
+			if(!$size->isSaved()) {
+				$size->update();
 			}
-		} catch(RecordNotFoundException $e) {
-			throw new WrongDataException($data, "wrong id", $e);
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}

@@ -21,9 +21,13 @@ final class CRUPProducerForm extends AbstractCRUPForm {
 		$validator   = new ProducerValidator();
 		$imValidator = new ImageValidator();
 
-		if(isset($data['file'])) {
+		if(isset($data['file']['image'])) {
 			$data['image'] = $data['file']['image'];
 			unset($data['file']);
+		}
+
+		if(isset($data['image']) && isset($data['image_only'])) {
+			$data = array("image" => $data['image']);
 		}
 
 		$method = function(string $key) use (&$imValidator) {
@@ -58,26 +62,31 @@ final class CRUPProducerForm extends AbstractCRUPForm {
 	 * @return void
 	 */
 	public static function create(array $data) {
-		$name   = $data['name'];
-		$image  = $data['file']['image'];
-		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
+		$name    = $data['name'];
+		$imageUF = $data['file']['image'];
+		$status  = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$im = new Image();
+		//image
 			try {
-				$im->setByUploadedFile($image);
-				$im->setStatus(true);
-				$im->insert();
+				$image = new Image();
+
+				$image->setStatus(true);
+				$image->setByUploadedFile($imageUF);
+
+				$image->insert();
 			} catch(WrongDataException $e) {
-				throw new WrongDataException($im, "wrong file", $e);
+				throw new WrongDataException($imageUF, "wrong file", $e);
 			}
+		//image end
 
-			$p = new Producer();
-			$p->setName($name);
-			$p->setImage($im);
-			$p->setStatus($status);
+			$producer = new Producer();
 
-			$p->insert();
+			$producer->setName($name);
+			$producer->setImage($image);
+			$producer->setStatus($status);
+
+			$producer->insert();
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}
@@ -95,27 +104,38 @@ final class CRUPProducerForm extends AbstractCRUPForm {
 		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
-			$p = Producer::findFirst(array("id" => $id), true);
-			$p->setStatus($status);
-			
-			isset($data['name']) ? ($p->setName($data['name'])) : (null);
-			if(isset($data['file']['image'])) {
-				$im = new Image();
-				try {
-					$im->setByUploadedFile($data['file']['image']);
-					$im->setStatus(true);
-					$im->insert();
-				} catch(WrongDataException $e) {
-					throw new WrongDataException($im, "wrong file", $e);
-				}
-				$p->setImage($im);
+			try {
+				$producer = Producer::findFirst(array("id" => $id), true);
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($id, "wrong id", $e);
 			}
 
-			if(!$p->isSaved()) {
-				$p->update();
+			$producer->setStatus($status);
+			
+			if(isset($data['name'])) {
+				$producer->setName($data['name']);
 			}
-		} catch(RecordNotFoundException $e) {
-			throw new WrongDataException($data, "wrong id", $e);
+
+			if(isset($data['file']['image'])) {
+				$imageUF = $data['file']['image'];
+
+				try {
+					$image = new Image();
+
+					$image->setStatus(true);
+					$image->setByUploadedFile($imageUF);
+					
+					$image->insert();
+				} catch(WrongDataException $e) {
+					throw new WrongDataException($imageUF, "wrong file", $e);
+				}
+
+				$producer->setImage($image);
+			}
+
+			if(!$producer->isSaved()) {
+				$producer->update();
+			}
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}
