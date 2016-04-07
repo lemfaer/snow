@@ -62,9 +62,11 @@ jQuery(document).ready(function($) {
 	$("#ad-" + crup.name).on("change", 
 		".form-group.ajax .form-control.image", 
 		function(event) {
+			var name = crup.name;
 			var form = $("#ad-" + crup.name);
-			var data = new FormData(form[0]);
 			var link = "/admin/" + crup.name + "/crup/check";
+			var data = new FormData(form[0]);
+			data.append(name + "[image_only]", null);
 			
 			$.ajax({
 				url: link,
@@ -84,17 +86,25 @@ jQuery(document).ready(function($) {
 		var dom = this;
 		event.preventDefault();
 
-		$("#ad-status").iCheck("update");
-		var status = $("#ad-status").prop("checked");
-		$("#ad-status-text").val(status);
-
-		$(".form-group.ajax .form-control:not(.select2):not(.image)").trigger("focusout");
-		$(".form-group.ajax .form-control.select2").trigger("select2:select");
-		$(".form-group.ajax .form-control.image").trigger("change");
-
-		if($(".form-group.has-error").length === 0) {
-			dom.submit();
-		}
+		var form = $("#ad-" + crup.name);
+		var data = new FormData(form[0]);
+		var link = "/admin/" + crup.name + "/crup/check";
+		
+		$.ajax({
+			url: link,
+			type: "POST",
+			data: data,
+			dataType: "json",
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				if(data.success) {
+					dom.submit();
+				} else {
+					checkResult(data);
+				}
+			},
+		});
 	});
 
 	$(".ad_update").click(function(event) {
