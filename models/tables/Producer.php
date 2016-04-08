@@ -44,7 +44,12 @@ class Producer extends AbstractTable {
 		$obj->name   = (string) $arr['name'];
 		$obj->status = (bool)   $arr['status'];
 
-		$image      = Image::findFirst(array("id" => $arr['image_id']));
+		try {
+			$image = Image::findFirst(array("id" => $arr['image_id']), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['image_id'], "wrong id in db", $e));
+		}
 		$obj->image = $image;
 
 		return $obj;

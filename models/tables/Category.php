@@ -110,12 +110,22 @@ class Category extends AbstractTable {
 		$obj->sort_order  = (int)    $arr['sort_order'];
 		$obj->status      = (bool)   $arr['status'];
 
-		$image      = Image::findFirst(array("id" => $arr['image_id']));
+		try {
+			$image = Image::findFirst(array("id" => $arr['image_id']), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['image_id'], "wrong id in db", $e));
+		}
 		$obj->image = $image;
 
-		$parent = ($arr['parent_id']) 
-			? (Category::findFirst(array("id" => $arr['parent_id'])))
-			: (new NullCategory());
+		try {
+			$parent = ($arr['parent_id'])
+				? (Category::findFirst(array("id" => $arr['parent_id']), true))
+				: (new NullCategory());
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['parent_id'], "wrong id in db", $e));
+		}
 		$obj->parent = $parent;
 		
 		return $obj;

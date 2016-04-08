@@ -60,13 +60,28 @@ class Available extends AbstractTable {
 		$obj->id    = (int) $arr['id'];
 		$obj->count = (int) $arr['count'];
 
-		$size      = Size::findFirst(array("id" => $arr['size_id']));
+		try {
+			$size = Size::findFirst(array("id" => $arr['size_id']), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['size_id'], "wrong id in db", $e));
+		}
 		$obj->size = $size;
 
-		$color      = Color::findFirst(array("id" => $arr['color_id']));
+		try {
+			$color = Color::findFirst(array("id" => $arr['color_id']), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['color_id'], "wrong id in db", $e));
+		}
 		$obj->color = $color;
 
-		$product      = Product::findFirst(array("id" => $arr['product_id']));
+		try {
+			$product = Product::findFirst(array("id" => $arr['product_id']), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['product_id'], "wrong id in db", $e));
+		}
 		$obj->product = $product;
 
 		return $obj;

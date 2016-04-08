@@ -137,10 +137,20 @@ class Product extends AbstractTable {
 		$obj->is_recomended     = (bool)   $arr['is_recomended'];
 		$obj->status            = (bool)   $arr['status'];
 
-		$category      = Category::findFirst(array("id" => $arr['category_id']));
+		try {
+			$category = Category::findFirst(array("id" => $arr['category_id']), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['category_id'], "wrong id in db", $e));
+		}
 		$obj->category = $category; //class
 
-		$producer      = Producer::findFirst(array("id" => $arr['producer_id']));
+		try {
+			$producer = Producer::findFirst(array("id" => $arr['producer_id']), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['producer_id'], "wrong id in db", $e));
+		}
 		$obj->producer = $producer; //class
 
 		return $obj;

@@ -44,7 +44,12 @@ class CharName extends AbstractTable {
 		$obj->name   = (string) $arr['name'];
 		$obj->status = (bool)   $arr['status'];
 
-		$category      = Category::findFirst(array("id" => $arr['category_id']));
+		try {
+			$category = Category::findFirst(array("id" => $arr['category_id']), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['category_id'], "wrong id in db", $e));
+		}
 		$obj->category = $category;
 
 		return $obj;

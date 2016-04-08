@@ -44,7 +44,12 @@ class CharValue extends AbstractTable {
 		$obj->value  = (string) $arr['value'];
 		$obj->status = (bool)   $arr['status'];
 
-		$name      = CharName::findFirst(array("id" => $arr['name_id']));
+		try {
+			$name = CharName::findFirst(array("id" => $arr['name_id']), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr['name_id'], "wrong id in db", $e));
+		}
 		$obj->name = $name;
 
 		return $obj;
