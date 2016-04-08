@@ -144,20 +144,18 @@
 			</div>
 
 			<!-- Status(Статус) -->
-			<div class="form-group">
+			<div class="form-group ad-check">
 				<div class="field-header">
 					<label>Статус</label>
 				</div>
 				<label>
 					<input type="checkbox" 
-						class="minimal"
-						id="ad-status" 
+						class="minimal ad-check-check"
 						checked>
 					Включен
 					<input type="hidden"
-						id="ad-status-text"
-						name="char[status]"
-						value="true">
+						class="ad-check-text" 
+						name="char[status]">
 				</label>
 			</div>
 

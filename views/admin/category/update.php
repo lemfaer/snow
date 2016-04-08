@@ -229,24 +229,18 @@
 			</div>
 
 			<!-- Status(Статус) -->
-			<div class="form-group">
+			<div class="form-group ad-check">
 				<div class="field-header">
 					<label>Статус</label>
-					<a class="ad_update">
-						<i class="up_ico fa fa-edit"></i>
-						<font class="up_message">Изменить</font>
-					</a>
 				</div>
 				<label>
 					<input type="checkbox" 
-						class="minimal"
-						id="ad-status" 
+						class="minimal ad-check-check"
 						<?= ($status) ? ("checked") : (null) ?>>
 					Включен
 					<input type="hidden"
-						id="ad-status-text"
-						name="category[status]"
-						value="true">
+						class="ad-check-text" 
+						name="category[status]">
 				</label>
 			</div>
 

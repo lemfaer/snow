@@ -86,6 +86,16 @@ jQuery(document).ready(function($) {
 		var dom = this;
 		event.preventDefault();
 
+		$(".ad-check").each(function(index, el) {
+			var check = $(el).find(".ad-check-check");
+			var text  = $(el).find(".ad-check-text");
+
+			$(check).iCheck("update");
+			var bool = $(check).prop("checked");
+			
+			$(text).val(bool);
+		});
+
 		var form = $("#ad-" + crup.name);
 		var data = new FormData(form[0]);
 		var link = "/admin/" + crup.name + "/crup/check";
