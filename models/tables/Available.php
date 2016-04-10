@@ -57,8 +57,9 @@ class Available extends AbstractTable {
 	protected static function withArray(array $arr) : AbstractTable {
 		$obj = new self();
 
-		$obj->id    = (int) $arr['id'];
-		$obj->count = (int) $arr['count'];
+		$obj->id     = (int)  $arr['id'];
+		$obj->count  = (int)  $arr['count'];
+		$obj->status = (bool) $arr['status'];
 
 		try {
 			$size = Size::findFirst(array("id" => $arr['size_id']), true);
