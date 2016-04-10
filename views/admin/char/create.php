@@ -115,7 +115,7 @@
 					<div class="form-group">
 						<div class="input-group">
 							<input type="text" 
-								name="char[value][]"
+								name="char[value][value_0]"
 								id="ad-char-value_0" 
 								class="form-control" 
 								placeholder="Введите значение"

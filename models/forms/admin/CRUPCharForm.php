@@ -22,6 +22,11 @@ final class CRUPCharForm extends AbstractCRUPForm {
 		$valueValidator = new CharValueValidator();
 		$catValidator   = new CategoryValidator();
 
+		if(isset($data['value'])) {
+			$data = array_merge($data, $data['value']); 
+			unset($data['value']);
+		}
+
 		$method = function(string $key) use(&$valueValidator, &$catValidator) {
 			if(preg_match("/value_[0-9]+/", $key)) {
 				return array($valueValidator, "checkValue");
