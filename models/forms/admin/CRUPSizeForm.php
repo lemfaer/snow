@@ -66,7 +66,7 @@ final class CRUPSizeForm extends AbstractCRUPForm {
 			}
 		//category end
 
-			$size= new Size();
+			$size = new Size();
 
 			$size->setName($name);
 			$size->setStatus($status);

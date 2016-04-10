@@ -40,7 +40,7 @@
 <?php $short  = $category->getShortName(); ?>
 <?php $desc   = $category->getDescription(); ?>
 <?php $image  = $category->getImage()->link(); ?>
-<?php $sort   = $category->getSortOrder() - 1; ?>
+<?php $sort   = $category->getSortOrder(); ?>
 <?php $parent = $category->getParent()->getID(); ?>
 
 <section class="content-header">
