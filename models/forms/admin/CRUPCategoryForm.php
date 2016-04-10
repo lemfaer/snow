@@ -108,7 +108,9 @@ final class CRUPCategoryForm extends AbstractCRUPForm {
 			$query = "UPDATE category AS c
 				SET sort_order = sort_order + '1'
 				WHERE sort_order > '$sort' AND parent_id = '$parentID'";
-			DB::query($query);
+			try {
+				DB::query($query);
+			} catch(QueryEmptyResultException $e) {}
 			$sort = $sort + 1;
 		//sort end
 
