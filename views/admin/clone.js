@@ -20,7 +20,12 @@ jQuery(document).ready(function($) {
 			var label = $(el).find(".control-label");
 
 			$(input).prop("disabled", false);
+			if($(input).hasClass("select2-lazy")) {
+				$(input).removeClass("select2-lazy");
+				$(input).select2();
+			}
 			$(input).attr("id",   $(input).attr("id").replace("0", num));
+			$(input).attr("name", $(input).attr("name").replace("0", num));
 			$(label).attr("for",  $(label).attr("for").replace("0", num));
 		});
 
