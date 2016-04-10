@@ -232,7 +232,7 @@ class AdminController {
 		}
 		
 		$arr = array();
-		foreach ($valueList as $v) {
+		foreach ($valueList as $k => $v) {
 		 	$arr[$k] = array(
 				"id"   => $v->getID(),
 				"text" => $v->getValue(),
