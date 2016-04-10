@@ -46,8 +46,12 @@ class ProductItem extends AbstractRecord {
 			$charIDArray[] = $id;
 		}
 
-		$charList = Characteristic::findAll(array("id" => $charIDArray), 
-			"id ASC", self::LIMIT_CHAR);
+		try {
+			$charList = CharValue::findAll(array("id" => $arr), "id ASC");
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr, "wrong id in db"), $e);
+		}
 		$this->charList = $charList;
 	} 
 //char list end

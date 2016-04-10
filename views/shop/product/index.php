@@ -126,9 +126,8 @@
 				<div class="product-specifications">
 					<h4>Characteristics</h4>
 					<ul>
-						<?php foreach ($charList as $charItem): ?>
-							<?php $cName  = $charItem->getName(); ?>
-							<?php $cValue = $charItem->getValue(); ?>
+						<?php foreach ($charList as $cValue): ?>
+							<?php $cName  = $cValue->getName(); ?>
 							<?php $name   = $cName->getName(); ?>
 							<?php $value  = $cValue->getValue(); ?>
 							<li>
