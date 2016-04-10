@@ -83,19 +83,17 @@ final class CRUPCategoryForm extends AbstractCRUPForm {
 		$sort     = $data['sort_order'];
 		$short    = $data['short_name'];
 		$desc     = $data['description'];
-		$imageID  = $data['file']['image'];
+		$imageUF  = $data['file']['image'];
 		$status   = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
 		//image
 			$image = new Image();
-			try {
-				$image->setByUploadedFile($imageID);
-				$image->setStatus(true);
-				$image->insert();
-			} catch(WrongDataException $e) {
-				throw new WrongDataException($imageID, "wrong file", $e);
-			}
+
+			$image->setByUploadedFile($imageUF);
+			$image->setStatus(true);
+			
+			$image->insert();
 		//image end
 
 		//parent
@@ -182,16 +180,12 @@ final class CRUPCategoryForm extends AbstractCRUPForm {
 			if(isset($data['file']['image'])) {
 				$imageUF = $data['file']['image'];
 
-				try {
-					$image = new Image();
+				$image = new Image();
 
-					$image->setStatus(true);
-					$image->setByUploadedFile($imageUF);
-					
-					$image->insert();
-				} catch(WrongDataException $e) {
-					throw new WrongDataException($imageUF, "wrong file", $e);
-				}
+				$image->setStatus(true);
+				$image->setByUploadedFile($imageUF);
+				
+				$image->insert();
 
 				$category->setImage($image);
 			}
