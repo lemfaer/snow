@@ -4,7 +4,11 @@
 
 		public function actionIndex($productID) {
 			$productItem = ProductItem::findFirst(array("id" => $productID));
-			$recomendedList = Product::findAll(array("is_recomended" => '1'), "id DESC", 3);
+			try {
+				$recomendedList = Product::findAll(array("is_recomended" => '1'), "id DESC", 4);
+			} catch(QueryEmptyResultException $e) {
+				$recomendedList = array();
+			}
 
 			// echo "ID: $productID";
 			// echo "<pre>";
