@@ -37,6 +37,7 @@
 				<thead>
 					<tr>
 						<th>ID</th>
+						<th>Category</th>
 						<th>Name</th>
 						<th>Value</th>
 						<th>Status</th>
@@ -51,10 +52,12 @@
 						<?php $id     = $cValue->getID(); ?>
 						<?php $name   = $cName->getName(); ?>
 						<?php $value  = $cValue->getValue(); ?>
+						<?php $cat    = $cName->getCategory()->getName(); ?>
 						<?php $status = $cValue->getStatus() ? "enabled" : "disabled"; ?>
 						
 						<tr>
 							<td><?= $id; ?></td>
+							<td><?= $cat; ?></td>
 							<td><?= $name; ?></td>
 							<td><?= $value; ?></td>
 							<td><?= $status; ?></td>
@@ -74,6 +77,7 @@
 				<tfoot>
 					<tr>
 						<th>ID</th>
+						<th>Category</th>
 						<th>Name</th>
 						<th>Value</th>
 						<th>Status</th>
