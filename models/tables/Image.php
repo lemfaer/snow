@@ -134,9 +134,9 @@ class Image extends AbstractTable {
 //destruct
 	public function __destruct() {
 		if(!isset($this->id)) { // here must be isSaved
-			unlink($this->path700);
-			unlink($this->path135);
-			unlink($this->path50);
+			unlink(IMAGE.$this->path700);
+			unlink(IMAGE.$this->path135);
+			unlink(IMAGE.$this->path50);
 		}
 	}
 //destruct end
