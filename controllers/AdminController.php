@@ -162,6 +162,57 @@ class AdminController {
 		echo json_encode($arr);
 	}
 
+	public function actionSort() {
+		$this->checkAdmin();
+		if(!isset($_POST["parent_id"])) {
+			header("location: /admin/");
+		}
+
+		$id = $_POST['parent_id'];  
+		try {
+			$categoryList = Category::findAll(array("parent_id" => $id), "sort_order ASC");
+		} catch(RecordNotFoundException $e) {
+			echo json_encode(false);
+			return;
+		}
+		
+		$arr = array();
+		foreach ($categoryList as $k => $c) {
+			if($c instanceof NullCategory) {
+				continue;
+			}
+			$arr[] = array(
+				"id"   => $c->getSortOrder(),
+				"text" => $c->getName(),
+			);
+		}
+		echo json_encode($arr);
+	}
+
+	public function actionName() {
+		$this->checkAdmin();
+		if(!isset($_POST["category_id"])) {
+			header("location: /admin/");
+		}
+
+		$id = $_POST['category_id'];  
+		try {
+			$nameList = CharName::findAll(array("category_id" => $id));
+		} catch(RecordNotFoundException $e) {
+			echo json_encode(false);
+			return;
+		}
+		
+		$arr = array();
+		foreach ($nameList as $k => $n) {
+		 	$arr[$k] = array(
+				"id"   => $n->getID(),
+				"text" => $n->getName(),
+			);
+		} 
+		echo json_encode($arr);
+	}
+
 	public function actionValue() {
 		$this->checkAdmin();
 		if(!isset($_POST["name_id"])) {
@@ -186,6 +237,29 @@ class AdminController {
 		echo json_encode($arr);
 	}
 
+	public function actionColor() {
+		$this->checkAdmin();
+		if(!isset($_POST["color"])) {
+			header("location: /admin/");
+		}
+ 
+		try {
+			$colorList = Color::findAll();
+		} catch(RecordNotFoundException $e) {
+			echo json_encode(false);
+			return;
+		}
+		
+		$arr = array();
+		foreach ($colorList as $k => $c) {
+			$arr[$k] = array(
+				"id"   => $c->getID(),
+				"text" => $c->getName(),
+			);
+		}
+		echo json_encode($arr);
+	}
+
 	public function actionSize() {
 		$this->checkAdmin();
 		if(!isset($_POST["category_id"])) {
@@ -205,6 +279,29 @@ class AdminController {
 			$arr[$k] = array(
 				"id"   => $s->getID(),
 				"text" => $s->getName(),
+			);
+		}
+		echo json_encode($arr);
+	}
+
+	public function actionProducer() {
+		$this->checkAdmin();
+		if(!isset($_POST["producer"])) {
+			header("location: /admin/");
+		}
+
+		try {
+			$producerList = Producer::findAll();
+		} catch(RecordNotFoundException $e) {
+			echo json_encode(false);
+			return;
+		}
+		
+		$arr = array();
+		foreach ($producerList as $k => $p) {
+			$arr[$k] = array(
+				"id"   => $p->getID(),
+				"text" => $p->getName(),
 			);
 		}
 		echo json_encode($arr);

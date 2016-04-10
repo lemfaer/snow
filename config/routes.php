@@ -44,8 +44,12 @@
 		"admin/([a-z]+)/crup/check"  => "admin/CRUPCheck/$1",
 		"admin/([a-z]+)/crup/submit" => "admin/CRUPSubmit/$1",
 
-		"admin/select/inherits" => "admin/inherit",
-		"admin/select/values"   => "admin/value",
-		"admin/select/sizes"    => "admin/size",
+		"admin/select/producers" => "admin/producer",
+		"admin/select/inherits"  => "admin/inherit",
+		"admin/select/values"    => "admin/value",
+		"admin/select/colors"    => "admin/color",
+		"admin/select/names"     => "admin/name",
+		"admin/select/sizes"     => "admin/size",
+		"admin/select/sort"      => "admin/sort",
 
 	);
