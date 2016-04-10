@@ -18,7 +18,7 @@ class Files {
 		foreach ($files as $key => $value) {
 			$files[$key] = array();
 			foreach (self::rec($value) as $value) {
-				$files[$key] = array_merge_recursive($files[$key], $value);
+				$files[$key] = array_replace_recursive($files[$key], $value);
 			}
 		}
 
