@@ -12,7 +12,7 @@ class AvailableValidator extends AbstractTableValidator {
 //validate methods
 	public function checkCount(int $count) : bool {
 		$error = array("count" => self::COUNT_ERROR);
-		$bool = $count < self::COUNT_LIMIT;
+		$bool = $count >= 0 && $count <= self::COUNT_LIMIT;
 		return parent::log($bool, $error);
 	}
 
