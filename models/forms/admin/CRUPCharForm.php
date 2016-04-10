@@ -29,7 +29,7 @@ final class CRUPCharForm extends AbstractCRUPForm {
 
 			switch ($key) {
 				case "id":
-					$m = "checkID";
+					$m = array($valueValidator, "checkID");
 					break;
 				case "category":
 					$m = array($catValidator, "checkID");
