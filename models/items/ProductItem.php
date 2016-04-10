@@ -2,49 +2,91 @@
 
 class ProductItem extends AbstractRecord {
 
-	const LIMIT_CHAR = 10;
-	const LIMIT_IMAGE = 5;
-	const LIMIT_COLOR = 20;
-	const LIMIT_SIZE = 20;
+//set
+	/**
+	 * Выполняет действия перед установкой значений в свойства
+	 * 
+	 * @param mixed $value переданное значение
+	 * @param string $checkMethod метод для проверки переданного значения
+	 * @throws WrongDataException передано неправильное значение
+	 * @return mixed (type of $value) переданное значение
+	 */
+	protected function set($value, string $checkMethod) {
+		if(!$this->validator->$checkMethod($value)) {
+			throw new WrongDataException($value, implode(", ", $this->errorInfo()));
+		}
+		return $value;
+	}
+//set end
 
-//product
+//main info
 	private $product;
+	private $charList  = array();
+	private $imageList = array();
+	private $colorList = array();
+	private $sizeList  = array();
+	private $availableList = array();
 
+	//getters
 	public function getProduct() : Product {
 		return $this->product;
 	}
-
-	public function setProduct(Product $product) {
-		$this->product = $product;
-	}
-//product end
-
-//char list
-	private $charList;
 
 	public function getCharList() : array {
 		return $this->charList;
 	}
 
-	public function setCharList(array $charList) {
-		$this->charList = $charList;
+	public function getImageList() : array {
+		return $this->imageList;
 	}
 
+	public function getAvailableList() : array {
+		return $this->availableList;
+	}
+
+	public function getColorList() : array {
+		return $this->colorList;
+	}
+
+	public function getSizeList() : array {
+		return $this->sizeList;
+	}
+	//getters end
+
+	//setters
+	public function setProduct(Product $product) {
+		$this->product = self::set($product, "checkProduct");
+	}
+
+	public function setCharList(array $charList) {
+		$this->charList = self::set($charList, "checkCharList");
+	}
+
+	public function setImageList(array $imageList) {
+		$this->imageList = self::set($imageList, "checkImageList");
+	}
+
+	public function setAvailableList(array $availableList) {
+		$this->availableList = self::set($availableList, "checkAvailableList");
+	}
+	//setters end
+//main info end
+
+//init
 	private function charList() {
 		$id = $this->product->getID();
 		$query = "SELECT value_id FROM product_has_value WHERE product_id = '$id'";
-		
 		try {
 			$result = DB::query($query);
-		} catch(Exception $e) {
+		} catch(QueryEmptyResultException $e) {
 			return;
 		}
 
-		$charIDArray = array();
-		while($id = $result->fetch()) {
-			$id = array_shift($id);
-			$charIDArray[] = $id;
+		$arr = array();
+		foreach ($result->fetchAll() as $value) {
+			$arr = array_merge_recursive($arr, $value);
 		}
+		$arr = array_shift($arr);
 
 		try {
 			$charList = CharValue::findAll(array("id" => $arr), "id ASC");
@@ -53,92 +95,64 @@ class ProductItem extends AbstractRecord {
 				new WrongDataException($arr, "wrong id in db"), $e);
 		}
 		$this->charList = $charList;
-	} 
-//char list end
-
-//image list
-	private $imageList;
-
-	public function getImageList() : array {
-		return $this->imageList;
-	}
-
-	public function setImageList(array $imageList) {
-		$this->imageList = $imageList;
 	}
 
 	private function imageList() {
 		$id = $this->product->getID();
 		$query = "SELECT image_id FROM product_has_image WHERE product_id = $id";
-
 		try {
 			$result = DB::query($query);
-		}
-		catch(Exception $e) {
+		} catch(QueryEmptyResultException $e) {
 			$this->imageList = array($this->product->getImage());
 			return;
 		}
 
-		$imageIDArray = array();
-		while($id = $result->fetch()) {
-			$id = array_shift($id);
-			$imageIDArray[] = $id;
+		$arr = array();
+		foreach ($result->fetchAll() as $value) {
+			$arr = array_merge_recursive($arr, $value);
 		}
-			
-		$imageList = Image::findAll(array("id" => $imageIDArray), "id ASC", self::LIMIT_IMAGE);
-
+		$arr = array_shift($arr);
+		
+		try {
+			$imageList = Image::findAll(array("id" => $arr));
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($arr, "wrong id in db"), $e);
+		}
 		$this->imageList = $imageList;
-	}
-//image list end
-
-//available list
-	private $availableList;
-
-	public function getAvailableList() : array {
-		return $this->availableList;
-	}
-
-	public function setAvailableList(array $availableList) {
-		$this->availableList = $availableList;
 	}
 
 	private function availableList() {
-		$availableList = array();
+		$id = $this->product->getID();
+		try {
+			$arr = Available::findAll(array("product_id" => $id));
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("available checked", $e);
+		}
 
-		if($this->product->isAvailable()) {
-			$id = $this->product->getID();
-			$availableList = Available::findAll(array("product_id" => $id), 
-				"id ASC", self::LIMIT_MAX);
-			foreach ($availableList as $key => $av) {
-				if($av->getCount() < 1) {
-					unset($availableList[$key]);
-				}
+		foreach ($arr as $key => $av) {
+			if($av->getCount() < 1) {
+				unset($arr[$key]);
 			}
 		}
 
-		$this->availableList = $availableList;
-	} 
-//available list end
-
-//color list with size ids
-	private $colorList;
-
-	public function getColorList() : array {
-		return $this->colorList;
+		$this->availableList = $arr;
+		$this->colorList();
+		$this->sizeList();
 	}
 
 	private function colorList() {
-		if(!$this->product->isAvailable()) {
-			$this->colorList = array();
-			return;
-		}
-
 		foreach ($this->availableList as $av) {
 			$colorIDArray[] = $av->getColor()->getID();
 		}
 		$colorIDArray = array_unique($colorIDArray);
 
-		$colorList = Color::findAll(array("id" => $colorIDArray), "name ASC", self::LIMIT_COLOR);
+		try {
+			$colorList = Color::findAll(array("id" => $colorIDArray), "name ASC");
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($colorIDArray, "wrong id in db"), $e);
+		}
 		foreach ($colorList as $key => $color) {
 			$colorList[$key] = array(
 				"color" => $color,
@@ -155,27 +169,19 @@ class ProductItem extends AbstractRecord {
 
 		$this->colorList = $colorList;
 	}
-//color list with size ids end
-
-//size list with color ids
-	private $sizeList;
-
-	public function getSizeList() : array {
-		return $this->sizeList;
-	}
 
 	private function sizeList() {
-		if(!$this->product->isAvailable()) {
-			$this->sizeList = array();
-			return;
-		}
-
 		foreach ($this->availableList as $av) {
 			$sizeIDArray[] = $av->getSize()->getID();
 		}
 		$sizeIDArray = array_unique($sizeIDArray);
 
-		$sizeList = Size::findAll(array("id" => $sizeIDArray), "name ASC", self::LIMIT_SIZE);
+		try {
+			$sizeList = Size::findAll(array("id" => $sizeIDArray), "name ASC");
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("data in db must be valide",
+				new WrongDataException($sizeIDArray, "wrong id in db"), $e);
+		}
 		foreach ($sizeList as $key => $size) {
 			$sizeList[$key] = array(
 				"size" => $size,
@@ -192,25 +198,49 @@ class ProductItem extends AbstractRecord {
 
 		$this->sizeList = $sizeList;
 	}
-//size list with color ids end
+//init end
+
+//check
+	public function isIn() {
+		$id   = $this->product->getID();
+		$bool = false;
+
+		try {
+			$query = "SELECT count(*) FROM product_has_image WHERE product_id = '$id'";
+			$count = DB::query($query)->fetch();
+			$bool  = $bool || array_shift($count) > 0;
+
+			$query = "SELECT count(*) FROM product_has_value WHERE product_id = '$id'";
+			$count = DB::query($query)->fetch();
+			$bool  = $bool || array_shift($count) > 0;
+		} catch(QueryEmptyResultException $e) {
+			throw new UncheckedLogicException("count(*) must return smth", $e);
+		}
+
+		$bool = $bool || Available::findCount(array("product_id" => $id)) > 0;
+
+		return $bool;
+	}
+//check end
 
 //construct
-	public function __construct($product) {
-		$this->product = $product;
-		
-		$this->charList 		= array();
-		$this->imageList 		= array();
-		$this->availableList 	= array();
-		$this->colorList 		= array();
-		$this->sizeList 		= array();
+	public static function withProduct($product) {
+		$obj = new self();
 
-		if($this->product->getID()) {
-			$this->charList();
-			$this->imageList();
-			$this->availableList();
-			$this->colorList();
-			$this->sizeList();
+		$obj->product = $product;
+
+		$obj->charList();
+		$obj->imageList();
+
+		if($product->isAvailable()) {
+			$obj->availableList();
 		}
+
+		return $obj;
+	}
+
+	private function __construct() {
+		$this->validator = new ProductItemValidator();
 	}
 //construct end
 
@@ -221,23 +251,73 @@ class ProductItem extends AbstractRecord {
 
 	public static function findFirst(array $whereArr = array(), bool $nullStatus = false) : AbstractRecord {
 		$product = Product::findFirst($whereArr, $nullStatus);
-		$productItem = new ProductItem($product);
+		$productItem = self::withProduct($product);
 		return $productItem;
 	}
 
-	public static function findAll(array $whereArr = array(), string $order = "id", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
+	public static function findAll(array $whereArr = array(), string $order = "id ASC", int $limit = parent::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
 		$productList = Product::findAll($whereArr, $order, $limit, $offset, $nullStatus);
 		foreach ($productList as $key => $product) {
-			$productList[$key] = new ProductItem($product);
+			$productList[$key] = self::withProduct($product);
 		}
 		return $productList;
 	}
 
-	public function insert() {}
+	public function insert() {
+		if($this->isIn()) {
+			throw new WrongDataException($this, "already in database");
+		}
+		$id = $this->product->getID();
 
-	public function update() {}
+		try {
+			foreach ($this->charList as $char) {
+				$query = "INSERT INTO product_has_value 
+					SET product_id = '$id', value_id = '{$char->getID()}'";
+				DB::query($query);
+			}
+
+			foreach ($this->imageList as $image) {
+				$query = "INSERT INTO product_has_image 
+					SET product_id = '$id', image_id = '{$image->getID()}'";
+				DB::query($query);
+			}
+
+			foreach ($this->availableList as $i => $av) {
+				$av->setProduct($this->product);
+				$av->insert();
+				$this->availableList[$i] = $av;
+			}
+		} catch(QueryEmptyResultException $e) {
+			throw new UncheckedLogicException("insert must return smth", $e);
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		}
+	}
+
+	public function update() {
+		$this->delete();
+		$this->insert();
+	}
 	
-	public function delete() {}
+	public function delete() {
+		$id = $this->product->getID();
+
+		$query = "DELETE FROM product_has_value WHERE product_id = '$id'";
+		try {
+			DB::query($query);
+		} catch(QueryEmptyResultException $e) {}
+
+		$query = "DELETE FROM product_has_image WHERE product_id = '$id'";
+		try {
+			DB::query($query);
+		} catch(QueryEmptyResultException $e) {}
+
+		foreach ($this->availableList as $av) {
+			try {
+				$av->delete();
+			} catch(WrongDataException $e) {}
+		}
+	}
 //abstract methods realization end
 
 }
