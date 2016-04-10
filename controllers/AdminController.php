@@ -20,6 +20,7 @@ class AdminController {
 
 //form name
 	private $formNameArr = array(
+		"product"  => "CRUPProductForm",
 		"category" => "CRUPCategoryForm",
 		"user"     => "CRUPUserForm",
 		"producer" => "CRUPProducerForm",
