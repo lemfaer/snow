@@ -155,7 +155,10 @@ class AdminController {
 		
 		$arr = array();
 		foreach ($categoryList as $k => $c) {
-			$arr[$k] = array(
+			if($c instanceof NullCategory) {
+				continue;
+			}
+			$arr[] = array(
 				"id"   => $c->getID(),
 				"text" => $c->getName(),
 			);
