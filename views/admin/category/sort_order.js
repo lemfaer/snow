@@ -22,7 +22,7 @@ jQuery(document).ready(function($) {
 			text: "В начало",
 		};
 
-		$.post("/admin/select/inherits", {"parent_id": id}, function(data) {
+		$.post("/admin/select/sort", {"parent_id": id}, function(data) {
 			if(data) {
 				data.unshift(first);
 				$(sort).select2({
