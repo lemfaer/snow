@@ -43,7 +43,11 @@ abstract class AbstractValidator {
 
 	protected function checkObject(AbstractTable $obj, array $error) : bool {
 		return self::log($obj->isSaved(), $error);
-	} 
+	}
+
+	protected function checkClass(AbstractTable $obj, string $class, array $error) : bool {
+		return self::log($obj instanceof $class, $error);
+	}
 //standart check end
 
 }
