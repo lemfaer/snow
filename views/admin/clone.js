@@ -33,10 +33,11 @@ jQuery(document).ready(function($) {
 
 	$(".clone-block").on("click", ".remove-clone", function(event) {
 		event.preventDefault();
-		var remove = $(this).parents(".clone");
-		var label  = $(this).parents(".clone-block").find(".field-header label");
+		var clblock = $(this).parents(".clone-block");
+		var remove  = $(this).parents(".clone");
+		var label   = $(clblock).find(".field-header label");
 		
-		if($(".clone").length === 1) {
+		if($(clblock).find(".clone").length === 1) {
 			$(label).fadeOut("slow");
 		}
 		$(remove).fadeOut("slow", function() {
