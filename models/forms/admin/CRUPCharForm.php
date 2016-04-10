@@ -70,7 +70,7 @@ final class CRUPCharForm extends AbstractCRUPForm {
 			try {
 				$category = Category::findFirst(array("id" => $categoryID));
 			} catch(RecordNotFoundException $e) {
-				throw new WrongDataException($categoryID, "wrong id", $e);
+				throw new WrongDataException($categoryID, "wrong category id", $e);
 			}
 
 			$charName = new CharName();

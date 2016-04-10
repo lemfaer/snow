@@ -100,7 +100,7 @@ final class CRUPCategoryForm extends AbstractCRUPForm {
 			try {
 				$parent = Category::findFirst(array("id" => $parentID), true);
 			} catch(RecordNotFoundException $e) {
-				throw new WrongDataException($parentID, "wrong id", $e);
+				throw new WrongDataException($parentID, "wrong parent id", $e);
 			}
 		//parent end
 
