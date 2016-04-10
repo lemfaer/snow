@@ -106,16 +106,20 @@ class Product extends AbstractTable {
 //first image
 	public function getImage() : Image {
 		try {
-			$query = "SELECT image_id FROM product_has_image WHERE product_id = $this->id LIMIT 1";
-			$result = DB::query($query);
-			$result = $result->fetch();
+			$query = "SELECT image_id 
+				FROM product_has_image 
+				WHERE product_id = $this->id 
+				LIMIT 1";
+
+			$result = DB::query($query)->fetch();
 			$id = array_shift($result);
-			return Image::findFirst(array("id" => $id));
-		} catch(Exception $e) {
-			$image = new Image();
-			$image->setPath("http://i65.tinypic.com/k6ey0.gif");
-			return $image;
+
+			$image = Image::findFirst(array("id" => $id));
+		} catch(QueryEmptyResultException $e) {
+			$image = Image::findFirst(array("id" => 0));
 		}
+
+		return $image;
 	}
 //first image end
 
