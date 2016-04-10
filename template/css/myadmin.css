@@ -13,10 +13,10 @@
 .form-group.has-success label.control-label, .form-group.has-error label.control-label {
 	display: block;
 }
-.form-group.has-success .select2-container {
+.form-group.has-success .select2-selection {
 	border: 1px solid #01b764 !important;
 }
-.form-group.has-error .select2-container {
+.form-group.has-error .select2-selection {
 	border: 1px solid #ef6958 !important;
 }
 .form-group.id {
@@ -46,7 +46,7 @@
 	color: #f97d6d;
 }
 
-.clones {
+.clone-block {
 	margin-bottom: 1em;
 }
 .add-clone {
@@ -56,7 +56,17 @@
 .sample {
 	display: none;
 }
+.sample.row, .clone.row {
+	margin-left: 0;
+	margin-right: 0; 
+}
 
 .image-view {
 	width: inherit;
+}
+
+.clone-block .form-group {
+	padding: 0;
+	margin: 0;
+	margin-bottom: 1em;
 }
