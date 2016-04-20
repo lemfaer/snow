@@ -11,7 +11,7 @@ jQuery(document).ready(function($) {
 		window.location.href = link;
 	});
 
-	$(".ad-update-link").click(function(event) {
+	$(document).on("click", ".ad-update-link", function(event) {
 		var id   = $(this).attr("data-id");
 		var name = read.name;
 		var link = "/admin/" + name + "/update/" + id;
