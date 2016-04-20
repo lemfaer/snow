@@ -43,6 +43,11 @@ final class CRUPProductForm extends AbstractCRUPForm {
 			unset($data['image']);
 		}
 
+		if(isset($data['image_id'])) {
+			$data = array_merge($data, $data['image_id']);
+			unset($data['image_id']);
+		}
+
 		if(isset($data['char_name'])) {
 			$data = array_merge($data, $data['char_name']); 
 			unset($data['char_name']);
@@ -81,6 +86,10 @@ final class CRUPProductForm extends AbstractCRUPForm {
 			&$categoryValidator, &$producerValidator) {
 			if(preg_match("/image_[0-9]+/", $key)) {
 				return array($imageValidator, "checkUploadedFile");
+			}
+
+			if(preg_match("/image_id_[0-9]+/", $key)) {
+				return array($imageValidator, "checkID");
 			}
 
 			if(preg_match("/name_[0-9]+/", $key)) {
@@ -168,31 +177,197 @@ final class CRUPProductForm extends AbstractCRUPForm {
 		$categoryID = $data['category'];
 		$producerID = $data['producer'];
 
-		$imageArr = array();
-		$charArr  = array();
-		$colorArr = array();
-		$sizeArr  = array();
-		$countArr = array();
+		try {
+		//product
+			//category
+				try {
+					$category = Category::findFirst(array("id" => $categoryID));
+				} catch(RecordNotFoundException $e) {
+					throw new WrongDataException($categoryID, "wrong category id", $e);
+				}
+			//category end
 
-		if(isset($data['file']['image'])) {
-			$imageArr = array_values($data['file']['image']);
-		} 
+			//producer
+				try {
+					$producer = Producer::findFirst(array("id" => $producerID));
+				} catch(RecordNotFoundException $e) {
+					throw new WrongDataException($producerID, "wrong producer id", $e);
+				}
+			//producer end
 
-		if(isset($data['char_value'])) {
-			$charArr = array_values($data['char_value']);
+			$product = new Product();
+
+			$product->setNew($new);
+			$product->setName($name);
+			$product->setYear($year);
+			$product->setPrice($price);
+			$product->setStatus($status);
+			$product->setRecomended($rec);
+			$product->setDescription($desc);
+			$product->setCategory($category);
+			$product->setProducer($producer);
+			$product->setShortDescription($short);
+
+			$product->insert();
+		//product end
+
+		//item
+			extract(self::item(
+				$data['file']['image'] ?? array(),
+				$data['char_value']    ?? array(),
+				$data['color']         ?? array(),
+				$data['size']          ?? array(),
+				$data['count']         ?? array()
+			));
+		//item end
+
+			$productItem = ProductItem::withProduct($product);
+
+			$productItem->setCharList($charArr);
+			$productItem->setImageList($imageArr);
+			$productItem->setAvailableList($availableArr);
+
+			$productItem->insert();
+		} catch(WrongDataException $e) {
+			throw new WrongDataException($data, null, $e);
 		}
+	}
 
-		if(isset($data['color'])) {
-			$colorArr = array_values($data['color']);
-		}
+	/**
+	 * Редактирует запись Product в базе данных на основе данных из формы
+	 * 
+	 * @param array $data массив переданный из формы
+	 * @throws WrongDataException переданы неправильные данные
+	 * @return void
+	 */
+	public static function update(array $data) {
+		$id     = $data['id'];
+		$new    = filter_var($data['is_new'], FILTER_VALIDATE_BOOLEAN);
+		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
+		$rec    = filter_var($data['is_recomended'], FILTER_VALIDATE_BOOLEAN);
 
-		if(isset($data['size'])) {
-			$sizeArr = array_values($data['size']);
-		}
+		try {
+			try {
+				$productItem = ProductItem::findFirst(array("id" => $id), true);
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($id, "wrong product id", $e);
+			}
 
-		if(isset($data['count'])) {
-			$countArr = array_values($data['count']);
+		//product
+			$product = $productItem->getProduct();
+
+			$product->setNew($new);
+			$product->setStatus($status);
+			$product->setRecomended($rec);
+
+			//category
+				if(isset($data['category'])) {
+					$categoryID = $data['category'];
+					try {
+						$category = Category::findFirst(array("id" => $categoryID));
+					} catch(RecordNotFoundException $e) {
+						throw new WrongDataException($categoryID, "wrong category id", $e);
+					}
+					$product->setCategory($category);
+				}
+			//category end
+
+			//producer
+				if(isset($data['producer'])) {
+					$producerID = $data['producer'];
+					try {
+						$producer = Producer::findFirst(array("id" => $producerID));
+					} catch(RecordNotFoundException $e) {
+						throw new WrongDataException($producerID, "wrong producer id", $e);
+					}
+					$product->setProducer($producer);
+				}
+			//producer end
+
+			if(isset($data['name'])) {
+				$product->setName($data['name']);
+			}
+
+			if(isset($data['year'])) {
+				$year = (int) $data['year'];
+				$product->setYear($year);
+			}
+
+			if(isset($data['price'])) {
+				$price = (int) $data['price'];
+				$product->setPrice($price);
+			}
+
+			if(isset($data['description'])) {
+				$product->setDescription($data['description']);
+			}
+
+			if(isset($data['short_description'])) {
+				$product->setShortDescription($data['short_description']);
+			}
+
+			if(!$product->isSaved()) {
+				$product->update();
+			}
+
+			$productItem->setProduct($product);
+		//product end
+
+		//item
+			extract(self::item(
+				$data['file']['image'] ?? array(),
+				$data['char_value']    ?? array(),
+				$data['color']         ?? array(),
+				$data['size']          ?? array(),
+				$data['count']         ?? array()
+			));
+		//item end
+
+		//images
+			if(isset($data['image_id'])) {
+				$imageIDArr = $data['image_id'];
+				
+				$arr = array();
+				try {
+					foreach ($imageIDArr as $imageID) {
+						$arr[] = Image::findFirst(array("id" => $imageID));
+					}
+				} catch(RecordNotFoundException $e) {
+					throw new WrongDataException($imageID, "wrong image id", $e);
+				}
+
+				$imageArr = array_merge($imageArr, $arr);
+			}
+		//images end
+
+			$productItem->setCharList($charArr);
+			$productItem->setImageList($imageArr);
+			$productItem->setAvailableList($availableArr);
+
+			$productItem->update();
+		} catch(WrongDataException $e) {
+			throw new WrongDataException($data, null, $e);
 		}
+	}
+
+	/**
+	 * Обрабатывает данные полученные с формы
+	 * 
+	 * @param array $imageArr массив изображений с формы
+	 * @param array $charArr массив значений характеристик с формы
+	 * @param array $colorArr массив выбранных цветов с формы
+	 * @param array $sizeArr массив выбранных размеров с формы
+	 * @param array $countArr массив количества экземпляров с формы
+	 * @throws WrongDataException переданы неправильные данные
+	 * @return array compact содержит данные для инициализации ProductItem 
+	 * ($imageArr, $charArr, $availableArr)
+	 */
+	private static function item(array $imageArr, array $charArr, array $colorArr, array $sizeArr, array $countArr) {
+		$charArr  = array_values($charArr);
+		$sizeArr  = array_values($sizeArr);
+		$countArr = array_values($countArr);
+		$imageArr = array_values($imageArr);
+		$colorArr = array_values($colorArr);
 
 		if(count($colorArr) !== count($sizeArr) 
 			|| count($sizeArr) !== count($countArr)) {
@@ -203,22 +378,9 @@ final class CRUPProductForm extends AbstractCRUPForm {
 			);
 		}
 
-		try {
-		//category
-			try {
-				$category = Category::findFirst(array("id" => $categoryID));
-			} catch(RecordNotFoundException $e) {
-				throw new WrongDataException($categoryID, "wrong category id", $e);
-			}
-		//category end
-
-		//producer
-			try {
-				$producer = Producer::findFirst(array("id" => $producerID));
-			} catch(RecordNotFoundException $e) {
-				throw new WrongDataException($producerID, "wrong producer id", $e);
-			}
-		//producer end
+		foreach ($countArr as $i => $count) {
+			$countArr[$i] = (int) $count;
+		}
 
 		//images
 			$arr = array();
@@ -282,42 +444,7 @@ final class CRUPProductForm extends AbstractCRUPForm {
 			$availableArr = $arr;
 		//available end
 
-		//product
-			$product = new Product();
-
-			$product->setNew($new);
-			$product->setName($name);
-			$product->setYear($year);
-			$product->setPrice($price);
-			$product->setStatus($status);
-			$product->setRecomended($rec);
-			$product->setDescription($desc);
-			$product->setCategory($category);
-			$product->setProducer($producer);
-			$product->setShortDescription($short);
-
-			$product->insert();
-		//product end
-
-			$productItem = ProductItem::withProduct($product);
-
-			$productItem->setCharList($charArr);
-			$productItem->setImageList($imageArr);
-			$productItem->setAvailableList($availableArr);
-
-			$productItem->insert();
-		} catch(WrongDataException $e) {
-			throw new WrongDataException($data, null, $e);
-		}
+		return compact("imageArr", "charArr", "availableArr");
 	}
-
-	/**
-	 * Редактирует запись Product в базе данных на основе данных из формы
-	 * 
-	 * @param array $data массив переданный из формы
-	 * @throws WrongDataException переданы неправильные данные
-	 * @return void
-	 */
-	public static function update(array $data) {}
 
 }
