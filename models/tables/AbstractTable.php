@@ -437,7 +437,26 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @return void
 	 */
 	public function delete() {
-		
+		if(!isset($this->id)) {
+			throw new WrongDataException($this, "id not set");
+		}
+
+		$class = get_class($this);
+		$table = $class::TABLE;
+
+		$query = "DELETE FROM $table WHERE id = '$this->id'";
+
+		try {
+			$result = DB::query($query);
+		} catch(QueryEmptyResultException $e) {
+			throw new UncheckedQueryException("delete must return smth", $e);
+		}
+
+		unset($this->id);
+
+		if($this->isSaved()) {
+			throw new UncheckedLogicException("object must be deleted here");
+		}
 	}
 //active record functions end
 
