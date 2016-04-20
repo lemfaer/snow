@@ -2,6 +2,7 @@
 	<!-- $productItem -->
 <!-- REQUIRED END -->
 
+<?php $id        = $productItem->getProduct()->getID(); ?>
 <?php $sizeList  = $productItem->getSizeList(); ?>
 <?php $colorList = $productItem->getColorList(); ?>
 
@@ -9,6 +10,10 @@
 
 <form class="product-options">
 								
+	<input type="hidden"
+		id="op-product-id"
+		value="<?= $id; ?>">
+
 	<?php if (count($colorList) > 1): ?>
 		<ul class="op-group" op-name="color">
 

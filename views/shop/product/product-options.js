@@ -93,6 +93,7 @@ jQuery(document).ready(function($) {
 
 			request[name] = value;
 		});
+		request.product_id = $("#op-product-id").val();
 
 		var request = {"opt": request};
 		$.post("/cart/add/options", request, function(data) {
