@@ -312,10 +312,13 @@ class ProductItem extends AbstractRecord {
 			DB::query($query);
 		} catch(QueryEmptyResultException $e) {}
 
-		foreach ($this->availableList as $av) {
-			try {
-				$av->delete();
-			} catch(WrongDataException $e) {}
+		try {
+			$availableList = Available::findAll(array("product_id" => $id), true);
+		} catch(RecordNotFoundException $e) {
+			$availableList = array();
+		}
+		foreach ($availableList as $av) {
+			$av->delete();
 		}
 	}
 //abstract methods realization end
