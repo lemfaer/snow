@@ -17,4 +17,6 @@ jQuery(document).ready(function($) {
 		updateColor);
 //observer end
 
+	updateColor($("[id^='ad-" + name + "-color_']").parents(".clone"));
+
 });
