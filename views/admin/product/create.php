@@ -181,7 +181,6 @@
 					id="ad-product-short_description"
 					class="form-control"
 					placeholder="Введите краткое описание"
-					required
 					rows="2"
 					style="max-width: 100%;"></textarea>
 				<label class="control-label" for="ad-product-short_description">
@@ -200,7 +199,6 @@
 					id="ad-product-description"
 					class="form-control"
 					placeholder="Введите описание"
-					required
 					rows="3"
 					style="max-width: 100%;"></textarea>
 				<label class="control-label" for="ad-product-description">

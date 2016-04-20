@@ -158,8 +158,8 @@ final class CRUPProductForm extends AbstractCRUPForm {
 		$name  = $data['name'];
 		$year  = $data['year'];
 		$price = $data['price'];
-		$desc  = $data['description'];
-		$short = $data['short_description'];
+		$desc  = $data['description'] ?? '';
+		$short = $data['short_description'] ?? '';
 
 		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
 		$new    = filter_var($data['is_new'], FILTER_VALIDATE_BOOLEAN);
