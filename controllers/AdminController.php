@@ -272,7 +272,7 @@ class AdminController {
 
 		$id = $_POST['category_id'];  
 		try {
-			$sizeList = Size::findAll(array("category_id" => $id));
+			$sizeList = Size::findAll(array("category_id" => $id), "name ASC");
 		} catch(RecordNotFoundException $e) {
 			echo json_encode(false);
 			return;
