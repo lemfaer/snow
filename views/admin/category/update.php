@@ -150,7 +150,7 @@
 			<!-- Description(Описание) -->
 			<div class="form-group">
 				<script type="text/javascript">
-					var textarea = "<?= $desc; ?>";
+					var textarea = <?= json_encode($desc); ?>;
 					jQuery(document).ready(function($) {
 						$("#ad-category-description").val(textarea);
 					});
