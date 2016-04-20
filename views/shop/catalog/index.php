@@ -1,3 +1,20 @@
+<script type="text/javascript" src="/template/js/masonry.min.js"></script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".masonry").masonry({
+			itemSelector: ".shop_box",
+			singleMode: true,
+			isResizable: true,
+			isAnimated: true,
+			animationOptions: { 
+	      queue: false, 
+	      duration: 500 
+	  	}
+		});
+	});
+</script>
+
 <div class="main">
 	<div class="shop_top">
 		<div class="container">
@@ -26,7 +43,7 @@
 				</ul>
 			</div>
 
-			<div class="row shop_box-top">
+			<div class="row shop_box-top masonry">
 
 				<?php foreach($productList as $product): ?>
 					<?php $isNew     = $product->isNew(); ?>
@@ -38,18 +55,24 @@
 						.' '.$product->getName()
 						.' '.$product->getYear(); ?>
 
-					<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 shop_box">
+					<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 shop_box" style="float: left">
 						<a href="<?= $link; ?>">
-							<img src="<?= $image ?>" class="img-responsive" alt=""/>
+
+							<img src="<?= $image; ?>" class="img-responsive" alt=""/>
+
 							<?php if($isNew): ?>
 								<span class="new-box">
 									<span class="new-label">New</span>
 								</span>
 							<?php endif; ?>
+
 							<div class="shop_desc">
 								<h3><a href="<?= $link; ?>"><?= $name; ?></a></h3>
+
 								<p><?= $shortDesc; ?></p>
+
 								<span class="actual"><?= $price; ?></span><br>
+
 								<ul class="buttons">
 									<li class="shop_btn">
 										<a href="<?= $link; ?>">Read More</a>

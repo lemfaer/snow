@@ -28,6 +28,7 @@
 
 <!-- js links -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/template/js/jquery.md5.js"></script>
 	<script type="text/javascript" src="/template/js/jquery.fancybox.js"></script>
 	<script type="text/javascript" src="/template/js/jquery.flexisel.js"></script>
