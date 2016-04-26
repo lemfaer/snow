@@ -1,15 +1,27 @@
 <?php
 
-class ProductItem extends AbstractRecord {
+/**
+ * Класс описывает структуру продукта
+ * 
+ * Класс описывает структуру заказа содержащую описание продукта,
+ * изображения, спицификации и список модификаций продукта.
+ * Методы класса дают возможность получить доступ к данным,
+ * описывающим продукт в базе данных, изменять и сохранять их. 
+ * 
+ * @package models_items
+ * @author  Alan Smithee
+ * @final
+ */
+final class ProductItem extends AbstractRecord {
 
-//set
+//main info
 	/**
-	 * Выполняет действия перед установкой значений в свойства
-	 * 
-	 * @param mixed $value переданное значение
-	 * @param string $checkMethod метод для проверки переданного значения
-	 * @throws WrongDataException передано неправильное значение
-	 * @return mixed (type of $value) переданное значение
+	 * @var Product $product   Объект, содержащий основную информацию о продукте
+	 * @var array   $charList  Массив, содержащий список характеристик продукта
+	 * @var array   $imageList Массив, содержащий изображения продукта
+	 * @var array   $сolorList Массив, содержащий цвета и соответствующие размеры
+	 * @var array   $sizeList  Массив, содержащий размеры и соответствующие цвета
+	 * @var array   $availableList Массив, содержащий модификации продукта
 	 */
 	private $product;
 	private $charList  = array();
@@ -19,44 +31,108 @@ class ProductItem extends AbstractRecord {
 	private $availableList = array();
 
 	//getters
+	/**
+	 * Возвращает объект, содержащий основную информацию о продукте
+	 * 
+	 * @throws NullAccessException поле не заполнено
+	 * @return Product информация о продукте
+	 */
 	public function getProduct() : Product {
 		return parent::get($this->product);
 	}
 
+	/**
+	 * Возвращает массив, содержащий список характеристик продукта
+	 * 
+	 * @throws NullAccessException поле не заполнено
+	 * @return array список характеристик продукта
+	 */
 	public function getCharList() : array {
 		return parent::get($this->charList);
 	}
 
+	/**
+	 * Возвращает массив, содержащий изображения продукта
+	 * 
+	 * @throws NullAccessException поле не заполнено
+	 * @return array изображения продукта
+	 */
 	public function getImageList() : array {
 		return parent::get($this->imageList);
 	}
 
+	/**
+	 * Возвращает массив, содержащий модификации продукта
+	 * 
+	 * @throws NullAccessException поле не заполнено
+	 * @return array модификации продукта
+	 */
 	public function getAvailableList() : array {
 		return parent::get($this->availableList);
 	}
 
+	/**
+	 * Возвращает массив, содержащий цвета и соответствующие размеры
+	 * 
+	 * @throws NullAccessException поле не заполнено
+	 * @return array цвета и соответствующие размеры
+	 */
 	public function getColorList() : array {
 		return parent::get($this->colorList);
 	}
 
+	/**
+	 * Возвращает массив, содержащий размеры и соответствующие цвета
+	 * 
+	 * @throws NullAccessException поле не заполнено
+	 * @return array размеры и соответствующие цвета
+	 */
 	public function getSizeList() : array {
 		return parent::get($this->sizeList);
 	}
 	//getters end
 
 	//setters
+	/**
+	 * Устанавливает основную информацию о продукте
+	 * 
+	 * @param Product $product основная информация о продукте
+	 * @throws WrongDataException передано неправильное значение
+	 * @return void
+	 */
 	public function setProduct(Product $product) {
 		$this->product = parent::set($product, "checkProduct");
 	}
 
+	/**
+	 * Устанавливает список характеристик продукта
+	 * 
+	 * @param array $charList список характеристик продукта
+	 * @throws WrongDataException передано неправильное значение
+	 * @return void
+	 */
 	public function setCharList(array $charList) {
 		$this->charList = parent::set($charList, "checkCharList");
 	}
 
+	/**
+	 * Устанавливает изображения продукта
+	 * 
+	 * @param array $imageList изображения продукта
+	 * @throws WrongDataException передано неправильное значение
+	 * @return void
+	 */
 	public function setImageList(array $imageList) {
 		$this->imageList = parent::set($imageList, "checkImageList");
 	}
 
+	/**
+	 * Устанавливает модификации продукта
+	 * 
+	 * @param array $availableList модификации продукта
+	 * @throws WrongDataException передано неправильное значение
+	 * @return void
+	 */
 	public function setAvailableList(array $availableList) {
 		$this->availableList = parent::set($availableList, "checkAvailableList");
 	}
@@ -64,6 +140,13 @@ class ProductItem extends AbstractRecord {
 //main info end
 
 //init
+	/**
+	 * Инициализирует массив характеристик продукта 
+	 * на основе объекта Product в свойстве $product
+	 * 
+	 * @throws WrongDataException объект Product не установлен
+	 * @return void
+	 */
 	private function charList() {
 		try {
 			$id = $this->getProduct()->getID();
@@ -91,9 +174,17 @@ class ProductItem extends AbstractRecord {
 			throw new UncheckedLogicException("data in db must be valide",
 				new WrongDataException($arr, "wrong id in db"), $e);
 		}
+
 		$this->charList = $charList;
 	}
 
+	/**
+	 * Инициализирует массив изображений продукта
+	 * на основе объекта Product в свойстве $product
+	 * 
+	 * @throws WrongDataException объект Product не установлен
+	 * @return void
+	 */
 	private function imageList() {
 		try {
 			$id = $this->getProduct()->getID();
@@ -121,9 +212,17 @@ class ProductItem extends AbstractRecord {
 			throw new UncheckedLogicException("data in db must be valide",
 				new WrongDataException($arr, "wrong id in db"), $e);
 		}
+
 		$this->imageList = $imageList;
 	}
 
+	/**
+	 * Инициализирует массив модификаций продукта
+	 * на основе объекта Product в свойстве $product
+	 * 
+	 * @throws WrongDataException объект Product не установлен
+	 * @return void
+	 */
 	private function availableList() {
 		try {
 			$id = $this->getProduct()->getID();
@@ -153,6 +252,13 @@ class ProductItem extends AbstractRecord {
 		}
 	}
 
+	/**
+	 * Инициализирует массив цветов и соответствующих размеров
+	 * на основе модификаций продукта в свойстве $availableList
+	 * 
+	 * @throws WrongDataException массив модификаций не установлен
+	 * @return void
+	 */
 	private function colorList() {
 		try {
 			$id = $this->getAvailableList();
@@ -188,6 +294,13 @@ class ProductItem extends AbstractRecord {
 		$this->colorList = $colorList;
 	}
 
+	/**
+	 * Инициализирует массив размеров и соответствующих цветов
+	 * на основе модификаций продукта в свойстве $availableList
+	 * 
+	 * @throws WrongDataException массив модификаций не установлен
+	 * @return void
+	 */
 	private function sizeList() {
 		try {
 			$id = $this->getAvailableList();
@@ -225,6 +338,15 @@ class ProductItem extends AbstractRecord {
 //init end
 
 //check
+	/**
+	 * Проверяет сохраненена ли информация о продукте в базе данных
+	 * 
+	 * Возвращает true если в базе данных присутствует информация о продукте
+	 * Возвращает false если в базе данных отсутствует информация о продукте
+	 * 
+	 * @throws WrongDataException объект Product не установлен 
+	 * @return bool сохраненен ли список товаров
+	 */
 	public function isIn() {
 		try {
 			$id = $this->getProduct()->getID();
@@ -252,7 +374,14 @@ class ProductItem extends AbstractRecord {
 //check end
 
 //construct
-	public static function withProduct($product) {
+	/**
+	 * Конструктор
+	 * 
+	 * @param Product $product объект, содержащий основную информацию о продукте
+	 * @throws WrongDataException передан неправильный объект Product
+	 * @return ProductItem обьект класса
+	 */
+	public static function withProduct(Product $product) : ProductItem {
 		$obj = new self();
 
 		$obj->setProduct($product); // no exception check
@@ -271,22 +400,49 @@ class ProductItem extends AbstractRecord {
 		return $obj;
 	}
 
+	/**
+	 * Приватный конструктор
+	 * Устанавливает валидатор
+	 */
 	private function __construct() {
 		$this->validator = new ProductItemValidator();
 	}
 //construct end
 
 //abstract methods realization
+	/**
+	 * Находит количество записей по параметрам
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @return int количество найденных записей
+	 */
 	public static function findCount(array $whereArr = array(), bool $nullStatus = false) : int {
 		return Product::findCount($whereArr, $nullStatus);
-	} 
+	}
 
+	/**
+	 * Находит первую запись по параметрам
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @throws RecordNotFoundException запись не найдена
+	 * @return AbstractRecord первая запись
+	 */
 	public static function findFirst(array $whereArr = array(), bool $nullStatus = false) : AbstractRecord {
 		$product = Product::findFirst($whereArr, $nullStatus);
 		$productItem = self::withProduct($product);
 		return $productItem;
 	}
 
+	/**
+	 * Находит все записи по параметрам
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @throws RecordNotFoundException записи не найдены
+	 * @return array<AbstractRecord> записи
+	 */
 	public static function findAll(array $whereArr = array(), string $order = "id ASC", int $limit = parent::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
 		$productList = Product::findAll($whereArr, $order, $limit, $offset, $nullStatus);
 		foreach ($productList as $key => $product) {
@@ -295,6 +451,12 @@ class ProductItem extends AbstractRecord {
 		return $productList;
 	}
 
+	/**
+	 * Добавляет запись в базу данных на основе свойств обьекта
+	 * 
+	 * @throws WrongDataException неправильные свойства обьекта
+	 * @return void
+	 */
 	public function insert() {
 		if($this->isIn()) { // no exception check
 			throw new WrongDataException($this, "already in database");
@@ -333,11 +495,23 @@ class ProductItem extends AbstractRecord {
 		}
 	}
 
+	/**
+	 * Обновляет запись в базе данных на основе свойств обьекта
+	 * 
+	 * @throws WrongDataException неправильные свойства обьекта
+	 * @return void
+	 */
 	public function update() {
 		$this->delete();
 		$this->insert();
 	}
 	
+	/**
+	 * Удаляет запись из базы данных на основе свойств обьекта
+	 * 
+	 * @throws WrongDataException неправильные свойства обьекта
+	 * @return void
+	 */
 	public function delete() {
 		try {
 			$id = $this->getProduct()->getID();
@@ -368,6 +542,7 @@ class ProductItem extends AbstractRecord {
 		} catch(RecordNotFoundException $e) {
 			$availableList = array();
 		}
+		
 		foreach ($availableList as $av) {
 			$av->delete();
 		}
