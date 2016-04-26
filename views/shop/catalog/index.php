@@ -1,3 +1,9 @@
+<!-- REQUIRED -->
+	<!-- $category -->
+	<!-- $productList -->
+	<!-- $pagination -->
+<!-- REQUIRED END -->
+
 <script type="text/javascript" src="/template/js/masonry.min.js"></script>
 
 <script type="text/javascript">
