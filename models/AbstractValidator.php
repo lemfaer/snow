@@ -11,6 +11,7 @@ abstract class AbstractValidator {
 	const COLOR_OBJECT_ERROR     = "Передан неправильный обьект Color";
 	const CONTACT_OBJECT_ERROR   = "Передан неправильный обьект Contact";
 	const IMAGE_OBJECT_ERROR     = "Передан неправильный обьект Image";
+	const INDENT_OBJECT_ERROR    = "Передан неправильный обьект Indent";
 	const PRODUCER_OBJECT_ERROR  = "Передан неправильный обьект Producer";
 	const PRODUCT_OBJECT_ERROR   = "Передан неправильный обьект Product";
 	const SIZE_OBJECT_ERROR      = "Передан неправильный обьект Size";
