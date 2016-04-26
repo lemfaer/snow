@@ -106,7 +106,7 @@ abstract class AbstractTable extends AbstractRecord {
 
 		try {
 			$obj = $class::findFirst(array("id" => $this->id), true);
-		} catch(QueryEmptyResultException $e) {
+		} catch(RecordNotFoundException $e) {
 			throw new UncheckedQueryException("object with id must be in db", $e);
 		}
 		
