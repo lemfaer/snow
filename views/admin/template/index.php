@@ -67,11 +67,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="/admin" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b></span>
+          <span class="logo-mini"><b>S</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b></span>
+          <span class="logo-lg"><b>Snow</b></span>
         </a>
 
         <!-- Header Navbar -->
@@ -133,13 +133,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             ?>
 
             <?php $linkArr = array(
-              array("Product",        "/admin/product"),
-              array("Category",       "/admin/category"),
-              array("User",           "/admin/user"),
-              array("Producer",       "/admin/producer"),
-              array("Characteristic", "/admin/char"),
-              array("Size",           "/admin/size"),
-              array("Color",          "/admin/color"),
+              array("Продукты",       "/admin/product"),
+              array("Категории",      "/admin/category"),
+              array("Пользователи",   "/admin/user"),
+              array("Изготовители",   "/admin/producer"),
+              array("Характеристики", "/admin/char"),
+              array("Размеры",        "/admin/size"),
+              array("Цвета",          "/admin/color"),
             ); ?>
 
             <?php foreach ($linkArr as list($name, $link)): ?>
