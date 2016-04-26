@@ -5,7 +5,7 @@
 		public function actionIndex($productID) {
 			$productItem = ProductItem::findFirst(array("id" => $productID));
 			try {
-				$recomendedList = Product::findAll(array("is_recomended" => '1'), "id DESC", 4);
+				$recomendedList = Product::findAll(array("is_recomended" => '1'), "rand()", 4);
 			} catch(QueryEmptyResultException $e) {
 				$recomendedList = array();
 			}
