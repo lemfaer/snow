@@ -20,6 +20,8 @@
 <script type="text/javascript" src="/views/admin/crup.js"></script>
 <script type="text/javascript">crup.name = "user";</script>
 <script type="text/javascript" src="/views/admin/user/pass_update.js"></script>
+<?php $userItem = $user; ?>
+<?php $user = $user->getUser(); ?>
 
 <?php $id        = $user->getID(); ?>
 <?php $email     = $user->getEmail(); ?>

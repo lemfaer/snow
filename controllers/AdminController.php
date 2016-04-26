@@ -6,7 +6,7 @@ class AdminController {
 	private $classNameArr = array(
 		"product"  => "ProductItem",
 		"category" => "Category",
-		"user"     => "User",
+		"user"     => "UserItem",
 		"producer" => "Producer",
 		"char"     => "CharValue",
 		"size"     => "Size",
