@@ -200,7 +200,7 @@ class ProductItem extends AbstractRecord {
 		$sizeIDArray = array_unique($sizeIDArray);
 
 		try {
-			$sizeList = Size::findAll(array("id" => $sizeIDArray), "name ASC");
+			$sizeList = Size::findAll(array("id" => $sizeIDArray), "CAST(name AS int)");
 		} catch(RecordNotFoundException $e) {
 			throw new UncheckedLogicException("data in db must be valide",
 				new WrongDataException($sizeIDArray, "wrong id in db"), $e);
