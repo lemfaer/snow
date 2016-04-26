@@ -65,7 +65,12 @@ class ProductItem extends AbstractRecord {
 
 //init
 	private function charList() {
-		$id = $this->product->getID();
+		try {
+			$id = $this->getProduct()->getID();
+		} catch(NullAccessException $e) {
+			throw new WrongDataException($this, "product not set", $e);
+		}
+
 		$query = "SELECT value_id FROM product_has_value WHERE product_id = '$id'";
 		try {
 			$result = DB::query($query);
@@ -89,7 +94,12 @@ class ProductItem extends AbstractRecord {
 	}
 
 	private function imageList() {
-		$id = $this->product->getID();
+		try {
+			$id = $this->getProduct()->getID();
+		} catch(NullAccessException $e) {
+			throw new WrongDataException($this, "product not set", $e);
+		}
+
 		$query = "SELECT image_id FROM product_has_image WHERE product_id = $id";
 		try {
 			$result = DB::query($query);
@@ -114,7 +124,12 @@ class ProductItem extends AbstractRecord {
 	}
 
 	private function availableList() {
-		$id = $this->product->getID();
+		try {
+			$id = $this->getProduct()->getID();
+		} catch(NullAccessException $e) {
+			throw new WrongDataException($this, "product not set", $e);
+		}
+
 		try {
 			$arr = Available::findAll(array("product_id" => $id));
 		} catch(RecordNotFoundException $e) {
@@ -128,11 +143,22 @@ class ProductItem extends AbstractRecord {
 		}
 
 		$this->availableList = $arr;
-		$this->colorList();
-		$this->sizeList();
+
+		try {
+			$this->colorList();
+			$this->sizeList();
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("available has been set", $e);
+		}
 	}
 
 	private function colorList() {
+		try {
+			$id = $this->getAvailableList();
+		} catch(NullAccessException $e) {
+			throw new WrongDataException($this, "available not set", $e);
+		}
+
 		foreach ($this->availableList as $av) {
 			$colorIDArray[] = $av->getColor()->getID();
 		}
@@ -162,6 +188,12 @@ class ProductItem extends AbstractRecord {
 	}
 
 	private function sizeList() {
+		try {
+			$id = $this->getAvailableList();
+		} catch(NullAccessException $e) {
+			throw new WrongDataException($this, "available not set", $e);
+		}
+
 		foreach ($this->availableList as $av) {
 			$sizeIDArray[] = $av->getSize()->getID();
 		}
@@ -193,7 +225,11 @@ class ProductItem extends AbstractRecord {
 
 //check
 	public function isIn() {
-		$id   = $this->product->getID();
+		try {
+			$id = $this->getProduct()->getID();
+		} catch(NullAccessException $e) {
+			throw new WrongDataException($this, "product not set", $e);
+		}
 		$bool = false;
 
 		try {
@@ -218,13 +254,17 @@ class ProductItem extends AbstractRecord {
 	public static function withProduct($product) {
 		$obj = new self();
 
-		$obj->product = $product;
+		$obj->setProduct($product); // no exception check
 
-		$obj->charList();
-		$obj->imageList();
+		try {
+			$obj->charList();
+			$obj->imageList();
 
-		if($product->isAvailable()) {
-			$obj->availableList();
+			if($product->isAvailable()) {
+				$obj->availableList();
+			}
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("product has been set", $e);
 		}
 
 		return $obj;
@@ -255,10 +295,15 @@ class ProductItem extends AbstractRecord {
 	}
 
 	public function insert() {
-		if($this->isIn()) {
+		if($this->isIn()) { // no exception check
 			throw new WrongDataException($this, "already in database");
 		}
-		$id = $this->product->getID();
+
+		try {
+			$id = $this->getProduct()->getID();
+		} catch(NullAccessException $e) {
+			throw new WrongDataException($this, "product not set", $e);
+		}
 
 		try {
 			foreach ($this->charList as $char) {
@@ -275,7 +320,9 @@ class ProductItem extends AbstractRecord {
 
 			foreach ($this->availableList as $i => $av) {
 				$av->setProduct($this->product);
-				$av->insert();
+				if(!$av->isSaved()) {
+					$av->insert();
+				}
 				$this->availableList[$i] = $av;
 			}
 		} catch(QueryEmptyResultException $e) {
@@ -291,7 +338,11 @@ class ProductItem extends AbstractRecord {
 	}
 	
 	public function delete() {
-		$id = $this->product->getID();
+		try {
+			$id = $this->getProduct()->getID();
+		} catch(NullAccessException $e) {
+			throw new WrongDataException($this, "product not set", $e);
+		}
 
 		$query = "DELETE FROM product_has_value WHERE product_id = '$id'";
 		try {
