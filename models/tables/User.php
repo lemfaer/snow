@@ -38,6 +38,28 @@ class User extends AbstractTable {
 	public function getHash() : string {
 		return parent::get($this->hash);
 	}
+
+	public function getIndentList() : array {
+		$id = $this->id;
+		try {
+			$contact = Contact::findFirst(array("user_id" => $id));
+		} catch(RecordNotFoundException $e) {
+			return array();
+		}
+
+		$id = $contact->getID();
+		try {
+			$indentList = Indent::findAll(array("contact_id" => $id));
+		} catch(RecordNotFoundException $e) {
+			return array();
+		}
+
+		foreach ($indentList as $i => $indent) {
+			$indentList[$i] = IndentItem::withIndent($indent);
+		}
+
+		return $indentList;
+	}
 	//getters end
 
 	//setters
