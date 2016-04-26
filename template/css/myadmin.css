@@ -49,7 +49,7 @@
 .clone-block {
 	margin-bottom: 1em;
 }
-.add-clone {
+.add-clone, .remove-clone.contact {
 	display: block;
 	margin: 0 auto;
 }

@@ -9,6 +9,11 @@ html, body{
 	background:#fff;
 	font-size: 100%;
 }
+body {
+	display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
 body a{
  	transition: 0.5s all;
 	-webkit-transition: 0.5s all;
@@ -471,6 +476,9 @@ ul.icon1 {
 	background:#555;
 }
 /*--main--*/
+.main {
+	flex: 1;
+}
 .content-top{
 	padding:10% 0;
 }
@@ -2545,4 +2553,8 @@ ul.qty li.name a {
 
 .none {
 	display: none;
+}
+
+.field-header {
+	width: 100%;
 }
