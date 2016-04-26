@@ -24,7 +24,7 @@
 <!-- PLUGINS END -->
 
 <script type="text/javascript" src="/views/admin/product/select.js"></script>
-<script type="text/javascript" src="/views/admin/product/observer.js"></script>
+<script type="text/javascript" src="/views/admin/observer.js"></script>
 <script type="text/javascript" src="/views/admin/crup.js"></script>
 <script type="text/javascript">crup.name = "product";</script>
 <script type="text/javascript" src="/views/admin/image.js"></script>

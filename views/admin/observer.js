@@ -1,4 +1,4 @@
-function observer(clones, func) {
+function observer(thing, func) {
 
 	var MutationObserver = window.MutationObserver || window.WebkitMutationObserver
 		|| window.MozMutationObserver;
@@ -7,7 +7,7 @@ function observer(clones, func) {
 		func(mutations[0].addedNodes[0]);
 	});
 
-	observer.observe(clones, {
+	observer.observe(thing, {
 		attributes: true,
 		childList: true,
 		characterData: true,
