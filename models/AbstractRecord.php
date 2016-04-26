@@ -57,5 +57,6 @@ abstract class AbstractRecord {
 	abstract public function update();
 
 	abstract public function delete();
+//active record functions end
 
 }
