@@ -75,6 +75,7 @@ class ProductItem extends AbstractRecord {
 		try {
 			$result = DB::query($query);
 		} catch(QueryEmptyResultException $e) {
+			$this->charList = array();
 			return;
 		}
 
