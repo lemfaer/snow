@@ -14,6 +14,7 @@ abstract class AbstractValidator {
 	const PRODUCER_OBJECT_ERROR  = "Передан неправильный обьект Producer";
 	const PRODUCT_OBJECT_ERROR   = "Передан неправильный обьект Product";
 	const SIZE_OBJECT_ERROR      = "Передан неправильный обьект Size";
+	const STATE_OBJECT_ERROR     = "Передан неправильный обьект State";
 	const USER_OBJECT_ERROR      = "Передан неправильный обьект User";
 //const end
 
