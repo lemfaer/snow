@@ -62,8 +62,8 @@
 
 <section class="content-header">
 	<h1>
-		Product Create
-		<small>Добавление новой записи в таблицу Product</small>
+		Product Update
+		<small>Редактирование записи в таблице Product</small>
 	</h1>
 </section>
 
