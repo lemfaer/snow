@@ -2,6 +2,8 @@
 	<!-- iCheck for checkboxes and radio inputs -->
 	<link rel="stylesheet" href="/template/iCheck/all.css">
 	<script src="/template/iCheck/icheck.min.js"></script>
+	<script type="text/javascript" src="/template/js/jquery.maskedinput.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
@@ -15,6 +17,11 @@
 
 <script type="text/javascript" src="/views/admin/crup.js"></script>
 <script type="text/javascript">crup.name = "user";</script>
+<script type="text/javascript" src="/views/admin/clone.js"></script>
+<script type="text/javascript" src="/views/admin/observer.js"></script>
+<script type="text/javascript" src="/views/admin/user/contact.js"></script>
+<script type="text/javascript" src="/views/admin/user/phone.js"></script>
+<script type="text/javascript" src="/views/admin/user/address.js"></script>
 
 <section class="content-header">
 	<h1>
@@ -123,6 +130,78 @@
 					<i class="ico fa fa-check"></i> 
 					<font class="message">Ошибка</font>
 				</label>
+			</div>
+
+			<!-- Contact(Контактная информация) -->
+			<div class="clone-block">
+				<!-- sample -->
+				<div class="sample" next="1">
+					<!-- Name(Контактное лицо) -->
+					<div class="form-group">
+						<div class="field-header">
+							<label>Контактное лицо</label>
+						</div>
+						<input type="text" 
+							name="user[contact][names][contact-name_0]"
+							id="ad-user-contact-name_0" 
+							class="form-control" 
+							placeholder="Введите значение"
+							required
+							disabled>
+						<label class="control-label" for="ad-user-contact-name_0">
+							<i class="ico fa fa-check"></i> 
+							<font class="message">Ошибка</font>
+						</label>
+					</div>
+
+					<!-- Phone(Телефон) -->
+					<div class="form-group">
+						<div class="field-header">
+							<label>Телефон</label>
+						</div>
+						<input type="text" 
+							name="user[contact][phones][contact-phone_0]"
+							id="ad-user-contact-phone_0" 
+							class="form-control" 
+							placeholder="Введите значение"
+							required
+							disabled>
+						<label class="control-label" for="ad-user-contact-phone_0">
+							<i class="ico fa fa-check"></i> 
+							<font class="message">Ошибка</font>
+						</label>
+					</div>
+
+					<!-- Address(Адрес) -->
+					<div class="form-group">
+						<div class="field-header">
+							<label>Адрес</label>
+						</div>
+						<input type="text" 
+							name="user[contact][addresses][contact-address_0]"
+							id="ad-user-contact-address_0" 
+							class="form-control" 
+							placeholder="Введите значение"
+							required
+							disabled>
+						<label class="control-label" for="ad-user-contact-address_0">
+							<i class="ico fa fa-check"></i> 
+							<font class="message">Ошибка</font>
+						</label>
+					</div>
+
+					<button class="btn btn-danger remove-clone-lazy contact">
+						Удалить контактные данные
+					</button>
+				</div>
+				
+				<!-- clones -->
+				<div class="clones"></div>
+
+				<!-- button -->
+				<button class="btn btn-default add-clone contact">
+					Добавить контактные данные
+				</button>
 			</div>
 
 			<!-- Status(Статус) -->

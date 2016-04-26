@@ -6,6 +6,8 @@
 	<!-- iCheck for checkboxes and radio inputs -->
 	<link rel="stylesheet" href="/template/iCheck/all.css">
 	<script src="/template/iCheck/icheck.min.js"></script>
+	<script type="text/javascript" src="/template/js/jquery.maskedinput.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
@@ -20,6 +22,12 @@
 <script type="text/javascript" src="/views/admin/crup.js"></script>
 <script type="text/javascript">crup.name = "user";</script>
 <script type="text/javascript" src="/views/admin/user/pass_update.js"></script>
+<script type="text/javascript" src="/views/admin/clone.js"></script>
+<script type="text/javascript" src="/views/admin/observer.js"></script>
+<script type="text/javascript" src="/views/admin/user/contact.js"></script>
+<script type="text/javascript" src="/views/admin/user/phone.js"></script>
+<script type="text/javascript" src="/views/admin/user/address.js"></script>
+
 <?php $userItem = $user; ?>
 <?php $user = $user->getUser(); ?>
 
@@ -175,6 +183,170 @@
 					<i class="ico fa fa-check"></i> 
 					<font class="message">Ошибка</font>
 				</label>
+			</div>
+
+			<!-- Contact(Контактная информация) -->
+			<div class="clone-block">
+				<!-- clones -->
+				<div class="clones">
+					<?php $i = 1; ?>
+					<?php if($userItem->issetContact()): ?>
+						<?php $contact = $userItem->getContact(); ?>
+
+						<?php $name    = $contact->getName(); ?>
+						<?php $phone   = $contact->getPhone(); ?>
+						<?php $address = $contact->getAddress(); ?>
+
+						<div class="clone" this="<?= $i; ?>">
+							<!-- Name(Контактное лицо) -->
+							<div class="form-group">
+								<div class="field-header">
+									<label>Контактное лицо</label>
+									<a class="ad_update">
+										<i class="up_ico fa fa-edit"></i>
+										<font class="up_message">Изменить</font>
+									</a>
+								</div>
+								<input type="text" 
+									name="user[contact][names][contact-name_<?= $i; ?>]"
+									id="ad-user-contact-name_<?= $i; ?>" 
+									class="form-control" 
+									placeholder="Введите значение"
+									value="<?= $name; ?>"
+									required
+									disabled>
+								<label class="control-label" for="ad-user-contact-name_<?= $i; ?>">
+									<i class="ico fa fa-check"></i> 
+									<font class="message">Ошибка</font>
+								</label>
+							</div>
+
+							<!-- Phone(Телефон) -->
+							<div class="form-group">
+								<div class="field-header">
+									<label>Телефон</label>
+									<a class="ad_update">
+										<i class="up_ico fa fa-edit"></i>
+										<font class="up_message">Изменить</font>
+									</a>
+								</div>
+								<input type="text" 
+									name="user[contact][phones][contact-phone_<?= $i; ?>]"
+									id="ad-user-contact-phone_<?= $i; ?>" 
+									class="form-control" 
+									placeholder="Введите значение"
+									value="<?= $phone; ?>"
+									required
+									disabled>
+								<label class="control-label" for="ad-user-contact-phone_<?= $i; ?>">
+									<i class="ico fa fa-check"></i> 
+									<font class="message">Ошибка</font>
+								</label>
+							</div>
+
+							<!-- Address(Адрес) -->
+							<div class="form-group">
+								<div class="field-header">
+									<label>Адрес</label>
+									<a class="ad_update">
+										<i class="up_ico fa fa-edit"></i>
+										<font class="up_message">Изменить</font>
+									</a>
+								</div>
+								<input type="text" 
+									name="user[contact][addresses][contact-address_<?= $i; ?>]"
+									id="ad-user-contact-address_<?= $i; ?>" 
+									class="form-control" 
+									placeholder="Введите значение"
+									value="<?= $address; ?>"
+									required
+									disabled>
+								<label class="control-label" for="ad-user-contact-address_<?= $i; ?>">
+									<i class="ico fa fa-check"></i> 
+									<font class="message">Ошибка</font>
+								</label>
+							</div>
+
+							<button class="btn btn-danger remove-clone contact">
+								Удалить контактные данные
+							</button>
+						</div>
+
+						<script type="text/javascript">
+							jQuery(document).ready(function($) {
+								$(".add-clone.contact").hide("fast");
+							});
+						</script>
+
+						<?php $i++; ?>
+					<?php endif ?>
+				</div>
+
+				<!-- sample -->
+				<div class="sample" next="<?= $i; ?>">
+					<!-- Name(Контактное лицо) -->
+					<div class="form-group">
+						<div class="field-header">
+							<label>Контактное лицо</label>
+						</div>
+						<input type="text" 
+							name="user[contact][names][contact-name_0]"
+							id="ad-user-contact-name_0" 
+							class="form-control" 
+							placeholder="Введите значение"
+							required
+							disabled>
+						<label class="control-label" for="ad-user-contact-name_0">
+							<i class="ico fa fa-check"></i> 
+							<font class="message">Ошибка</font>
+						</label>
+					</div>
+
+					<!-- Phone(Телефон) -->
+					<div class="form-group">
+						<div class="field-header">
+							<label>Телефон</label>
+						</div>
+						<input type="text" 
+							name="user[contact][phones][contact-phone_0]"
+							id="ad-user-contact-phone_0" 
+							class="form-control" 
+							placeholder="Введите значение"
+							required
+							disabled>
+						<label class="control-label" for="ad-user-contact-phone_0">
+							<i class="ico fa fa-check"></i> 
+							<font class="message">Ошибка</font>
+						</label>
+					</div>
+
+					<!-- Address(Адрес) -->
+					<div class="form-group">
+						<div class="field-header">
+							<label>Адрес</label>
+						</div>
+						<input type="text" 
+							name="user[contact][addresses][contact-address_0]"
+							id="ad-user-contact-address_0" 
+							class="form-control" 
+							placeholder="Введите значение"
+							required
+							disabled>
+						<label class="control-label" for="ad-user-contact-address_0">
+							<i class="ico fa fa-check"></i> 
+							<font class="message">Ошибка</font>
+						</label>
+					</div>
+
+					<button class="btn btn-danger remove-clone-lazy contact">
+						Удалить контактные данные
+					</button>
+				</div>
+
+				<!-- button -->
+				<button class="btn btn-default add-clone contact">
+					Добавить контактные данные
+				</button>
 			</div>
 
 			<!-- Status(Статус) -->
