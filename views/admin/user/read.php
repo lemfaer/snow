@@ -48,6 +48,8 @@
 				</thead>
 				<tbody>
 					<?php foreach ($userList as $user): ?>
+						<?php $user = $user->getUser(); ?>
+
 						<?php $id        = $user->getID(); ?>
 						<?php $fname     = $user->getFirstName(); ?>
 						<?php $lname     = $user->getLastName(); ?>
