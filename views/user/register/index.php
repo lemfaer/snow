@@ -5,7 +5,7 @@
 	<div class="shop_top">
 		<div class="container">
 
-			<form method="post" id="form" action="<?="/register/submit"?>"> 
+			<form method="post" id="form" action="/register/submit"> 
 				<div class="register-top-grid">
 					<h3>ПЕРСОНАЛЬНАЯ ИНФОРМАЦИЯ</h3>
 					<div>
@@ -59,18 +59,15 @@
 						<i class="reg-text"></i>
 					</div>
 				</div>
-				<!-- 
-					<div class="clear"> </div>
-					<a class="news-letter" href="#">
-						<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i>Sign Up for Newsletter</label>
-					</a> 
-				-->
+
 				<div class="g-recaptcha" data-theme="light" id="captcha"
 					data-sitekey="6Ld9xhoTAAAAABPLHe7BJCHLuPFffdD8nP4geB9z">
 				</div>
+				
 				<div class="clear"> </div>
 				<input type="submit" value="Отправить">
 			</form>
+
 		</div>
 	</div>
 </div>
