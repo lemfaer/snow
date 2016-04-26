@@ -5,8 +5,8 @@ class SizeValidator extends AbstractTableValidator {
 //const
 	const CLASS_NAME = "Size";
 
-	//кириллица, латиница, цифры, пробел, дефис. 1-99 символов
-	const NAME_PATTERN = "/^[A-Za-zА-Яа-яЁё0-9\- ]{1,99}$/u";
+	//кириллица, латиница, цифры, пробел, дефис, точка. 1-99 символов
+	const NAME_PATTERN = "/^[A-Za-zА-Яа-яЁё0-9\-\/\. ]{1,99}$/u";
 
 	const NAME_ERROR = "Неправильный ввод имени";
 //const end
