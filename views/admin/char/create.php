@@ -122,7 +122,7 @@
 								required
 								disabled>
 							<span class="input-group-btn">
-								<button class="btn btn-danger btn-flat remove-clone">
+								<button class="btn btn-danger btn-flat remove-clone-lazy">
 									<i class="fa fa-remove"></i>
 								</button>
 							</span>

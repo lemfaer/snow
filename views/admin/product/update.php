@@ -335,7 +335,7 @@
 										value="<?= $imageID; ?>">
 									<div class="input-group">
 										<img src="<?= $link; ?>" class="image-view">
-										<button class="btn btn-danger btn-flat image-remove remove-clone">
+										<button class="btn btn-danger btn-flat image-remove remove-clone-lazy">
 											<i class="fa fa-remove"></i>
 										</button>
 									</div>
@@ -393,7 +393,7 @@
 										<option></option>
 									</select>
 									<span class="input-group-btn">
-										<button class="btn btn-danger btn-flat remove-clone">
+										<button class="btn btn-danger btn-flat remove-clone-lazy">
 											<i class="fa fa-remove"></i>
 										</button>
 									</span>
@@ -437,7 +437,7 @@
 								<option></option>
 							</select>
 							<span class="input-group-btn">
-								<button class="btn btn-danger btn-flat remove-clone">
+								<button class="btn btn-danger btn-flat remove-clone-lazy">
 									<i class="fa fa-remove"></i>
 								</button>
 							</span>
@@ -515,7 +515,7 @@
 										min="0"
 										max="999">
 									<span class="input-group-btn">
-										<button class="btn btn-danger btn-flat remove-clone">
+										<button class="btn btn-danger btn-flat remove-clone-lazy">
 											<i class="fa fa-remove"></i>
 										</button>
 									</span>
@@ -573,7 +573,7 @@
 								min="0"
 								max="999">
 							<span class="input-group-btn">
-								<button class="btn btn-danger btn-flat remove-clone">
+								<button class="btn btn-danger btn-flat remove-clone-lazy">
 									<i class="fa fa-remove"></i>
 								</button>
 							</span>

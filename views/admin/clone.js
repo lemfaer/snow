@@ -9,6 +9,7 @@ jQuery(document).ready(function($) {
 		var clone     = $(sample).clone();
 		var clonePath = $(parent).find(".clones");
 		var num       = $(sample).attr("next");
+		var remove    = $(clone).find(".remove-clone-lazy");
 
 		$(label).fadeIn('slow');
 
@@ -17,6 +18,9 @@ jQuery(document).ready(function($) {
 
 		$(clone).removeClass("sample");
 		$(clone).addClass("clone");
+
+		$(remove).removeClass(".remove-clone-lazy");
+		$(remove).addClass("remove-clone");
 
 		$(clone).find(".form-group").each(function(index, el) {
 			$(el).addClass("ajax");
