@@ -19,21 +19,19 @@ class ImageValidator extends AbstractTableValidator {
 	public function checkPath(string $path) : bool {
 		$error = array("path" => self::PATH_ERROR);
 		$path = ROOT."/images/".$path;
-		//return parent::log(file_exists($path), $error);
-		return true;
+		return parent::log(file_exists($path), $error);
 	}
 
-	private function checkImage($im) : bool {
+	private function checkImagick(Imagick $im) : bool {
 		$error = array("image" => self::IMAGE_MIN_XY_ERROR);
-		$bool  = (imagesx($im) >= self::IMAGE_MIN_X)
-			&& (imagesy($im) >= self::IMAGE_MIN_Y);
+		$bool  = ($im->getImageWidth() >= self::IMAGE_MIN_X)
+			&& ($im->getImageHeight() >= self::IMAGE_MIN_Y);
 		return parent::log($bool, $error);
 	}
 
 	public function checkUploadedFile(array $uf) : bool {
 		$bool = false;
 		$type = $uf['type'];
-
 		$error = array("image" => self::IMAGE_NULL_ERROR);
 		if($type) {
 			$error = array("image" => self::IMAGE_TYPE_ERROR);
@@ -41,11 +39,10 @@ class ImageValidator extends AbstractTableValidator {
 				$bool = true;
 			}
 		}
-
 		if($bool) {
 			$url = $uf['tmp_name'];
-			$im  = imagecreatefromjpeg($url); 
-			return self::checkImage($im);
+			$im  = new Imagick($url); 
+			return self::checkImagick($im);
 		} else {
 			return parent::log(false, $error);
 		}
