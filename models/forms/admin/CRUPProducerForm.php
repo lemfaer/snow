@@ -68,12 +68,7 @@ final class CRUPProducerForm extends AbstractCRUPForm {
 
 		try {
 		//image
-			$image = new Image();
-
-			$image->setStatus(true);
-			$image->setByUploadedFile($imageUF);
-
-			$image->insert();
+			$image = Image::withUploadedFile($imageUF);
 		//image end
 
 			$producer = new Producer();
@@ -115,17 +110,7 @@ final class CRUPProducerForm extends AbstractCRUPForm {
 			if(isset($data['file']['image'])) {
 				$imageUF = $data['file']['image'];
 
-				try {
-					$image = new Image();
-
-					$image->setStatus(true);
-					$image->setByUploadedFile($imageUF);
-					
-					$image->insert();
-				} catch(WrongDataException $e) {
-					throw new WrongDataException($imageUF, "wrong file", $e);
-				}
-
+				$image = Image::withUploadedFile($imageUF);
 				$producer->setImage($image);
 			}
 

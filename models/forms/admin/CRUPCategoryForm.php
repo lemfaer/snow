@@ -88,12 +88,7 @@ final class CRUPCategoryForm extends AbstractCRUPForm {
 
 		try {
 		//image
-			$image = new Image();
-
-			$image->setByUploadedFile($imageUF);
-			$image->setStatus(true);
-			
-			$image->insert();
+			$image = Image::withUploadedFile($imageUF);
 		//image end
 
 		//parent
@@ -182,13 +177,7 @@ final class CRUPCategoryForm extends AbstractCRUPForm {
 			if(isset($data['file']['image'])) {
 				$imageUF = $data['file']['image'];
 
-				$image = new Image();
-
-				$image->setStatus(true);
-				$image->setByUploadedFile($imageUF);
-				
-				$image->insert();
-
+				$image = Image::withUploadedFile($imageUF);
 				$category->setImage($image);
 			}
 

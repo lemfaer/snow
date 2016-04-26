@@ -386,12 +386,7 @@ final class CRUPProductForm extends AbstractCRUPForm {
 			$arr = array();
 
 			foreach ($imageArr as $imageUF) {
-				$image = new Image();
-
-				$image->setStatus(true);
-				$image->setByUploadedFile($imageUF);
-
-				$image->insert();
+				$image = Image::withUploadedFile($imageUF);
 				$arr[] = $image;
 			}
 
