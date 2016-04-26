@@ -64,7 +64,7 @@ class Category extends AbstractTable {
 			if($this->validator->checkParentID($parent, $this->id)) {
 				$this->parent = $parent;
 			} else {
-				throw new WrongDataException($parent);
+				throw new WrongDataException($parent, implode(", ", $this->errorInfo()));
 			}
 		} else {
 			$this->parent = $parent;
