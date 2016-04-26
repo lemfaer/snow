@@ -355,6 +355,14 @@ class ProductItem extends AbstractRecord {
 			DB::query($query);
 		} catch(QueryEmptyResultException $e) {}
 
+		foreach ($this->availableList as $i => $av) {
+			try {
+				$av->getID();
+				$av->delete();
+				$this->availableList[$i] = $av;
+			} catch(NullAccessException $e) {}
+		}
+
 		try {
 			$availableList = Available::findAll(array("product_id" => $id), true);
 		} catch(RecordNotFoundException $e) {
