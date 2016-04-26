@@ -7,8 +7,8 @@
  * findCount, findFirst, findAll, insert, update, delete
  * для поиска, добавления, обновления, и удаления нужных записей 
  * 
- * @package  models_tables
- * @author   Alan Smithee
+ * @package models_tables
+ * @author  Alan Smithee
  * @abstract
  */
 abstract class AbstractTable extends AbstractRecord {
@@ -93,7 +93,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * Проверяет сохраненен ли объект в базе данных
 	 * 
 	 * Возвращает true если свойства обьекта совпадают со значениями в базе данных
-	 * Возвращает false усли одно или несколько свойств не совпадают со значениями в базе данных
+	 * Возвращает false если одно или несколько свойств не совпадают со значениями в базе данных
 	 * 
 	 * @return bool сохранен ли объект
 	 */
