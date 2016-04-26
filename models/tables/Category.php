@@ -80,7 +80,7 @@ class Category extends AbstractTable {
 //link
 	public function link() : string {
 		$arr = array();
-		for($i = $this; $i instanceof NullCategory; $i = $i->parent) {
+		for($i = $this; !($i instanceof NullCategory); $i = $i->parent) {
 			$arr[] = $i->short_name;
 		}
 		$arr = array_reverse($arr);
