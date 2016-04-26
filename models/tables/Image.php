@@ -37,15 +37,6 @@ class Image extends AbstractTable {
 	public function setPath50(string $path50) {
 		$this->path50 = parent::set($path50, "checkPath");
 	}
-
-	public function setByUploadedFile(array $uf) {
-		$uf = parent::set($uf, "checkUploadedFile");
-		
-		$url = $uf['tmp_name'];
-		$im  = imagecreatefromjpeg($url);
-
-		$this->setImage($im);
-	}
 	//setters end
 //main info end
 
@@ -82,31 +73,45 @@ class Image extends AbstractTable {
 
 		return $obj;
 	}
+
+	public static function withUploadedFile(array $uf) : Image {
+		$uf = parent::set($uf, "checkUploadedFile");
+		
+		$url = $uf['tmp_name'];
+		$im = new Imagic($url);
+
+		return $this->withImagick($im);
+	}
+
+	public static function withImagick(Imagick $im) : Image {
+		$im = parent::set($im, "checkImagick");
+
+		$obj = new self();
+		$obj->imagick($im);
+
+		$obj->setStatus(true);
+		$obj->insert();
+
+		return $obj;
+	}
 //construct end
 
-//gd
-	private function setImage($im) {
-		$this->create700($im);
-		$this->create135($im);
-		$this->create50($im);
+//imagick
+	public function imagick(Imagick $im) {
+		$im700 = $im;
+		$im700->adaptiveResizeImage(700, 700);
+		$this->path700 = $this->create($im700);
+
+		$im135 = $im;
+		$im135->adaptiveResizeImage(135, 135);
+		$this->path135 = $this->create($im135);
+
+		$im50 = $im;
+		$im50->adaptiveResizeImage(50, 50);
+		$this->path50 = $this->create($im50);
 	}
 
-	private function create700($im) {
-		$im = imagescale($im, 700, 700);
-		$this->path700 = $this->createImage($im);
-	}
-
-	private function create135($im) {
-		$im = imagescale($im, 135, 135);
-		$this->path135 = $this->createImage($im);
-	}
-
-	private function create50($im) {
-		$im = imagescale($im, 50, 50);
-		$this->path50 = $this->createImage($im);
-	}
-
-	private function createImage($im) : string {
+	private function create(Imagick $im) {
 		$dir = substr(md5(microtime()), mt_rand(0, 30), 2).'/'.
 			substr(md5(microtime()), mt_rand(0, 30), 2);
 		
@@ -116,27 +121,23 @@ class Image extends AbstractTable {
 			mkdir($absPath, 0777, true);
 		}
 
-		ob_start();
-		imagejpeg($im);
-		$bin = ob_get_contents();
-		ob_end_clean();
-		$name = md5($bin).".jpg";
+		$name = substr($im->getImageSignature(), 0, 10).".jpg";
 
 		$relPath = $relPath."/".$name;
 		$absPath = $absPath."/".$name;
 
-		imagejpeg($im, $absPath);
+		$im->writeImage($absPath);
 		
 		return $relPath;
 	}
-//gd end
+//imagick end
 
 //destruct
 	public function __destruct() {
 		if(!isset($this->id)) { // here must be isSaved
-			unlink(IMAGE.$this->path700);
-			unlink(IMAGE.$this->path135);
-			unlink(IMAGE.$this->path50);
+			unlink($this->getPath());
+			unlink($this->getPath135());
+			unlink($this->getPath50());
 		}
 	}
 //destruct end
