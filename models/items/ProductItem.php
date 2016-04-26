@@ -367,7 +367,7 @@ final class ProductItem extends AbstractRecord {
 			throw new UncheckedLogicException("count(*) must return smth", $e);
 		}
 
-		$bool = $bool || Available::findCount(array("product_id" => $id)) > 0;
+		$bool = $bool || Available::findCount(array("product_id" => $id), true) > 0;
 
 		return $bool;
 	}
