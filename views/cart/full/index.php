@@ -33,7 +33,7 @@
 						<?php $pPrice    = "$".$pPrice; ?>
 						<?php $pSubTotal = "$".$pSubTotal; ?>
 
-						<?php $pImage    = $product->getImage()->link(); ?>
+						<?php $pImage    = $product->getImage()->link135(); ?>
 						<?php $pLink     = "/product/".$product->getID(); ?>
 						<?php $pName     = $product->getProducer()->getName()
 							." ".$product->getName()." ".$product->getYear(); ?>

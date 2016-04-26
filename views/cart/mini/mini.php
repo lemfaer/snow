@@ -7,7 +7,7 @@
 	<?php $count   = $one['count']; ?>
 
 	<?php $price = '$'.$product->getPrice(); ?>
-	<?php $image = $product->getImage()->link(); ?>
+	<?php $image = $product->getImage()->link50(); ?>
 	<?php $link  = "/product/".$product->getID(); ?>
 	<?php $name  = $product->getProducer()->getName()
 		." ".$product->getName()." ".$product->getYear(); ?>
