@@ -297,29 +297,6 @@
 					<label>Изображения</label>
 				</div>
 
-				<!-- sample -->
-				<div class="sample row" next="1">
-					<div class="form-group image col-lg-12 col-md-12 col-sm-12 vol-xs-12">
-						<div class="input-group">
-							<input type="file"
-								name="product[image][image_0]"
-								id="ad-product-image_0" 
-								class="form-control image"
-								required
-								disabled>
-							<span class="input-group-btn">
-								<button class="btn btn-danger btn-flat remove-clone">
-									<i class="fa fa-remove"></i>
-								</button>
-							</span>
-						</div>
-						<label class="control-label" for="ad-product-image_0">
-							<i class="ico fa fa-check"></i> 
-							<font class="message">Ошибка</font>
-						</label>
-					</div>
-				</div>
-
 				<!-- clones -->
 				<div class="clones">
 					<div class="row">
@@ -344,6 +321,29 @@
 
 							<?php $i++; ?>
 						<?php endforeach ?>
+					</div>
+				</div>
+
+				<!-- sample -->
+				<div class="sample row" next="<?= $i; ?>">
+					<div class="form-group image col-lg-12 col-md-12 col-sm-12 vol-xs-12">
+						<div class="input-group">
+							<input type="file"
+								name="product[image][image_0]"
+								id="ad-product-image_0" 
+								class="form-control image"
+								required
+								disabled>
+							<span class="input-group-btn">
+								<button class="btn btn-danger btn-flat remove-clone-lazy">
+									<i class="fa fa-remove"></i>
+								</button>
+							</span>
+						</div>
+						<label class="control-label" for="ad-product-image_0">
+							<i class="ico fa fa-check"></i> 
+							<font class="message">Ошибка</font>
+						</label>
 					</div>
 				</div>
 
