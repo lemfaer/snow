@@ -4,6 +4,7 @@ abstract class AbstractValidator {
 
 //const
 	const AVAILABLE_OBJECT_ERROR = "Передан неправильный обьект Available";
+	const CARGO_OBJECT_ERROR     = "Передан неправильный обьект Cargo";
 	const CATEGORY_OBJECT_ERROR  = "Передан неправильный обьект Category";
 	const CHARNAME_OBJECT_ERROR  = "Передан неправильный обьект CharName";
 	const CHARVALUE_OBJECT_ERROR = "Передан неправильный обьект CharValue";
