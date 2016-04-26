@@ -11,15 +11,6 @@ class ProductItem extends AbstractRecord {
 	 * @throws WrongDataException передано неправильное значение
 	 * @return mixed (type of $value) переданное значение
 	 */
-	protected function set($value, string $checkMethod) {
-		if(!$this->validator->$checkMethod($value)) {
-			throw new WrongDataException($value, implode(", ", $this->errorInfo()));
-		}
-		return $value;
-	}
-//set end
-
-//main info
 	private $product;
 	private $charList  = array();
 	private $imageList = array();
@@ -29,45 +20,45 @@ class ProductItem extends AbstractRecord {
 
 	//getters
 	public function getProduct() : Product {
-		return $this->product;
+		return parent::get($this->product);
 	}
 
 	public function getCharList() : array {
-		return $this->charList;
+		return parent::get($this->charList);
 	}
 
 	public function getImageList() : array {
-		return $this->imageList;
+		return parent::get($this->imageList);
 	}
 
 	public function getAvailableList() : array {
-		return $this->availableList;
+		return parent::get($this->availableList);
 	}
 
 	public function getColorList() : array {
-		return $this->colorList;
+		return parent::get($this->colorList);
 	}
 
 	public function getSizeList() : array {
-		return $this->sizeList;
+		return parent::get($this->sizeList);
 	}
 	//getters end
 
 	//setters
 	public function setProduct(Product $product) {
-		$this->product = self::set($product, "checkProduct");
+		$this->product = parent::set($product, "checkProduct");
 	}
 
 	public function setCharList(array $charList) {
-		$this->charList = self::set($charList, "checkCharList");
+		$this->charList = parent::set($charList, "checkCharList");
 	}
 
 	public function setImageList(array $imageList) {
-		$this->imageList = self::set($imageList, "checkImageList");
+		$this->imageList = parent::set($imageList, "checkImageList");
 	}
 
 	public function setAvailableList(array $availableList) {
-		$this->availableList = self::set($availableList, "checkAvailableList");
+		$this->availableList = parent::set($availableList, "checkAvailableList");
 	}
 	//setters end
 //main info end

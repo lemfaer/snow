@@ -28,7 +28,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @return int идентификатор
 	 */
 	public function getID() : int {
-		return self::get($this->id);
+		return parent::get($this->id);
 	}
 
 	/**
@@ -38,7 +38,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @return bool статус
 	 */
 	public function getStatus() : bool {
-		return self::get($this->status);
+		return parent::get($this->status);
 	}
 
 	/**
@@ -49,7 +49,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @return void
 	 */
 	protected function setID(int $id) {
-		$this->id = self::set($id, "checkID");
+		$this->id = parent::set($id, "checkID");
 	}
 
 	/**
@@ -60,36 +60,7 @@ abstract class AbstractTable extends AbstractRecord {
 	 * @return void
 	 */
 	public function setStatus(bool $status) {
-		$this->status = self::set($status, "checkStatus");
-	}
-
-	/**
-	 * Выполняет действия перед возвращением свойств
-	 * 
-	 * @param mixed $prop 
-	 * @throws NullAccessException поле не заполнено
-	 * @return mixed (type of $prop) переданное свойство
-	 */
-	protected function get($prop) {
-		if(!isset($prop)) {
-			throw new NullAccessException();
-		}
-		return $prop;
-	}
-
-	/**
-	 * Выполняет действия перед установкой значений в свойства
-	 * 
-	 * @param mixed $value переданное значение
-	 * @param string $checkMethod метод для проверки переданного значения
-	 * @throws WrongDataException передано неправильное значение
-	 * @return mixed (type of $value) переданное значение
-	 */
-	protected function set($value, string $checkMethod) {
-		if(!$this->validator->$checkMethod($value)) {
-			throw new WrongDataException($value, implode(", ", $this->errorInfo()));
-		}
-		return $value;
+		$this->status = parent::set($status, "checkStatus");
 	}
 
 	/**
