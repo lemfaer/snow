@@ -11,6 +11,10 @@ jQuery(document).ready(function($) {
 		var num       = $(sample).attr("next");
 
 		$(label).fadeIn('slow');
+
+		$(clone).attr("this", $(clone).attr("next"));
+		$(clone).removeAttr("next");
+
 		$(clone).removeClass("sample");
 		$(clone).addClass("clone");
 

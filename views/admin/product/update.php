@@ -328,7 +328,7 @@
 							<?php $link    = $im->link(); ?>
 							<?php $imageID = $im->getID(); ?>
 
-							<div class="clone col-lg-4 col-md-4 col-sm-6 col-xs-12">
+							<div class="clone col-lg-4 col-md-4 col-sm-6 col-xs-12" this="<?= $i; ?>">
 								<div class="form-group">
 									<input type="hidden"
 										name="product[image_id][image_id_<?= $i; ?>]"
@@ -366,7 +366,7 @@
 						<?php $valueID = $cvalue->getID(); ?>
 						<?php $nameID  = $cvalue->getName()->getID(); ?>
 
-						<div class="clone row">
+						<div class="clone row" this="<?= $i; ?>">
 							<div class="form-group ajax col-lg-6 col-md-6 col-sm-6 col-xs-6">
 								<select id="ad-product-char_name_<?= $i; ?>"
 									name="product[char_name][char_name_<?= $i; ?>]" 
@@ -469,7 +469,7 @@
 						<?php $sizeID  = $av->getSize()->getID(); ?>
 						<?php $colorID = $av->getColor()->getID(); ?>
 
-						<div class="clone row" next="<?= $i; ?>">
+						<div class="clone row" this="<?= $i; ?>">
 							<div class="form-group ajax col-lg-4 col-md-4 col-sm-4 col-xs-4">
 								<select id="ad-product-color_<?= $i; ?>"
 									name="product[color][color_<?= $i; ?>]"
