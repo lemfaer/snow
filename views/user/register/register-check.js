@@ -54,6 +54,10 @@ jQuery(document).ready(function($) {
 		}, "json");
 	});
 
+	$("#reg-check-password").focusout(function(event) {
+		$("#cpass").val("");
+	});
+
 	$("#cpass").on("focusout", function(event) {
 		event.preventDefault();
 		var pass = $("input[type='password']").not(this).val();
