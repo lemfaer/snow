@@ -12,14 +12,11 @@ class ProductItemValidator extends AbstractValidator {
 	const AVAILABLELIST_CLASS_ERROR = 
 		"Переданный массив содержит не обьекты класса Available";
 
-	const AVAILABLE_EXISTS_ERROR = 
-		"Один или несколько переданных обьектов Available уже в базе данных";
 	const AVAILABLE_DATA_ERROR = 
 		"Один или несколько переданных обьектов Available не содержат необходимых данных";
 //const end
 
 //validate methods
-
 	public function checkProduct(Product $product) : bool {
 		$error = array("product" => parent::PRODUCT_OBJECT_ERROR);
 		return parent::checkObject($product, $error);
@@ -65,31 +62,26 @@ class ProductItemValidator extends AbstractValidator {
 	}
 
 	public function checkAvailableList(array $availableList) : bool {
-		$errorClass  = array("availableList" => self::AVAILABLELIST_CLASS_ERROR);
-		$errorObject = array("availableList" => parent::AVAILABLE_OBJECT_ERROR);
+		$errorClass = array("availableList" => self::AVAILABLELIST_CLASS_ERROR);
+		$errorData  = array("availableList" => self::AVAILABLE_DATA_ERROR);
+
 		foreach ($availableList as $av) {
 			if(!parent::checkClass($av, "Available", $errorClass)) {
 				return false;
 			}
 
-			try {
-				$av->getSize();
-				$av->getColor();
-				$av->getCount();
-			} catch(NullAccessException $e) {
-				return parent::log(false,
-					array("availableList" => self::AVAILABLE_DATA_ERROR));
-			}
+			$rc = new ReflectionClass($av);
+			$rp = $rc->getProperty("product");
+			$rp->setAccessible(true);
+			$rp->setValue($av, new Product());
 
-			if($av->isSaved()) {
-				return parent::log(false, 
-					array("availableList" => self::AVAILABLE_EXISTS_ERROR));
+			if($av->isNull()) {
+				return parent::log(false, $errorData);
 			}
 		}
 
 		return parent::log(true, array("availableList" => ""));
 	}
-
 //validate methods end
 
 }

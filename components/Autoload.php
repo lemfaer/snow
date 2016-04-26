@@ -14,6 +14,7 @@
 			"/models/forms/",
 			"/models/forms/admin/",
 			"/models/items/",
+			"/models/items/validators/",
 			"/models/tables/", 
 			"/models/tables/validators/",
 		);
