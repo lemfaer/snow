@@ -38,9 +38,10 @@ jQuery(document).ready(function($) {
 
 	$(".clone-block").on("click", ".remove-clone", function(event) {
 		event.preventDefault();
-		var clblock = $(this).parents(".clone-block");
-		var remove  = $(this).parents(".clone");
-		var label   = $(clblock).find(".field-header label");
+		var clblock   = $(this).parents(".clone-block");
+		var remove    = $(this).parents(".clone");
+		var sampleLab = $(clblock).find(".sample").find(".field-header label");
+		var label     = $(clblock).find(".field-header label").not(sampleLab);
 		
 		if($(clblock).find(".clone").length === 1) {
 			$(label).fadeOut("slow");
