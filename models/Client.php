@@ -42,8 +42,26 @@ class Client {
 		return false;
 	}
 
+	/**
+	 * Возвращает пользователя, или переадресует на страницу авторизации
+	 * 
+	 * @return User пользователь
+	 */
 	public static function get() : User {
-		
+		if(!self::logged()) {
+			header("location: /login");
+		}
+
+		try {
+			$user = User::findFirst(array(
+				"id"   => $_COOKIE['id'],
+				"hash" => $_COOKIE['hash'],
+			));
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("user is logged checked", $e);
+		}
+
+		return $user;
 	}
 
 	public static function logout() {
