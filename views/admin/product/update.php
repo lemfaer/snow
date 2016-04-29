@@ -322,7 +322,7 @@
 										value="<?= $imageID; ?>">
 									<div class="input-group">
 										<img src="<?= $link; ?>" class="image-view">
-										<button class="btn btn-danger btn-flat image-remove remove-clone-lazy">
+										<button class="btn btn-danger btn-flat image-remove remove-clone">
 											<i class="fa fa-remove"></i>
 										</button>
 									</div>
@@ -377,11 +377,20 @@
 						<?php $nameID  = $cvalue->getName()->getID(); ?>
 
 						<div class="clone row" this="<?= $i; ?>">
-							<div class="form-group ajax col-lg-6 col-md-6 col-sm-6 col-xs-6">
+							<!-- ID -->
+							<div class="form-group id">
+								<input type="hidden"
+									id="ad-product-char_id_<?= $i; ?>"
+									name="product[char_value][char_value_<?= $i; ?>]"
+									value="<?= $valueID; ?>">
+							</div>
+							<!-- Name -->
+							<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
 								<select id="ad-product-char_name_<?= $i; ?>"
 									name="product[char_name][char_name_<?= $i; ?>]" 
 									class="form-control select2 update"
 									required
+									disabled
 									data-id="<?= $nameID; ?>"
 									style="width: 100%;">
 									<option></option>
@@ -392,19 +401,21 @@
 									<font class="message">Ошибка</font>
 								</label>
 							</div>
-							<div class="form-group ajax col-lg-6 col-md-6 col-sm-6 col-xs-6">
+							<!-- Value -->
+							<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
 								<div class="input-group">
 									<select id="ad-product-char_value_<?= $i; ?>"
 										name="product[char_value][char_value_<?= $i; ?>]"
 										class="form-control select2 update"
 										data-id="<?= $valueID; ?>"
 										required
+										disabled
 										style="width: 100%;">
 										<option></option>
 									</select>
 									<span class="input-group-btn">
-										<button class="btn btn-danger btn-flat remove-clone-lazy">
-											<i class="fa fa-remove"></i>
+										<button class="btn btn-primary btn-flat update-clone remove">
+											<i class="fa fa-pencil"></i>
 										</button>
 									</span>
 								</div>
@@ -475,16 +486,26 @@
 				<div class="clones">
 					<?php $i = 1; ?>
 					<?php foreach ($availableList as $av): ?>
+						<?php $avID    = $av->getID(); ?>
 						<?php $count   = $av->getCount(); ?>
 						<?php $sizeID  = $av->getSize()->getID(); ?>
 						<?php $colorID = $av->getColor()->getID(); ?>
 
 						<div class="clone row" this="<?= $i; ?>">
-							<div class="form-group ajax col-lg-4 col-md-4 col-sm-4 col-xs-4">
+							<!-- ID -->
+							<div class="form-group id">
+								<input type="hidden"
+									id="ad-product-available_id_<?= $i; ?>"
+									name="product[available_id][available_id_<?= $i; ?>]"
+									value="<?= $avID; ?>">
+							</div>
+							<!-- Color -->
+							<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
 								<select id="ad-product-color_<?= $i; ?>"
 									name="product[color][color_<?= $i; ?>]"
 									class="form-control select2 update"
 									required
+									disabled
 									data-id="<?= $colorID; ?>"
 									style="width: 100%;">
 									<option></option>
@@ -494,11 +515,13 @@
 									<font class="message">Ошибка</font>
 								</label>
 							</div>
-							<div class="form-group ajax col-lg-4 col-md-4 col-sm-4 col-xs-4">
+							<!-- Size -->
+							<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
 								<select id="ad-product-size_<?= $i; ?>" 
 									name="product[size][size_<?= $i; ?>]"
 									class="form-control select2 update"
 									required
+									disabled
 									data-id="<?= $sizeID; ?>"
 									style="width: 100%;">
 									<option></option>
@@ -508,7 +531,8 @@
 									<font class="message">Ошибка</font>
 								</label>
 							</div>
-							<div class="form-group ajax col-lg-4 col-md-4 col-sm-4 col-xs-4">
+							<!-- Count -->
+							<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
 								<script type="text/javascript">
 									jQuery(document).ready(function($) {
 										$("#ad-product-count_<?= $i; ?>").trigger("focusout");
@@ -522,11 +546,12 @@
 										placeholder="Введите количество"
 										value="<?= $count; ?>"
 										required
+										disabled
 										min="0"
 										max="999">
 									<span class="input-group-btn">
-										<button class="btn btn-danger btn-flat remove-clone-lazy">
-											<i class="fa fa-remove"></i>
+										<button class="btn btn-primary btn-flat update-clone">
+											<i class="fa fa-pencil"></i>
 										</button>
 									</span>
 								</div>
