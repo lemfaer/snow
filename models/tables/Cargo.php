@@ -92,4 +92,129 @@ class Cargo extends AbstractTable {
 	}
 //construct end
 
+//active record functions
+	/**
+	 * Добавляет запись в базу данных на основе свойств обьекта
+	 * 
+	 * @throws WrongDataException неправильные свойства обьекта
+	 * @return void
+	 */
+	public function insert() {
+		if($this->isNull()) {
+			throw new WrongDataException($this, "object not filled");
+		}
+		if($error = $this->errorInfo()) {
+			throw new WrongDataException($this, "object filled with errors: "
+				.implode(", ", $error));
+		}
+
+		try {
+			$count = $this->available->getCount() - $this->count;
+			$this->available->setCount($count);
+			if(!$this->available->isSaved()) {
+				$this->available->update();
+			}
+		} catch(NullAccessException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		}
+
+		parent::insert();
+	}
+
+	/**
+	 * Обновляет запись в базе данных на основе свойств обьекта
+	 * 
+	 * @throws WrongDataException неправильные свойства обьекта
+	 * @return void
+	 */
+	public function update() {
+		if(!isset($this->id)) {
+			throw new WrongDataException($this, "id not set");
+		}
+		if($this->isNull()) {
+			throw new WrongDataException($this, "object not filled");
+		}
+		if($error = $this->errorInfo()) {
+			throw new WrongDataException($this, "object filled with errors: "
+				.implode(", ", $error));
+		}
+
+		try {
+			$cargo = Cargo::findFirst(array("id" => $this->id), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("id in object must be valide",
+				new WrongDataException($this->id, "wrong id", $e));
+		}
+
+		try {
+			$count = $cargo->available->getCount() + $cargo->count;
+			$cargo->available->setCount($count);
+			if(!$cargo->available->isSaved()) {
+				$cargo->available->update();
+			}
+		} catch(NullAccessException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		}
+
+		if($this->available->getID() === $cargo->available->getID()) {
+			$this->available = $cargo->available;
+		}
+
+		try {
+			$count = $this->available->getCount() - $this->count;
+			$this->available->setCount($count);
+			if(!$this->available->isSaved()) {
+				$this->available->update();
+			}
+		} catch(NullAccessException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		}
+
+		parent::update();
+	}
+
+	/**
+	 * Удаляет запись из базы данных на основе свойств обьекта
+	 * 
+	 * @throws WrongDataException неправильные свойства обьекта
+	 * @return void
+	 */
+	public function delete() {
+		if(!isset($this->id)) {
+			throw new WrongDataException($this, "id not set");
+		}
+
+		try {
+			$cargo = Cargo::findFirst(array("id" => $this->id), true);
+		} catch(RecordNotFoundException $e) {
+			throw new UncheckedLogicException("id in object must be valide",
+				new WrongDataException($this->id, "wrong id", $e));
+		}
+
+		try {
+			$count = $cargo->available->getCount() + $cargo->count;
+			$cargo->available->setCount($count);
+			if(!$cargo->available->isSaved()) {
+				$cargo->available->update();
+			}
+		} catch(NullAccessException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		}
+
+		if(isset($this->available) && $this->available->getID() === $cargo->available->getID()) {
+			$this->available = $cargo->available;
+		}
+
+		parent::delete();
+	}
+//active record functions end
+
 }
