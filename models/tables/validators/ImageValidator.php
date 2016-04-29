@@ -22,7 +22,7 @@ class ImageValidator extends AbstractTableValidator {
 		return parent::log(file_exists($path), $error);
 	}
 
-	private function checkImagick(Imagick $im) : bool {
+	public function checkImagick(Imagick $im) : bool {
 		$error = array("image" => self::IMAGE_MIN_XY_ERROR);
 		$bool  = ($im->getImageWidth() >= self::IMAGE_MIN_X)
 			&& ($im->getImageHeight() >= self::IMAGE_MIN_Y);
