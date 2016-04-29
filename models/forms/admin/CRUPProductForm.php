@@ -73,12 +73,23 @@ final class CRUPProductForm extends AbstractCRUPForm {
 			unset($data['count']);
 		}
 
+		if(isset($data['available_id'])) {
+			$data = array_merge($data, $data['available_id']); 
+			unset($data['available_id']);
+		}
+
 		if(isset($data['price'])) {
 			$data['price'] = (int) $data['price'];
 		}
 
 		if(isset($data['year'])) {
 			$data['year'] = (int) $data['year'];
+		}
+
+		foreach ($data as $i => $v) {
+			if(preg_match("/count_[0-9]+/", $i)) {
+				$data[$i] = (int) $v;
+			}
 		}
 
 		$method = function(string $key) use (&$imageValidator, &$nameValidator, 
@@ -110,6 +121,10 @@ final class CRUPProductForm extends AbstractCRUPForm {
 
 			if(preg_match("/count_[0-9]+/", $key)) {
 				return array($availableValidator, "checkCount");
+			}
+
+			if(preg_match("/available_id_[0-9]+/", $key)) {
+				return array($availableValidator, "checkID");
 			}
 
 			switch ($key) {
@@ -164,54 +179,9 @@ final class CRUPProductForm extends AbstractCRUPForm {
 	 * @return void
 	 */
 	public static function create(array $data) {
-		$name  = $data['name'];
-		$year  = $data['year'];
-		$price = $data['price'];
-		$desc  = $data['description'] ?? '';
-		$short = $data['short_description'] ?? '';
-
-		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
-		$new    = filter_var($data['is_new'], FILTER_VALIDATE_BOOLEAN);
-		$rec    = filter_var($data['is_recomended'], FILTER_VALIDATE_BOOLEAN);
-
-		$categoryID = $data['category'];
-		$producerID = $data['producer'];
-
 		try {
-		//product
-			//category
-				try {
-					$category = Category::findFirst(array("id" => $categoryID));
-				} catch(RecordNotFoundException $e) {
-					throw new WrongDataException($categoryID, "wrong category id", $e);
-				}
-			//category end
+			$product = self::createProduct($data);
 
-			//producer
-				try {
-					$producer = Producer::findFirst(array("id" => $producerID));
-				} catch(RecordNotFoundException $e) {
-					throw new WrongDataException($producerID, "wrong producer id", $e);
-				}
-			//producer end
-
-			$product = new Product();
-
-			$product->setNew($new);
-			$product->setName($name);
-			$product->setYear($year);
-			$product->setPrice($price);
-			$product->setStatus($status);
-			$product->setRecomended($rec);
-			$product->setDescription($desc);
-			$product->setCategory($category);
-			$product->setProducer($producer);
-			$product->setShortDescription($short);
-
-			$product->insert();
-		//product end
-
-		//item
 			extract(self::item(
 				$data['file']['image'] ?? array(),
 				$data['char_value']    ?? array(),
@@ -219,7 +189,6 @@ final class CRUPProductForm extends AbstractCRUPForm {
 				$data['size']          ?? array(),
 				$data['count']         ?? array()
 			));
-		//item end
 
 			$productItem = ProductItem::withProduct($product);
 
@@ -241,10 +210,11 @@ final class CRUPProductForm extends AbstractCRUPForm {
 	 * @return void
 	 */
 	public static function update(array $data) {
-		$id     = $data['id'];
-		$new    = filter_var($data['is_new'], FILTER_VALIDATE_BOOLEAN);
-		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
-		$rec    = filter_var($data['is_recomended'], FILTER_VALIDATE_BOOLEAN);
+		if(!isset($data['id'])) {
+			throw new WrongDataException($data, "id not set");
+		}
+
+		$id = $data['id'];
 
 		try {
 			try {
@@ -253,67 +223,37 @@ final class CRUPProductForm extends AbstractCRUPForm {
 				throw new WrongDataException($id, "wrong product id", $e);
 			}
 
-		//product
 			$product = $productItem->getProduct();
-
-			$product->setNew($new);
-			$product->setStatus($status);
-			$product->setRecomended($rec);
-
-			//category
-				if(isset($data['category'])) {
-					$categoryID = $data['category'];
-					try {
-						$category = Category::findFirst(array("id" => $categoryID));
-					} catch(RecordNotFoundException $e) {
-						throw new WrongDataException($categoryID, "wrong category id", $e);
-					}
-					$product->setCategory($category);
-				}
-			//category end
-
-			//producer
-				if(isset($data['producer'])) {
-					$producerID = $data['producer'];
-					try {
-						$producer = Producer::findFirst(array("id" => $producerID));
-					} catch(RecordNotFoundException $e) {
-						throw new WrongDataException($producerID, "wrong producer id", $e);
-					}
-					$product->setProducer($producer);
-				}
-			//producer end
-
-			if(isset($data['name'])) {
-				$product->setName($data['name']);
-			}
-
-			if(isset($data['year'])) {
-				$year = (int) $data['year'];
-				$product->setYear($year);
-			}
-
-			if(isset($data['price'])) {
-				$price = (int) $data['price'];
-				$product->setPrice($price);
-			}
-
-			if(isset($data['description'])) {
-				$product->setDescription($data['description']);
-			}
-
-			if(isset($data['short_description'])) {
-				$product->setShortDescription($data['short_description']);
-			}
-
-			if(!$product->isSaved()) {
-				$product->update();
-			}
-
+			$product = self::updateProduct($product, $data);
 			$productItem->setProduct($product);
-		//product end
 
-		//item
+			$imageArrUp = self::updateImageID($data['image_id'] ?? array());
+
+			$avArrUp = self::updateAvID($data['available_id'] ?? array());
+			foreach ($avArrUp as $i => $av) {
+				$i++;
+
+				$bool1 = isset($data['color']["color_$i"]);
+				$bool2 = isset($data['size']["size_$i"]);
+				$bool3 = isset($data['count']["count_$i"]);
+
+				if(!$bool1 || !$bool2 || !$bool3) {
+					continue;
+				}
+
+				$color = $data['color']["color_$i"];
+				$size  = $data['size']["size_$i"];
+				$count = $data['count']["count_$i"];
+
+				$av = self::updateAvailable($av, $color, $size, $count);
+
+				unset($data['color']["color_$i"]);
+				unset($data['size']["size_$i"]);
+				unset($data['count']["count_$i"]);
+
+				$i--;
+			}
+
 			extract(self::item(
 				$data['file']['image'] ?? array(),
 				$data['char_value']    ?? array(),
@@ -321,24 +261,9 @@ final class CRUPProductForm extends AbstractCRUPForm {
 				$data['size']          ?? array(),
 				$data['count']         ?? array()
 			));
-		//item end
 
-		//images
-			if(isset($data['image_id'])) {
-				$imageIDArr = $data['image_id'];
-				
-				$arr = array();
-				try {
-					foreach ($imageIDArr as $imageID) {
-						$arr[] = Image::findFirst(array("id" => $imageID));
-					}
-				} catch(RecordNotFoundException $e) {
-					throw new WrongDataException($imageID, "wrong image id", $e);
-				}
-
-				$imageArr = array_merge($imageArr, $arr);
-			}
-		//images end
+			$imageArr     = array_merge($imageArr, $imageArrUp);			
+			$availableArr = array_merge($availableArr, $avArrUp); 
 
 			$productItem->setCharList($charArr);
 			$productItem->setImageList($imageArr);
@@ -348,6 +273,216 @@ final class CRUPProductForm extends AbstractCRUPForm {
 		} catch(WrongDataException $e) {
 			throw new WrongDataException($data, null, $e);
 		}
+	}
+
+	/**
+	 * Преобразует полученые с формы идентификаторы изображений в объекты Image
+	 * 
+	 * @param array $imageIDArr идентификаторы изображений
+	 * @throws WrongDataException переданы неправильные данные
+	 * @return array объекты Image
+	 */
+	private static function updateImageID(array $imageIDArr) : array {
+		try {
+			$imageArr = array();
+			foreach ($imageIDArr as $imageID) {
+				$imageArr[] = Image::findFirst(array("id" => $imageID), true);
+			}
+		} catch(RecordNotFoundException $e) {
+			throw new WrongDataException($imageID, "wrong image id", $e);
+		}
+
+		return $imageArr;
+	}
+
+	/**
+	 * Преобразует полученые с формы идентификаторы модификаций в объекты Available
+	 * 
+	 * @param array $avIDArr идентификаторы модификаций
+	 * @throws WrongDataException переданы неправильные данные
+	 * @return array объекты Available
+	 */
+	private static function updateAvID(array $avIDArr) : array {
+		try {
+			$avArr = array();
+			foreach ($avIDArr as $avID) {
+				$avArr[] = Available::findFirst(array("id" => $avID), true);
+			}
+		} catch(RecordNotFoundException $e) {
+			throw new WrongDataException($avID, "wrong image id", $e);
+		}
+
+		return $avArr;
+	}
+
+	/**
+	 * Изменяет объект Available
+	 * 
+	 * @param Available $product модификация товара
+	 * @param int $color идентификатор цвета
+	 * @param int $size идентификатор размера
+	 * @param int $count кол-во товаров
+	 * @throws WrongDataException переданы неправильные данные
+	 * @return Available модификация товара
+	 */
+	private static function updateAvailable(Available $av, int $colorID, int $sizeID, int $count) : Available {
+		try {
+			$size  = Size::findFirst(array("id" => $sizeID), true);
+		} catch(RecordNotFoundException $e) {
+			throw new WrongDataException($sizeID, "wrong size id", $e);
+		}
+
+		try {
+			$color = Color::findFirst(array("id" => $colorID), true);
+		} catch(RecordNotFoundException $e) {
+			throw new WrongDataException($colorID, "wrong color id", $e);
+		}
+
+		$av->setSize($size);
+		$av->setColor($color);
+		$av->setCount($count);
+
+		$av->update();
+
+		return $av;
+	}
+
+	/**
+	 * Создает объект Product на основе данных с формы
+	 * 
+	 * @param array $data данные полученные с формы
+	 * @throws WrongDataException переданы неправильные данные
+	 * @return Product объект
+	 */
+	private static function createProduct(array $data) : Product {
+		$req = array(
+			"name", "year", "price", 
+			"status", "is_new", "is_recomended",
+			"category", "producer",
+		);
+		if($k = array_diff_key(array_flip($req), $data)) {
+			throw new WrongDataException($k, " keys not exists");
+		}
+
+		//data
+			$name  = $data['name'];
+
+			$year  = (int) $data['year'];
+			$price = (int) $data['price'];
+
+			$desc  = $data['description'] ?? '';
+			$short = $data['short_description'] ?? '';
+
+			$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
+			$new    = filter_var($data['is_new'], FILTER_VALIDATE_BOOLEAN);
+			$rec    = filter_var($data['is_recomended'], FILTER_VALIDATE_BOOLEAN);
+
+			try {
+				$category = Category::findFirst(array("id" => $data['category']), true);
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($data['category'], "wrong category id", $e);
+			}
+
+			try {
+				$producer = Producer::findFirst(array("id" => $data['producer']), true);
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($data['producer'], "wrong producer id", $e);
+			}
+		//data end
+
+		$product = new Product();
+
+		$product->setNew($new);
+		$product->setName($name);
+		$product->setYear($year);
+		$product->setPrice($price);
+		$product->setStatus($status);
+		$product->setRecomended($rec);
+		$product->setDescription($desc);
+		$product->setCategory($category);
+		$product->setProducer($producer);
+		$product->setShortDescription($short);
+
+		$product->insert();
+
+		return $product;
+	}
+
+	/**
+	 * Изменяет объект Product на основе данных с формы
+	 * 
+	 * @param Product $product объект
+	 * @param array $data данные полученные с формы
+	 * @throws WrongDataException переданы неправильные данные
+	 * @return Product объект
+	 */
+	private static function updateProduct(Product $product, array $data) : Product {
+		$req = array(
+			"status", "is_new", "is_recomended",
+		);
+		if($k = array_diff_key(array_flip($req), $data)) {
+			throw new WrongDataException($k, " keys not exists");
+		}
+
+		if(!$product->isSaved()) {
+			throw new WrongDataException($product, "product not saved");
+		}
+
+		$new    = filter_var($data['is_new'], FILTER_VALIDATE_BOOLEAN);
+		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
+		$rec    = filter_var($data['is_recomended'], FILTER_VALIDATE_BOOLEAN);
+
+		$product->setNew($new);
+		$product->setStatus($status);
+		$product->setRecomended($rec);
+
+		if(isset($data['category'])) {
+			$categoryID = $data['category'];
+			try {
+				$category = Category::findFirst(array("id" => $categoryID));
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($categoryID, "wrong category id", $e);
+			}
+			$product->setCategory($category);
+		}
+
+		if(isset($data['producer'])) {
+			$producerID = $data['producer'];
+			try {
+				$producer = Producer::findFirst(array("id" => $producerID));
+			} catch(RecordNotFoundException $e) {
+				throw new WrongDataException($producerID, "wrong producer id", $e);
+			}
+			$product->setProducer($producer);
+		}
+
+		if(isset($data['name'])) {
+			$product->setName($data['name']);
+		}
+
+		if(isset($data['year'])) {
+			$year = (int) $data['year'];
+			$product->setYear($year);
+		}
+
+		if(isset($data['price'])) {
+			$price = (int) $data['price'];
+			$product->setPrice($price);
+		}
+
+		if(isset($data['description'])) {
+			$product->setDescription($data['description']);
+		}
+
+		if(isset($data['short_description'])) {
+			$product->setShortDescription($data['short_description']);
+		}
+
+		if(!$product->isSaved()) {
+			$product->update();
+		}
+
+		return $product;
 	}
 
 	/**
