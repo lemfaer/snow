@@ -1,14 +1,15 @@
+function updateColor(clone) {
+	var name = crup.name; // object crup from /views/admin/crup.js
+	var colors = $(clone).find("[id^='ad-" + name + "-color_']");
+
+	// function select from select.js
+	select(colors, "/admin/select/colors", 
+		{"color" : null}, "Выберите цвет");
+}
+
 jQuery(document).ready(function($) {
 
 	var name = crup.name; // object crup from /views/admin/crup.js
-
-	function updateColor(clone) {
-		var colors = $(clone).find("[id^='ad-" + name + "-color_']");
-
-		// function select from select.js
-		select(colors, "/admin/select/colors", 
-			{"color" : null}, "Выберите цвет");
-	}
 
 //observer
 	// function observer from observer.js

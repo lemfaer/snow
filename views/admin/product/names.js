@@ -1,15 +1,16 @@
+function updateName(clone) {
+	var name = crup.name; // object crup from /views/admin/crup.js
+	var names = $(clone).find("[id^='ad-" + name + "-char_name_']");
+	var id    = $("#ad-" + name + "-category").select2("val");
+
+	// function select from select.js
+	select(names, "/admin/select/names", 
+		{"category_id" : id}, "Выберите характеристику");
+}
+
 jQuery(document).ready(function($) {
 
 	var name = crup.name; // object crup from /views/admin/crup.js
-
-	function updateName(clone) {
-		var names = $(clone).find("[id^='ad-" + name + "-char_name_']");
-		var id    = $("#ad-" + name + "-category").select2("val");
-
-		// function select from select.js
-		select(names, "/admin/select/names", 
-			{"category_id" : id}, "Выберите характеристику");
-	}
 
 	$("#ad-" + name + "-category").on("select2:select", function(event) {
 		updateName($(".clone"));

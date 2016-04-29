@@ -1,19 +1,20 @@
+function updateValue(clone) {
+	var name  = crup.name; // object crup from /views/admin/crup.js
+	if(!$(clone).find("[id^='ad-" + name + "-char_name_']").data("select2")) {
+		return;
+	}
+
+	var values = $(clone).find("[id^='ad-" + name + "-char_value_']");
+	var id = $(clone).find("[id^='ad-" + name + "-char_name_']").select2("val");
+
+	// function select from select.js
+	select(values, "/admin/select/values", 
+		{"name_id": id}, "Выберите значение");
+}
+
 jQuery(document).ready(function($) {
 
 	var name  = crup.name; // object crup from /views/admin/crup.js
-
-	function updateValue(clone) {
-		if(!$(clone).find("[id^='ad-" + name + "-char_name_']").data("select2")) {
-			return
-		}
-
-		var values = $(clone).find("[id^='ad-" + name + "-char_value_']");
-		var id = $(clone).find("[id^='ad-" + name + "-char_name_']").select2("val");
-
-		// function select from select.js
-		select(values, "/admin/select/values", 
-			{"name_id": id}, "Выберите значение");
-	}
 
 	$(".clones").on("select2:select", "[id^='ad-" + name + "-char_name_']", 
 		function(event) {
