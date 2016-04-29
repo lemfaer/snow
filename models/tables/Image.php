@@ -75,16 +75,22 @@ class Image extends AbstractTable {
 	}
 
 	public static function withUploadedFile(array $uf) : Image {
-		$uf = parent::set($uf, "checkUploadedFile");
+		$val = new ImageValidator();
+		if(!$val->checkUploadedFile($uf)) {
+			throw new WrongDataException($uf, implode(", ", $val->errorInfo()));
+		}
 		
 		$url = $uf['tmp_name'];
-		$im = new Imagic($url);
+		$im = new Imagick($url);
 
-		return $this->withImagick($im);
+		return self::withImagick($im);
 	}
 
 	public static function withImagick(Imagick $im) : Image {
-		$im = parent::set($im, "checkImagick");
+		$val = new ImageValidator();
+		if(!$val->checkImagick($im)) {
+			throw new WrongDataException($im, implode(", ", $val->errorInfo()));
+		}
 
 		$obj = new self();
 		$obj->imagick($im);

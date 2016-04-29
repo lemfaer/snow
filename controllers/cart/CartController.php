@@ -13,7 +13,7 @@ class CartController {
 		}
 
 		try {
-			$cart = Cart::getCart();
+			$cart = Cart::get();
 			View::empty("cart/mini/mini.php", compact("cart"));
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("data from view must be valide", $e);
