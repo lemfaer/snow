@@ -19,9 +19,6 @@
 .form-group.has-error .select2-selection {
 	border: 1px solid #ef6958 !important;
 }
-.form-group.id {
-	margin: 0;
-}
 
 .field-header {
 	display: block;
@@ -74,4 +71,56 @@
 	padding: 0;
 	margin: 0;
 	margin-bottom: 1em;
+}
+
+.form-group.id {
+	margin: 0;
+}
+
+.form-control[readonly] {
+	background-color: #fff;
+}
+
+.cart-item {
+	border-bottom: 1px solid #ECECEC; 
+	padding: 1em 0;
+}
+
+.pr-image, .pr-info, .pr-qty {
+	display: inline-flex;
+	align-items: center;
+}
+
+.pr-image img {
+	max-width: 100%;
+}
+
+.qty {
+	width: 100%;
+	list-style-type: none;
+	padding: 0;
+}
+
+ul.qty li.name {
+	display: block;
+	margin-bottom: 1em;
+}
+
+ul.qty li.name a {
+	font-size: 1.5em;
+	font-weight: 700;
+	text-transform: none;
+}
+
+ul.qty li.price.subtotal p {
+	font-weight: 700;
+}
+
+.qty-field {
+	margin: 0 auto;
+}
+
+.qty-field input {
+	width: 2em;
+	text-align: center;
 }
