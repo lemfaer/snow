@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
 		var name;
 		name = $(label).siblings(".op-radio").attr("fgn-name");
 		thatGroup = $("[op-name='" + name + "']");
-		name = $(thatGroup).find(".op-radio").attr("fgn-name");
+		name = $(label).siblings(".op-radio").attr("name").replace("op-", '');
 		thisGroup = $("[op-name='" + name + "']");
 	}
 //define end
