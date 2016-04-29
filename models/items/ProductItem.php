@@ -502,8 +502,83 @@ final class ProductItem extends AbstractRecord {
 	 * @return void
 	 */
 	public function update() {
-		$this->delete();
-		$this->insert();
+		try {
+			$id = $this->getProduct()->getID();
+		} catch(NullAccessException $e) {
+			throw new WrongDataException($this, "product not set", $e);
+		}
+
+		try {
+			$query = "DELETE FROM product_has_value WHERE product_id = '$id'";
+			DB::query($query);
+		} catch(QueryEmptyResultException $e) {}
+
+		try {
+			$query = "DELETE FROM product_has_image WHERE product_id = '$id'";
+			DB::query($query);
+		} catch(QueryEmptyResultException $e) {}
+
+		try {
+			foreach ($this->charList as $char) {
+				$query = "INSERT INTO product_has_value 
+					SET product_id = '$id', value_id = '{$char->getID()}'";
+				DB::query($query);
+			}
+
+			foreach ($this->imageList as $image) {
+				$query = "INSERT INTO product_has_image 
+					SET product_id = '$id', image_id = '{$image->getID()}'";
+				DB::query($query);
+			}
+		} catch(QueryEmptyResultException $e) {
+			throw new UncheckedLogicException("insert must return smth", $e);
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		}
+
+		foreach ($this->availableList as $i => $av) {
+			try {
+				$av->getID();
+				$ioru = false;
+			} catch(NullAccessException $e) {
+				$ioru = true;
+			}
+
+			$av->setProduct($this->product);
+
+			if($ioru) {
+				$av->insert();
+			} else {
+				if(!$av->isSaved()) {
+					$av->update();
+				}
+			}
+
+			$this->availableList[$i] = $av;
+		}
+
+		try {
+			$productItem = ProductItem::withProduct($this->product);
+		} catch(WrongDataException $e) {
+			throw new UncheckedLogicException("data has been checked", $e);
+		}
+
+		$arr = array_diff($productItem, $this);
+
+		foreach ($this->availableList as $i => $av) {
+			foreach ($arr as $avd) {
+				if($av->getID() === $avd->getID()) {
+					$avd->delete();
+					$this->availableList[$i] = $avd;
+				}
+			}
+		}
+
+		foreach ($arr as $avd) {
+			if($avd->isSaved()) {
+				$avd->delete();
+			}
+		}
 	}
 	
 	/**
