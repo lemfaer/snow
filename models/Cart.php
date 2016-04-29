@@ -30,7 +30,7 @@ final class Cart {
 	 */
 	public static function getOne(int $id) : array {
 		self::check($id);
-		$cart = self::getCart();
+		$cart = self::get();
 		foreach ($cart as $key => $value) {
 			if($id === $value['available']->getID()) {
 				return $value;
@@ -62,7 +62,7 @@ final class Cart {
 	 * 
 	 * @return array корзина
 	 */
-	public static function getCart() : array {
+	public static function get() : array {
 		if(!isset(self::$cart)) {
 			$_SESSION['cart'] = $_SESSION['cart'] ?? array();
 			$arr = $_SESSION['cart'];
@@ -115,7 +115,7 @@ final class Cart {
 	 * @return int цена товаров в корзине
 	 */
 	public static function total() : int {
-		$cart = self::getCart();
+		$cart = self::get();
 		$total = 0;
 		foreach ($cart as $one) {
 			$count = $one['count'];
