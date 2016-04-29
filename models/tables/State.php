@@ -2,7 +2,43 @@
 
 class State extends AbstractTable {
 
+//const
 	const TABLE = "state";
+
+	const STATE_NEW_ID    = 1;
+	const STATE_TREAT_ID  = 2;
+	const STATE_BRING_ID  = 3;
+	const STATE_DONE_ID   = 4;
+//const end
+
+//default
+	protected static $def = array();
+
+	protected static $isDefaultInit = false;
+
+	private static function initDefault() {
+		if(!self::$isDefaultInit) {
+			self::$def['new']    = self::findFirst(array("id" => self::STATE_NEW_ID), true);
+			self::$def['treat']  = self::findFirst(array("id" => self::STATE_TREAT_ID), true);
+			self::$def['bring']  = self::findFirst(array("id" => self::STATE_BRING_ID), true);
+			self::$def['done']   = self::findFirst(array("id" => self::STATE_DONE_ID), true);
+
+			self::$isDefaultInit = true;
+		}
+	}
+
+	public static function default(string $name) : self {
+		if(!self::$isDefaultInit) {
+			self::initDefault();
+		}
+
+		if(isset(self::$def[$name])) {
+			return self::$def[$name];
+		}
+
+		throw new WrongDataException($name, "wrong name");
+	}
+//default end
 
 //main info
 	//protected $id
