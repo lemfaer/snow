@@ -6,10 +6,12 @@
 	<!-- iCheck for checkboxes and radio inputs -->
 	<link rel="stylesheet" href="/template/iCheck/all.css">
 	<script src="/template/iCheck/icheck.min.js"></script>
+
 	<!-- Select2 -->
 	<link rel="stylesheet" href="/template/css/select2.min.css">
 	<script src="/template/js/select2.full.min.js"></script>
 
+	<!-- Settings -->
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
 			$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -17,24 +19,32 @@
 				radioClass: 'iradio_minimal-blue'
 			});
 		});
+		
 		jQuery(document).ready(function($) {
 			$(".select2").select2();
 		});
 	</script>
 <!-- PLUGINS END -->
 
-<script type="text/javascript" src="/views/admin/product/select.js"></script>
-<script type="text/javascript" src="/views/admin/observer.js"></script>
-<script type="text/javascript" src="/views/admin/crup.js"></script>
-<script type="text/javascript">crup.name = "product";</script>
-<script type="text/javascript" src="/views/admin/image.js"></script>
-<script type="text/javascript" src="/views/admin/inherits.js"></script>
-<script type="text/javascript" src="/views/admin/product/producers.js"></script>
-<script type="text/javascript" src="/views/admin/product/names.js"></script>
-<script type="text/javascript" src="/views/admin/product/values.js"></script>
-<script type="text/javascript" src="/views/admin/product/colors.js"></script>
-<script type="text/javascript" src="/views/admin/product/sizes.js"></script>
-<script type="text/javascript" src="/views/admin/clone.js"></script>
+<!-- SCRIPTS END -->
+	<script type="text/javascript" src="/views/admin/crup.js"></script>
+
+	<script type="text/javascript" src="/views/admin/select.js"></script>
+	<script type="text/javascript" src="/views/admin/observer.js"></script>
+	<script type="text/javascript" src="/views/admin/clone.js"></script>
+	<script type="text/javascript" src="/views/admin/image.js"></script>
+	<script type="text/javascript" src="/views/admin/inherits.js"></script>
+
+	<script type="text/javascript" src="/views/admin/product/colors.js"></script>
+	<script type="text/javascript" src="/views/admin/product/names.js"></script>
+	<script type="text/javascript" src="/views/admin/product/producers.js"></script>
+	<script type="text/javascript" src="/views/admin/product/sizes.js"></script>
+	<script type="text/javascript" src="/views/admin/product/values.js"></script>
+<!-- SCRIPTS END -->
+
+<!-- SETTINGS -->
+	<script type="text/javascript">crup.name = "product";</script>
+<!-- SETTINGS END -->
 
 <?php $charList      = $product->getCharList(); ?>
 <?php $imageList     = $product->getImageList(); ?>
