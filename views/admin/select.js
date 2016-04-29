@@ -1,5 +1,6 @@
-function select(item, link, data, plh) {
+var select_top = {};
 
+function select(item, link, data, plh, first) {
 	if(item.length === 0 || !$(item).data('select2')) {
 		return;
 	}
@@ -14,6 +15,10 @@ function select(item, link, data, plh) {
 		if(!data) {
 			$(item).select2("val", "");
 			return;
+		}
+
+		if(select_top[first]) {
+			data.unshift(select_top[first]);
 		}
 
 		$(item).select2({
@@ -31,5 +36,4 @@ function select(item, link, data, plh) {
 			}
 		});
 	}, "json");
-
 }
