@@ -2,10 +2,12 @@
 	<!-- iCheck for checkboxes and radio inputs -->
 	<link rel="stylesheet" href="/template/iCheck/all.css">
 	<script src="/template/iCheck/icheck.min.js"></script>
+
 	<!-- Select2 -->
 	<link rel="stylesheet" href="/template/css/select2.min.css">
 	<script src="/template/js/select2.full.min.js"></script>
 
+	<!-- Settings -->
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
 			$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -13,17 +15,27 @@
 				radioClass: 'iradio_minimal-blue'
 			});
 		});
+		
 		jQuery(document).ready(function($) {
 			$(".select2").select2();
 		});
 	</script>
 <!-- PLUGINS END -->
 
-<script type="text/javascript" src="/views/admin/image.js"></script>
-<script type="text/javascript" src="/views/admin/crup.js"></script>
-<script type="text/javascript">crup.name = "category";</script>
-<script type="text/javascript" src="/views/admin/inherits.js"></script>
-<script type="text/javascript" src="/views/admin/category/sort_order.js"></script>
+<!-- SCRIPTS -->
+	<script type="text/javascript" src="/views/admin/crup.js"></script>
+
+	<script type="text/javascript" src="/views/admin/select.js"></script>
+	<script type="text/javascript" src="/views/admin/image.js"></script>
+	<script type="text/javascript" src="/views/admin/inherits.js"></script>
+
+	<script type="text/javascript" src="/views/admin/category/sort_order.js"></script>
+<!-- SCRIPTS END -->
+
+<!-- SETTINGS -->
+	<script type="text/javascript">crup.name = "category";</script>
+	<script type="text/javascript">select_top.parent = {id: 0, text: "Нет"};</script>
+<!-- SETTINGS END -->
 
 <section class="content-header">
 	<h1>

@@ -6,9 +6,14 @@
 	<!-- iCheck for checkboxes and radio inputs -->
 	<link rel="stylesheet" href="/template/iCheck/all.css">
 	<script src="/template/iCheck/icheck.min.js"></script>
+
+	<!-- MaskedInput -->
 	<script type="text/javascript" src="/template/js/jquery.maskedinput.min.js"></script>
+
+	<!-- Google Autocomplete -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 
+	<!-- Settings -->
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
 			$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -19,14 +24,21 @@
 	</script>
 <!-- PLUGINS END -->
 
-<script type="text/javascript" src="/views/admin/crup.js"></script>
-<script type="text/javascript">crup.name = "user";</script>
-<script type="text/javascript" src="/views/admin/user/pass_update.js"></script>
-<script type="text/javascript" src="/views/admin/clone.js"></script>
-<script type="text/javascript" src="/views/admin/observer.js"></script>
-<script type="text/javascript" src="/views/admin/user/contact.js"></script>
-<script type="text/javascript" src="/views/admin/user/phone.js"></script>
-<script type="text/javascript" src="/views/admin/user/address.js"></script>
+<!-- SCRIPTS END -->
+	<script type="text/javascript" src="/views/admin/crup.js"></script>
+
+	<script type="text/javascript" src="/views/admin/observer.js"></script>
+	<script type="text/javascript" src="/views/admin/clone.js"></script>
+
+	<script type="text/javascript" src="/views/admin/user/address.js"></script>
+	<script type="text/javascript" src="/views/admin/user/contact.js"></script>
+	<script type="text/javascript" src="/views/admin/user/pass_update.js"></script>
+	<script type="text/javascript" src="/views/admin/user/phone.js"></script>
+<!-- SCRIPTS END -->
+
+<!-- SETTINGS -->
+	<script type="text/javascript">crup.name = "user";</script>
+<!-- SETTINGS END -->
 
 <?php $userItem = $user; ?>
 <?php $user = $user->getUser(); ?>

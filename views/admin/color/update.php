@@ -6,10 +6,12 @@
 	<!-- bootstrap color picker -->
 	<link rel="stylesheet" href="/template/colorpicker/bootstrap-colorpicker.min.css">
 	<script src="/template/colorpicker/bootstrap-colorpicker.min.js"></script>
+
 	<!-- iCheck for checkboxes and radio inputs -->
 	<link rel="stylesheet" href="/template/iCheck/all.css">
 	<script src="/template/iCheck/icheck.min.js"></script>
 
+	<!-- Settings -->
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
 			$("#colorpicker").colorpicker();
@@ -22,8 +24,13 @@
 	</script>
 <!-- PLUGINS END -->
 
-<script type="text/javascript" src="/views/admin/crup.js"></script>
-<script type="text/javascript">crup.name = "color";</script>
+<!-- SCRIPTS -->
+	<script type="text/javascript" src="/views/admin/crup.js"></script>
+<!-- SCRIPTS END -->
+
+<!-- SETTINGS -->
+	<script type="text/javascript">crup.name = "color";</script>
+<!-- SETTINGS END -->
 
 <?php $id     = $color->getID(); ?>
 <?php $name   = $color->getName(); ?>

@@ -3,16 +3,26 @@
 <!-- REQUIRED END -->
 
 <!-- PLUGINS -->
+	<!-- DataTables -->
 	<link rel="stylesheet" href="/template/css/dataTables.bootstrap.css">
-
 	<script src="/template/js/jquery.dataTables.min.js"></script>
 	<script src="/template/js/dataTables.bootstrap.min.js"></script>
+
+	<!-- Settings -->
 	<script>
 		jQuery(document).ready(function($) {
 			$("#datatable").DataTable();
 		});
 	</script>
 <!-- PLUGINS END -->
+
+<!-- SCRIPTS -->
+	<script type="text/javascript" src="/views/admin/read.js"></script>
+<!-- SCRIPTS END -->
+
+<!-- SETTINGS -->
+	<script type="text/javascript">read.name = "user";</script>
+<!-- SETTINGS END -->
 
 <script type="text/javascript" src="/views/admin/read.js"></script>
 <script type="text/javascript">read.name = "user";</script>

@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/template/iCheck/all.css">
 	<script src="/template/iCheck/icheck.min.js"></script>
 
+	<!-- Settings -->
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
 			$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -17,14 +18,20 @@
 	</script>
 <!-- PLUGINS END -->
 
-<script type="text/javascript" src="/views/admin/image.js"></script>
-<script type="text/javascript" src="/views/admin/crup.js"></script>
-<script type="text/javascript">crup.name = "producer";</script>
-<script type="text/javascript">
-	jQuery(document).ready(function($) {
-		$(".form-control.image").hide();
-	});
-</script>
+<!-- SCRIPTS -->
+	<script type="text/javascript" src="/views/admin/crup.js"></script>
+
+	<script type="text/javascript" src="/views/admin/image.js"></script>
+<!-- SCRIPTS END -->
+
+<!-- SETTINGS -->
+	<script type="text/javascript">crup.name = "producer";</script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".form-control.image").hide();
+		});
+	</script>
+<!-- SETTINGS END -->
 
 <?php $id     = $producer->getID(); ?>
 <?php $name   = $producer->getName(); ?>
