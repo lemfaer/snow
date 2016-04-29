@@ -29,6 +29,9 @@
 		"login/check"  => "login/check",
 		"login/submit" => "login/submit",
 
+		"order"        => "order/index",
+		"order/check"  => "order/check",
+		"order/submit" => "order/submit",
 
 		//admin
 		"test" => "test/test",
