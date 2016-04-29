@@ -136,6 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               array("Продукты",       "/admin/product"),
               array("Категории",      "/admin/category"),
               array("Пользователи",   "/admin/user"),
+              array("Заказы",         "/admin/indent"),
               array("Изготовители",   "/admin/producer"),
               array("Характеристики", "/admin/char"),
               array("Размеры",        "/admin/size"),

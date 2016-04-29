@@ -7,6 +7,7 @@ class AdminController {
 		"product"  => "ProductItem",
 		"category" => "Category",
 		"user"     => "UserItem",
+		"indent"   => "IndentItem",
 		"producer" => "Producer",
 		"char"     => "CharValue",
 		"size"     => "Size",
