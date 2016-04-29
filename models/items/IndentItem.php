@@ -69,6 +69,28 @@ final class IndentItem extends AbstractRecord {
 	//setters end
 //main info end
 
+//calculation
+	public function total() : int {
+		$total = 0;
+
+		foreach ($this->cargoList as $cargo) {
+			$total += $cargo->subTotal();
+		}
+
+		return $total;
+	}
+
+	public function count() : int {
+		$count = 0;
+
+		foreach ($this->cargoList as $cargo) {
+			$count += $cargo->getCount();
+		}
+
+		return $count;
+	}
+//calculation end
+
 //init
 	/**
 	 * Инициализирует массив товаров в заказе 
