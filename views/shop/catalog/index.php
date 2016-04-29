@@ -8,16 +8,21 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
-		$(".masonry").masonry({
+		var settings = {
 			itemSelector: ".shop_box",
 			singleMode: true,
 			isResizable: true,
 			isAnimated: true,
 			animationOptions: { 
-	      queue: false, 
-	      duration: 500 
-	  	}
-		});
+				queue: false, 
+				duration: 500 
+			}
+		};
+
+		$('img').load(function(){
+            $(".masonry").masonry(settings);
+        });
+		$(".masonry").masonry(settings);
 	});
 </script>
 
