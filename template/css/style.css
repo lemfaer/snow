@@ -1119,7 +1119,7 @@ ul.buttons{
 	color:#FFAF02;
 }
 .shop_box-top{
-	margin-bottom:5%;
+	/*margin-bottom:5%;*/
 }
 h3.m_2 {
 	color: #555;
@@ -2234,9 +2234,12 @@ h4.m_11 {
 	opacity: 0.2;
 }
 
+.op-radio:disabled + .op-label span {
+	cursor: default;
+}
+
 .op-radio:disabled + .op-label:hover span {
 	border-color: #e2e2e2;
-	cursor: default;
 }
 
 #captcha {
