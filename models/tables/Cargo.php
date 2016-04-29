@@ -6,14 +6,14 @@ class Cargo extends AbstractTable {
 
 //main info
 	//protected $id
-	private $intent;
+	private $indent;
 	private $available;
 	private $count;
 	//protected $status
 
 	//getters
-	public function getIntent() : Intent {
-		return parent::get($this->intent);
+	public function getIndent() : Indent {
+		return parent::get($this->indent);
 	}
 
 	public function getAvailable() : Available {
@@ -26,8 +26,8 @@ class Cargo extends AbstractTable {
 	//getters end
 
 	//setters
-	public function setIntent(Intent $intent) {
-		$this->intent = parent::set($intent, "checkIntent");
+	public function setIndent(Indent $indent) {
+		$this->indent = parent::set($indent, "checkIndent");
 	}
 
 	public function setAvailable(Available $available) {
@@ -37,7 +37,7 @@ class Cargo extends AbstractTable {
 	public function setCount(int $count) {
 		$count = parent::set($count, "checkCount");
 		if(isset($this->available)) {
-			if($this->validator->checkCountAvailable($count, $this->available)) {
+			if($this->validator->checkAvailableCount($count, $this->available)) {
 				$this->count = $count;
 				return;
 			}
@@ -60,12 +60,12 @@ class Cargo extends AbstractTable {
 		$obj->status = (bool) $arr['status'];
 
 		try {
-			$intent = Intent::findFirst(array("id" => $arr['intent_id']), true);
+			$indent = Indent::findFirst(array("id" => $arr['indent_id']), true);
 		} catch(RecordNotFoundException $e) {
 			throw new UncheckedLogicException("data in db must be valide",
-				new WrongDataException($arr['intent_id'], "wrong id in db", $e));
+				new WrongDataException($arr['indent_id'], "wrong id in db", $e));
 		}
-		$obj->intent = $intent;
+		$obj->indent = $indent;
 
 		try {
 			$available = Available::findFirst(array("id" => $arr['available_id']), true);

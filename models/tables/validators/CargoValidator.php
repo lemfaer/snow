@@ -11,9 +11,9 @@ class CargoValidator extends AbstractTableValidator {
 //const end
 
 //validate methods
-	public function checkIntent(Intent $intent) : bool {
-		$error = array("intent" => parent::INTENT_OBJECT_ERROR);
-		return parent::checkObject($intent, $error);
+	public function checkIndent(Indent $indent) : bool {
+		$error = array("indent" => parent::INDENT_OBJECT_ERROR);
+		return parent::checkObject($indent, $error);
 	}
 
 	public function checkAvailable(Available $available) : bool {
