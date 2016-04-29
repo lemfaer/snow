@@ -81,22 +81,9 @@ class AdminController {
 
 		View::admin("$name/update.php", compact($name));
 	}
-
-	public function actionDelete(string $name, int $id) {
-		$this->checkAdmin();
-		//$this->controller($name)->actionDelete($name, $id);
-	}
 //action view end
 
 //action check/submit
-	public function actionDeleteSubmit(string $name, int $id) {
-		$this->checkAdmin();
-		if(!isset($_POST[$name])) {
-			header("location: /admin/$name");
-		}
-		//$this->controller($name)->actionDeleteSubmit($name);
-	}
-
 	public function actionCRUPCheck(string $name) {
 		$this->checkAdmin();
 		if(!isset($_POST[$name])) {

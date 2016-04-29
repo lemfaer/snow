@@ -19,10 +19,4 @@ jQuery(document).ready(function($) {
 		window.location.href = link;
 	});
 
-	$(".ad-update-link").click(function(event) {
-		var id   = $(this).attr("data-id");
-		var name = read.name;
-		
-	});
-
 });

@@ -51,7 +51,6 @@
 						<th>Sort</th>
 						<th>Status</th>
 						<th>Редактирование</th>
-						<th>Удаление</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -79,12 +78,7 @@
 									<i class="fa fa-edit"></i> Изменить
 								</a>
 							</td>
-							<td style="width: 1px;">
-								<a class="ad-delete-link" data-id="<?= $id; ?>">
-									<i class="fa fa-remove"></i> Удалить
-								</a>
-							</td>
-							</tr>
+						</tr>
 					<?php endforeach ?>
 				</tbody>
 				<tfoot>
@@ -97,7 +91,6 @@
 						<th>Sort</th>
 						<th>Status</th>
 						<th>Редактирование</th>
-						<th>Удаление</th>
 					</tr>
 				</tfoot>
 			</table>
