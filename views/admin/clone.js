@@ -59,4 +59,40 @@ jQuery(document).ready(function($) {
 		});
 	});
 
+	$(".clone-block").on("click", ".update-clone", function(event) {
+		event.preventDefault();
+		
+		var clone = $(this).parents(".clone");
+
+		var fgroup = $(clone).find(".form-group");
+		var input  = $(fgroup).find(".form-control");
+		var ico    = $(this).find("i.fa");
+
+		if($(input).prop("disabled")) {
+			if($(this).hasClass("remove")) {
+				$(this).removeClass("update-clone");
+				$(this).addClass("remove-clone");
+
+				$(this).removeClass("btn-primary");
+				$(this).addClass("btn-danger");
+			}
+
+			$(input).prop("disabled", false);
+
+			$(ico).removeClass("fa-pencil");
+			$(ico).addClass("fa-remove");
+
+			$(fgroup).addClass("ajax");
+		} else {
+			$(input).prop("disabled", true);
+
+			$(ico).removeClass("fa-remove");
+			$(ico).addClass("fa-pencil");
+
+			$(fgroup).removeClass("ajax");
+			$(fgroup).removeClass("has-error");
+			$(fgroup).removeClass("has-success");
+		}
+	});
+
 });
