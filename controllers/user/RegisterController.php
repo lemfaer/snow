@@ -27,10 +27,10 @@ class RegisterController {
 
 		try {
 			RegisterForm::submit($data);
-			View::template("user/register/success.php");
 		} catch(WrongDataException $e) {
-			View::template("user/register/error.php");
+			throw new UncheckedLogicException("wrong data from register form", $e);
 		}
+		View::template("user/register/success.php");
 	}
 
 }

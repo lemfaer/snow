@@ -23,10 +23,10 @@ class LoginController {
 
 		try {
 			LoginForm::submit($data);
-			header("location: /profile");
 		} catch(WrongDataException $e) {
-			View::template("user/login/error.php");
+			throw new UncheckedLogicException("wrong data from login form", $e);
 		}
+		header("location: /");
 	}
 
 }
