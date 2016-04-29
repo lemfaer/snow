@@ -1,8 +1,10 @@
+<!-- REQUIRED -->
+	<!-- $cart -->
+<!-- REQUIRED END -->
+
 <script type="text/javascript" src="/views/cart/full/price.js"></script>
 <script type="text/javascript" src="/views/cart/full/pr-qty.js"></script>
 <script type="text/javascript" src="/views/cart/full/pr-remove.js"></script>
-
-<?php $cart = Cart::getCart(); ?>
 
 <div class="main">
 	<div class="check">
@@ -91,11 +93,11 @@
 					</div>
 					<ul class="total_price">
 						<li class="last_price"> <h4>Итого:</h4></li>	
-						<li class="last_price"><span id="total">6150.00</span></li>
+						<li class="last_price"><span id="total"></span></li>
 						<div class="clearfix"> </div>
 					</ul> 
 					<div class="clearfix"></div>
-					<a class="order" href="#">Оформить заказ</a>
+					<a class="order" href="/order">Оформить заказ</a>
 				</div>
 			<?php else: ?>
 				<div class="col-md-12 cart">
