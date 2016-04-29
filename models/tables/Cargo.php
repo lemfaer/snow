@@ -47,6 +47,19 @@ class Cargo extends AbstractTable {
 	//setters end
 //main info end
 
+//subtotal
+	public function subTotal() : int {
+		if(!isset($this->available)) {
+			throw new WrongDataException($this, "available not set");
+		}
+		if(!$this->available->isSaved()) {
+			throw new WrongDataException($this->available, "wrong available");
+		}
+
+		return $this->available->getProduct()->getPrice() * $this->count;
+	}
+//subtotal end
+
 //construct
 	public function __construct() {
 		$this->validator = new CargoValidator();
