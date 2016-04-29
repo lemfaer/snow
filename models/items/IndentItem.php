@@ -109,8 +109,8 @@ final class IndentItem extends AbstractRecord {
 		try {
 			$arr = Cargo::findAll(array("indent_id" => $id), true);
 		} catch(RecordNotFoundException $e) {
-			throw new UncheckedLogicException("data in db must be valide",
-				new WrongDataException($id, "wrong indent in db (no cargos)", $e));
+			$this->cargoList = array();
+			return;
 		}
 
 		$this->cargoList = $arr;
