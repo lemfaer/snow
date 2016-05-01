@@ -47,11 +47,11 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>First</th>
-						<th>Last</th>
+						<th>Имя</th>
+						<th>Фамилия</th>
 						<th>Email</th>
-						<th>Login</th>
-						<th>Status</th>
+						<th>Логин</th>
+						<th>Статус</th>
 						<th>Редактирование</th>
 					</tr>
 				</thead>
@@ -89,7 +89,7 @@
 						<th>Email</th>
 						<th>Login</th>
 						<th>Status</th>
-						<th>Редактирование</th>
+						<th>Update</th>
 					</tr>
 				</tfoot>
 			</table>

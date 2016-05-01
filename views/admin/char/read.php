@@ -44,10 +44,10 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Category</th>
-						<th>Name</th>
-						<th>Value</th>
-						<th>Status</th>
+						<th>Категория</th>
+						<th>Название</th>
+						<th>Значение</th>
+						<th>Статус</th>
 						<th>Редактирование</th>
 					</tr>
 				</thead>
@@ -82,7 +82,7 @@
 						<th>Name</th>
 						<th>Value</th>
 						<th>Status</th>
-						<th>Редактирование</th>
+						<th>Update</th>
 					</tr>
 				</tfoot>
 			</table>

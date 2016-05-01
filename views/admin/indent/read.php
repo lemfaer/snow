@@ -87,13 +87,13 @@
 				<tfoot>
 					<tr>
 						<th>ID</th>
-						<th>Имя</th>
-						<th>Телефон</th>
-						<th>Адрес</th>
-						<th>Товаров</th>
-						<th>Сумма</th>
-						<th>Статус</th>
-						<th>Редактирование</th>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Address</th>
+						<th>Count</th>
+						<th>Total</th>
+						<th>State</th>
+						<th>Update</th>
 					</tr>
 				</tfoot>
 			</table>

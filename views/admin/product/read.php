@@ -44,14 +44,14 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Name</th>
-						<th>Category</th>
-						<th>Producer</th>
-						<th>Price</th>
-						<th>Year</th>
-						<th>New</th>
-						<th>Rec</th>
-						<th>Status</th>
+						<th>Название</th>
+						<th>Категория</th>
+						<th>Изготовитель</th>
+						<th>Цена</th>
+						<th>Год</th>
+						<th>Новое</th>
+						<th>Реком</th>
+						<th>Статус</th>
 						<th>Редактирование</th>
 					</tr>
 				</thead>
@@ -98,7 +98,7 @@
 						<th>New</th>
 						<th>Rec</th>
 						<th>Status</th>
-						<th>Редактирование</th>
+						<th>Update</th>
 					</tr>
 				</tfoot>
 			</table>

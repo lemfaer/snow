@@ -44,9 +44,9 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Name</th>
-						<th>Image</th>
-						<th>Status</th>
+						<th>Название</th>
+						<th>Изображение</th>
+						<th>Статус</th>
 						<th>Редактирование</th>
 					</tr>
 				</thead>
@@ -76,7 +76,7 @@
 						<th>Name</th>
 						<th>Image</th>
 						<th>Status</th>
-						<th>Редактирование</th>
+						<th>Update</th>
 					</tr>
 				</tfoot>
 			</table>
