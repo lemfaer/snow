@@ -1,4 +1,6 @@
 jQuery(document).ready(function($) {
+
+	$("#log-error").hide();
 	
 	$("#login-form").submit(function(event) {
 		var dom = this;
@@ -14,10 +16,12 @@ jQuery(document).ready(function($) {
 
 		$.post("/login/check", {loginData : loginData}, function(data) {
 			if(data.success) {
-				$("#modlgn_passwd").val(loginData.password);
+				$("#modlgn_hash").val(loginData.password);
+				$("#log-error").hide();
 				dom.submit();
 			} else {
-				console.log(data['error']);
+				$("#log-error p").text(data.error);
+				$("#log-error").show();
 			}
 		}, "json");
 	});
