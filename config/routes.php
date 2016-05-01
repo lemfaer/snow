@@ -33,7 +33,9 @@
 		"order/check"  => "order/check",
 		"order/submit" => "order/submit",
 
+		"user/orders" => "orders/index",
 		"user/logout" => "logout/index",
+
 		//admin
 		"test" => "test/test",
 
