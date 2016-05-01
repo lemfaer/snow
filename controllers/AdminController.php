@@ -15,6 +15,10 @@ class AdminController {
 	);
 
 	private function className(string $name) : string {
+		if(!isset($this->classNameArr[$name])) {
+			throw new WrongDataException($name, "wrong name");
+		}
+
 		return $this->classNameArr[$name];
 	}
 //class name end
@@ -32,6 +36,10 @@ class AdminController {
 	);
 
 	private function formName(string $name) : string {
+		if(!isset($this->formNameArr[$name])) {
+			throw new WrongDataException($name, "wrong name");
+		}
+
 		return $this->formNameArr[$name];
 	}
 //form name end
@@ -59,8 +67,12 @@ class AdminController {
 
 	public function actionRead(string $name) {
 		$this->checkAdmin();
+		try {
+			$class = $this->className($name);
+		} catch(WrongDataException $e) {
+			throw new PageNotFoundException("table not found", $e);
+		}
 
-		$class = $this->className($name);
 		$nameList = $name."List";
 		try {
 			${$nameList} = $class::findAll(array(), "id ASC", 500, 0, true);
@@ -73,8 +85,12 @@ class AdminController {
 
 	public function actionUpdate(string $name, int $id) {
 		$this->checkAdmin();
+		try {
+			$class = $this->className($name);
+		} catch(WrongDataException $e) {
+			throw new PageNotFoundException("table not found", $e);
+		}
 
-		$class = $this->className($name);
 		try {
 			${$name} = $class::findFirst(array("id" => $id), true);
 		} catch(RecordNotFoundException $e) {
