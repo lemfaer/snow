@@ -66,11 +66,17 @@ class AdminController {
 			set_exception_handler(array(__CLASS__, "handler"));
 			return;
 		}
+		?>
 
-		echo "<script>
-			document.getElementsByTagName('body')[0].innerHTML = '';
-		</script>";
+		<script>
+			var elem = document.getElementsByTagName("body")[0];
 
+			if(elem) {
+				elem.innerHTML = '';
+			}
+		</script>
+
+		<?php
 		if($e instanceof PageNotFoundException) {
 			View::admin("template/404.php");
 		} else {
