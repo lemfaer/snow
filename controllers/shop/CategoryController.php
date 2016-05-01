@@ -1,23 +1,30 @@
 <?php 
 
-	class CategoryController {
+class CategoryController {
 
-		public function actionIndex($shortName = null) {
-			$categoryID = Category::getIDByShortNameArray(array($shortName));
-			$category = ($categoryID) ? (Category::findFirst(array("id" => $categoryID))) : (null);
-			$categoryList = Category::findAll(array("parent_id" => $categoryID), "sort_order ASC");
+	const SORT_ORDER = "sort_order ASC";
 
-			// echo "ID: $categoryID";
-			// echo "<pre>";
-			// print_r($categoryList);
-			// echo "</pre>";
+	public function actionIndex($shortName = null) {
+		$id = Category::getIDByShortNameArray(array($shortName));
 
-			View::template("shop/category/index.php", compact("category", "categoryList"));
+		try {
+			$category = Category::findFirst(array("id" => $id));
+		} catch(RecordNotFoundException $e) {
+			throw new PageNotFoundException("category not found", $e);
 		}
 
-		public function actionRedirect($shortName1, $shortName2) {
-			$categoryID = Category::getIDByShortNameArray(array($shortName1, $shortName2));
-			header("location: /products/$categoryID");
+		try {
+			$categoryList = Category::findAll(array("parent_id" => $id), self::SORT_ORDER);
+		} catch(RecordNotFoundException $e) {
+			throw new PageNotFoundException("categories not found", $e);
 		}
 
+		View::template("shop/category/index.php", compact("category", "categoryList"));
 	}
+
+	public function actionRedirect($shortName1, $shortName2) {
+		$id = Category::getIDByShortNameArray(array($shortName1, $shortName2));
+		header("location: /products/$id");
+	}
+
+}
