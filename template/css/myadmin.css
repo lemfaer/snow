@@ -46,7 +46,7 @@
 .clone-block {
 	margin-bottom: 1em;
 }
-.add-clone, .remove-clone.contact {
+.add-clone, .remove-clone.contact, .update-user {
 	display: block;
 	margin: 0 auto;
 }

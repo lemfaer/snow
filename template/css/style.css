@@ -2433,8 +2433,8 @@ input#amount {
 }
 
 .cart-item img {
-	width: 135px;
-	height: 135px;
+	/*width: 135px;
+	height: 135px;*/
 }
 
 /* ICONS */
@@ -2560,4 +2560,22 @@ ul.qty li.name a {
 
 .field-header {
 	width: 100%;
+}
+
+.indent-heading {
+	cursor: pointer; 
+	background-color: #fff !important;
+}
+
+.indent-id, .indent-image, .indent-summ, .indent-state {
+	display: inline-flex;
+	align-items: center;
+}
+
+.indent-id h4, .indent-summ h4, .indent-state h4 {
+	margin: 0 auto;
+}
+
+.indent-image img {
+	max-width: 20%;
 }
