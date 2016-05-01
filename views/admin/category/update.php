@@ -33,7 +33,7 @@
 	<script type="text/javascript" src="/views/admin/image.js"></script>
 	<script type="text/javascript" src="/views/admin/inherits.js"></script>
 
-	<script type="text/javascript" src="/views/admin/category/sort_order.js"></script>
+	<script type="text/javascript" src="/views/admin/category/sort.js"></script>
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
