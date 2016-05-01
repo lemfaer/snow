@@ -77,7 +77,7 @@ class AdminController {
 		try {
 			${$name} = $class::findFirst(array("id" => $id), true);
 		} catch(RecordNotFoundException $e) {
-			die("no such record");
+			throw new PageNotFoundException("record not found", $e);
 		}
 
 		View::admin("$name/update.php", compact($name));
