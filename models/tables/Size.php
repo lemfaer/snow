@@ -27,7 +27,7 @@ class Size extends AbstractTable {
 	}
 
 	public function setCategory(Category $category) {
-		$this->category = parent::set($category, "checkCategory");
+		$this->category = parent::set($category, "checksize");
 	}
 	//setters end
 //main info end
@@ -38,6 +38,10 @@ class Size extends AbstractTable {
 	}
 
 	protected static function withArray(array $arr) : AbstractTable {
+		if(!$arr['id']) {
+			return new DefaultSize();
+		}
+
 		$obj = new self();
 
 		$obj->id     = (int)    $arr['id'];
@@ -55,5 +59,75 @@ class Size extends AbstractTable {
 		return $obj;
 	}
 //construct end
+
+//active record functions
+	/**
+	 * Находит все записи по параметрам
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @throws RecordNotFoundException записи не найдены
+	 * @return array<AbstractRecord> записи
+	 */
+	public static function findAll(array $whereArr = array(), string $order = "id ASC", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
+		$sizeList = parent::findAll($whereArr, $order, $limit, $offset, $nullStatus);
+
+		foreach ($sizeList as $i => $size) {
+			if($size instanceof DefaultSize) {
+				unset($sizeList[$i]);
+			}
+		}
+
+		return array_values($sizeList);
+	}
+//active record functions end
+
+}
+
+class DefaultSize extends Size {
+
+	public function __construct() {
+		$this->id = 0;
+	}
+
+	public function getID() : int {
+		return $this->id;
+	}
+
+	public function getName() : string {
+		return "По умолчанию";
+	}
+
+	public function isNull() : bool {
+		return true;
+	}
+
+	public function isSaved() : bool {
+		return true;
+	}
+
+	protected function get($prop) {
+		throw new NullAccessException();
+	}
+
+	protected function set($value, string $checkMethod) {
+		throw new NullAccessException();
+	}
+
+	public function insert() {
+		throw new NullAccessException();
+	}
+
+	public function update() {
+		throw new NullAccessException();
+	}
+
+	public function delete() {
+		throw new NullAccessException();
+	}
+
+	public function getArray() : array {
+		return array("id" => $this->id);
+	}
 
 }
