@@ -1,6 +1,14 @@
 <?php
 
-class Client {
+/**
+ * Класс отвечает за авторизацию пользователей на сайте
+ * 
+ * @package models
+ * @author  Alan Smithee
+ * @final
+ * @static
+ */
+final class Client {
 
 	/**
 	 * Авторизирует пользователя на сайте

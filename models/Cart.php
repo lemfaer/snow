@@ -10,6 +10,7 @@
  * 
  * @package models
  * @author  Alan Smithee
+ * @final
  * @static
  */
 final class Cart {
