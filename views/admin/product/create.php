@@ -39,6 +39,8 @@
 
 <!-- SETTINGS -->
 	<script type="text/javascript">crup.name = "product";</script>
+	<script type="text/javascript">select_top.color = {id: 0, text: "По умолчанию"};</script>
+	<script type="text/javascript">select_top.size = {id: 0, text: "По умолчанию"};</script>
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
 			$(".add-clone").click();

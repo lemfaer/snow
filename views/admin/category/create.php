@@ -35,6 +35,7 @@
 <!-- SETTINGS -->
 	<script type="text/javascript">crup.name = "category";</script>
 	<script type="text/javascript">select_top.parent = {id: 0, text: "Нет"};</script>
+	<script type="text/javascript">select_top.sort = {id: 0, text: "В начало"};</script>
 <!-- SETTINGS END -->
 
 <section class="content-header">
