@@ -4,7 +4,7 @@ function updateColor(clone) {
 
 	// function select from select.js
 	select(colors, "/admin/select/colors", 
-		{"color" : null}, "Выберите цвет");
+		{"color" : null}, "Выберите цвет", "color");
 }
 
 jQuery(document).ready(function($) {

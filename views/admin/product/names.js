@@ -5,7 +5,7 @@ function updateName(clone) {
 
 	// function select from select.js
 	select(names, "/admin/select/names", 
-		{"category_id" : id}, "Выберите характеристику");
+		{"category_id" : id}, "Выберите характеристику", "char_name");
 }
 
 jQuery(document).ready(function($) {

@@ -9,7 +9,7 @@ function updateValue(clone) {
 
 	// function select from select.js
 	select(values, "/admin/select/values", 
-		{"name_id": id}, "Выберите значение");
+		{"name_id": id}, "Выберите значение", "char_value");
 }
 
 jQuery(document).ready(function($) {

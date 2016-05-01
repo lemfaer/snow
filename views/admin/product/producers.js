@@ -1,7 +1,7 @@
 function updateProducer(producer) {
 	// function select from select.js
 	select(producer, "/admin/select/producers", 
-		{"producer": null}, "Выберите изготовителя");
+		{"producer": null}, "Выберите изготовителя", "producer");
 }
 
 jQuery(document).ready(function($) {

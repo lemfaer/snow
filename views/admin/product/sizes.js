@@ -5,7 +5,7 @@ function updateSize(clone) {
 
 	// function select from select.js
 	select(sizes, "/admin/select/sizes", 
-		{"category_id" : id}, "Выберите размер");
+		{"category_id" : id}, "Выберите размер", "size");
 }
 
 jQuery(document).ready(function($) {
