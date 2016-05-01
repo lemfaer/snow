@@ -81,17 +81,14 @@ class AdminController {
 
 //action view
 	public function actionIndex() {
-		$this->checkAdmin();
-		View::admin("index/index.php");
+		self::view("/index/index.php");
 	}
 
 	public function actionCreate(string $name) {
-		$this->checkAdmin();
-		View::admin("$name/create.php");
+		self::view("/$name/index.php");
 	}
 
 	public function actionRead(string $name) {
-		$this->checkAdmin();
 		try {
 			$class = $this->className($name);
 		} catch(WrongDataException $e) {
@@ -105,11 +102,10 @@ class AdminController {
 			${$nameList} = array();
 		}
 
-		View::admin("$name/read.php", compact($nameList));
+		self::view("/$name/read.php", compact($nameList));
 	}
 
 	public function actionUpdate(string $name, int $id) {
-		$this->checkAdmin();
 		try {
 			$class = $this->className($name);
 		} catch(WrongDataException $e) {
@@ -122,7 +118,14 @@ class AdminController {
 			throw new PageNotFoundException("record not found", $e);
 		}
 
-		View::admin("$name/update.php", compact($name));
+		self::view("/$name/update.php", compact($name));
+	}
+
+	private function view(string $path, array $compact = array()) {
+		$this->checkAdmin();
+
+		$path = ltrim($path, "/");
+		View::admin($path, $compact);
 	}
 //action view end
 
