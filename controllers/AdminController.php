@@ -91,7 +91,7 @@ class AdminController {
 	}
 
 	public function actionCreate(string $name) {
-		self::view("/$name/index.php");
+		self::view("/$name/create.php");
 	}
 
 	public function actionRead(string $name) {
