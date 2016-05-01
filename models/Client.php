@@ -64,8 +64,22 @@ class Client {
 		return $user;
 	}
 
+	/**
+	 * Совершает выход пользователя на сайте
+	 * 
+	 * @throws ClientNotExistsException пользователь не авторизирован
+	 * @return void
+	 */
 	public static function logout() {
+		if(!self::logged()) {
+			throw new ClientNotExistsException("no client");
+		}
 
+		unset($_COOKIE['id']);
+		unset($_COOKIE['hash']);
+
+		setcookie("id", null, -1, "/");
+		setcookie("hash", null, -1, "/");
 	}
 
 }
