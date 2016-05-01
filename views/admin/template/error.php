@@ -1,3 +1,5 @@
+<script type="text/javascript">document.title = "Unknown error"</script>
+
 <section class="content-header">
   <h1>
     Неизвестная ошибка

@@ -34,6 +34,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Char | Update"</script>
 	<script type="text/javascript">crup.name = "char";</script>
 <!-- SETTINGS END -->
 

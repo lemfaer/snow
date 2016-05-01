@@ -21,6 +21,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "User | Read"</script>
 	<script type="text/javascript">read.name = "user";</script>
 <!-- SETTINGS END -->
 

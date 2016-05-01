@@ -21,6 +21,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Producer | Read"</script>
 	<script type="text/javascript">read.name = "producer";</script>
 <!-- SETTINGS END -->
 

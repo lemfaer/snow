@@ -1,3 +1,5 @@
+<script type="text/javascript">document.title = "404 error"</script>
+
 <section class="content-header">
   <h1>
     404 Страница не найдена

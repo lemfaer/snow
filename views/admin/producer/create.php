@@ -21,6 +21,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Producer | Create"</script>
 	<script type="text/javascript">crup.name = "producer";</script>
 <!-- SETTINGS END -->
 

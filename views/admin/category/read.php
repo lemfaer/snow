@@ -21,6 +21,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Category | Read"</script>
 	<script type="text/javascript">read.name = "category";</script>
 <!-- SETTINGS END -->
 

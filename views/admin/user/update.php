@@ -37,6 +37,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "User | Update"</script>
 	<script type="text/javascript">crup.name = "user";</script>
 <!-- SETTINGS END -->
 

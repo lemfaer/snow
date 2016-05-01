@@ -21,6 +21,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Color | Read"</script>
 	<script type="text/javascript">read.name = "color";</script>
 <!-- SETTINGS END -->
 

@@ -40,6 +40,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Indent | Update"</script>
 	<script type="text/javascript">crup.name = "indent";</script>
 <!-- SETTINGS END -->
 

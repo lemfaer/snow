@@ -21,6 +21,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Indent | Read"</script>
 	<script type="text/javascript">read.name = "indent";</script>
 <!-- SETTINGS END -->
 

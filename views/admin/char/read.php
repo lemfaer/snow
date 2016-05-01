@@ -21,6 +21,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Char | Read"</script>
 	<script type="text/javascript">read.name = "char";</script>
 <!-- SETTINGS END -->
 

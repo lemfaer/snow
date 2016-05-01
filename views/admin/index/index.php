@@ -1,3 +1,5 @@
+<script type="text/javascript">document.title = "Admin"</script>
+
 <section class="content-header">
 	<h1>
 		Здравствуйте, администратор

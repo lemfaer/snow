@@ -30,6 +30,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Char | Create"</script>
 	<script type="text/javascript">crup.name = "char";</script>
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {

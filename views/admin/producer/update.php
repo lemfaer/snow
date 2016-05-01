@@ -25,6 +25,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Producer | Update"</script>
 	<script type="text/javascript">crup.name = "producer";</script>
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {

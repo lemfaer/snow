@@ -25,6 +25,7 @@
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
+	<script type="text/javascript">document.title = "Color | Create"</script>
 	<script type="text/javascript">crup.name = "color";</script>
 <!-- SETTINGS END -->
 
