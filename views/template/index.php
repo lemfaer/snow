@@ -29,6 +29,7 @@
 <!-- js links -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/template/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/template/js/jquery.md5.js"></script>
 	<script type="text/javascript" src="/template/js/jquery.fancybox.js"></script>
 	<script type="text/javascript" src="/template/js/jquery.flexisel.js"></script>
@@ -119,11 +120,6 @@
 					</a>
 					<ul class="nav" id="nav">
 						<li><a href="/category">Магазин</a></li>
-						<li><a href="team.html">Team</a></li>
-						<li><a href="shop.html">Events</a></li>
-						<li><a href="experiance.html">Experiance</a></li>
-						<li><a href="shop.html">Company</a></li>
-						<li><a href="contact.html">Contact</a></li>
 						<div class="clear"></div>
 					</ul>
 						
