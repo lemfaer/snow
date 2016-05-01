@@ -30,6 +30,11 @@ class View {
 	public static function admin(string $contentPath, array $compact = array()) {
 		$code = file_get_contents(ROOT."/views/admin/template/index.php");
 		$code = preg_replace(self::HTML_COMMENT_PATTERN, '', $code);
+
+		$client = Client::get();
+
+		$compact = array_replace(compact("client"), $compact);
+
 		eval("?>".$code);
 	}
 
