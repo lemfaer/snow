@@ -63,6 +63,10 @@ class Image extends AbstractTable {
 	}
 
 	protected static function withArray(array $arr) : AbstractTable {
+		if(!$arr['id']) {
+			return new DefaultImage();
+		}
+
 		$obj = new self();
 
 		$obj->id      = (int)    $arr['id'];
@@ -102,6 +106,28 @@ class Image extends AbstractTable {
 	}
 //construct end
 
+//active record functions
+	/**
+	 * Находит все записи по параметрам
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @throws RecordNotFoundException записи не найдены
+	 * @return array<AbstractRecord> записи
+	 */
+	public static function findAll(array $whereArr = array(), string $order = "id ASC", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
+		$imageList = parent::findAll($whereArr, $order, $limit, $offset, $nullStatus);
+
+		foreach ($imageList as $i => $image) {
+			if($image instanceof DefaultImage) {
+				unset($imageList[$i]);
+			}
+		}
+
+		return array_values($imageList);
+	}
+//active record functions end
+
 //imagick
 	public function imagick(Imagick $im) {
 		$im700 = $im;
@@ -140,12 +166,88 @@ class Image extends AbstractTable {
 
 //destruct
 	public function __destruct() {
-		if(!isset($this->id)) { // here must be isSaved
+		if(!isset($this->id)) {
 			unlink($this->getPath());
 			unlink($this->getPath135());
 			unlink($this->getPath50());
 		}
 	}
 //destruct end
+
+}
+
+class DefaultImage extends Image {
+
+	private $path700;
+	private $path135;
+	private $path50;
+
+//link
+	public function link() {
+		$sub = "//images.".$_SERVER['HTTP_HOST'];
+		return $sub.$this->path700;
+	}
+
+	public function link135() {
+		$sub = "//images.".$_SERVER['HTTP_HOST'];
+		return $sub.$this->path135;
+	}
+
+	public function link50() {
+		$sub = "//images.".$_SERVER['HTTP_HOST'];
+		return $sub.$this->path50;
+	}
+//link end
+
+	public function __construct() {
+		$this->id = 0;
+		$this->path700 = "/_default/700.jpg";
+		$this->path135 = "/_default/135.jpg";
+		$this->path50  = "/_default/50.jpg";
+	}
+
+	public function getID() : int {
+		return $this->id;
+	}
+
+	public function isNull() : bool {
+		return true;
+	}
+
+	public function isSaved() : bool {
+		return true;
+	}
+
+	protected function get($prop) {
+		throw new NullAccessException();
+	}
+
+	protected function set($value, string $checkMethod) {
+		throw new NullAccessException();
+	}
+
+	public function insert() {
+		throw new NullAccessException();
+	}
+
+	public function update() {
+		throw new NullAccessException();
+	}
+
+	public function delete() {
+		throw new NullAccessException();
+	}
+
+	public function getArray() : array {
+		return array(
+			"id" => $this->id,
+
+			"path700" => $this->path700,
+			"path135" => $this->path135,
+			"path50"  => $this->path50
+		);
+	}
+
+	public function __destruct() {}
 
 }

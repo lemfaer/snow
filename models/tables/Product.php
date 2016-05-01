@@ -116,7 +116,7 @@ class Product extends AbstractTable {
 
 			$image = Image::findFirst(array("id" => $id));
 		} catch(QueryEmptyResultException $e) {
-			$image = Image::findFirst(array("id" => 0));
+			$image = new DefaultImage();
 		}
 
 		return $image;
