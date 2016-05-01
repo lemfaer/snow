@@ -54,6 +54,31 @@ class AdminController {
 	private function checkAdmin() {}
 //check end
 
+//construct
+	public function __construct() {
+		$this::handler();
+	}
+//construct end
+
+//handler
+	public static function handler(Exception $e = null) {
+		if(!isset($e)) {
+			set_exception_handler(array(__CLASS__, "handler"));
+			return;
+		}
+
+		echo "<script>
+			document.getElementsByTagName('body')[0].innerHTML = '';
+		</script>";
+
+		if($e instanceof PageNotFoundException) {
+			View::admin("template/404.php");
+		} else {
+			View::admin("template/error.php");
+		}
+	}
+//handler end
+
 //action view
 	public function actionIndex() {
 		$this->checkAdmin();
