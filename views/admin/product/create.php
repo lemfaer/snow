@@ -227,7 +227,7 @@
 
 				<!-- sample -->
 				<div class="sample row" next="1">
-					<div class="form-group image col-lg-12 col-md-12 col-sm-12 vol-xs-12">
+					<div class="form-group image col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="input-group">
 							<input type="file"
 								name="product[image][image_0]"
