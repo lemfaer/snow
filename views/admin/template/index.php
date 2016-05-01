@@ -5,9 +5,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 
 <!-- REQUIRED -->
+  <!-- $client -->
   <!-- $contentPath -->
   <!-- $compact -->
 <!-- REQUIRED END -->
+
+<?php $name = $client->getFirstName()." ".$client->getLastName(); ?>
 
 <html>
   <head>
@@ -85,31 +88,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav navbar-nav">
 
               <!-- User Account Menu -->
-              <?php //$user = Client::get(); ?>
               <li class="dropdown user user-menu">
                 <!-- Menu Toggle Button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <!-- The user image in the navbar-->
-                  <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                <a style="cursor: default;">
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs">Alexander Pierce</span>
+                  <span class="hidden-xs"><?= $name; ?></span>
                 </a>
-                <ul class="dropdown-menu">
-                  <!-- The user image in the menu -->
-                  <li class="user-header">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                    <p>Alexander Pierce - Web Developer</p>
-                  </li>
-                  <!-- Menu Footer-->
-                  <li class="user-footer">
-                    <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Profile</a>
-                    </div>
-                    <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                    </div>
-                  </li>
-                </ul>
+              </li>
+              <li>
+                <a href="/">На главную</a>
               </li>
             </ul>
           </div>
@@ -170,10 +157,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          Anything you want
+          <a href="/">На главную</a>
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
+        <strong>Hello World!</strong>
       </footer>
 
     </div><!-- ./wrapper -->
