@@ -6,11 +6,6 @@
 			$categoryID = Category::getIDByShortNameArray(array($shortName));
 			$category = ($categoryID) ? (Category::findFirst(array("id" => $categoryID))) : (null);
 			$categoryList = Category::findAll(array("parent_id" => $categoryID), "sort_order ASC");
-			foreach ($categoryList as $key => $cat) {
-				if($cat instanceof NullCategory) {
-					unset($categoryList[$key]);
-				}
-			}
 
 			// echo "ID: $categoryID";
 			// echo "<pre>";

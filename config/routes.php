@@ -53,6 +53,7 @@
 		"admin/select/inherits"  => "admin/inherit",
 		"admin/select/values"    => "admin/value",
 		"admin/select/colors"    => "admin/color",
+		"admin/select/states"    => "admin/state",
 		"admin/select/names"     => "admin/name",
 		"admin/select/sizes"     => "admin/size",
 		"admin/select/sort"      => "admin/sort",

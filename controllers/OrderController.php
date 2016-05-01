@@ -44,6 +44,8 @@ class OrderController {
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("wrong data from register form", $e);
 		}
+
+		header("location: /user/orders");
 	}
 
 }

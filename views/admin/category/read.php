@@ -55,8 +55,6 @@
 				</thead>
 				<tbody>
 					<?php foreach ($categoryList as $category): ?>
-						<?php if($category instanceof NullCategory) continue; ?>
-
 						<?php $id     = $category->getID(); ?>
 						<?php $name   = $category->getName(); ?>
 						<?php $short  = $category->getShortName(); ?>

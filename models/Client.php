@@ -90,4 +90,9 @@ final class Client {
 		setcookie("hash", null, -1, "/");
 	}
 
+	/**
+	 * Приватный конструктор
+	 */
+	private function __construct() {}
+
 }

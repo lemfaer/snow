@@ -24,6 +24,7 @@ class AdminController {
 		"product"  => "CRUPProductForm",
 		"category" => "CRUPCategoryForm",
 		"user"     => "CRUPUserForm",
+		"indent"   => "CRUPIndentForm",
 		"producer" => "CRUPProducerForm",
 		"char"     => "CRUPCharForm",
 		"size"     => "CRUPSizeForm",
@@ -143,9 +144,6 @@ class AdminController {
 		
 		$arr = array();
 		foreach ($categoryList as $k => $c) {
-			if($c instanceof NullCategory) {
-				continue;
-			}
 			$arr[] = array(
 				"id"   => $c->getID(),
 				"text" => $c->getName(),
@@ -170,9 +168,6 @@ class AdminController {
 		
 		$arr = array();
 		foreach ($categoryList as $k => $c) {
-			if($c instanceof NullCategory) {
-				continue;
-			}
 			$arr[] = array(
 				"id"   => $c->getSortOrder(),
 				"text" => $c->getName(),
@@ -260,7 +255,7 @@ class AdminController {
 
 		$id = $_POST['category_id'];  
 		try {
-			$sizeList = Size::findAll(array("category_id" => $id), "name ASC");
+			$sizeList = Size::findAll(array("category_id" => $id), "CAST(name AS int)");
 		} catch(RecordNotFoundException $e) {
 			echo json_encode(false);
 			return;

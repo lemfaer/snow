@@ -95,7 +95,7 @@ final class OrderForm extends AbstractForm {
 		} catch(RecordNotFoundException $e) {
 			$contact = new Contact();
 		} finally {
-			$contact = ($user instanceof Anonymous) ? (new Contact()) : ($contact); 
+			$contact = ($user instanceof Anonym) ? (new Contact()) : ($contact); 
 		}
 
 		$ioru = !$contact->isSaved(); 
