@@ -298,6 +298,29 @@ class AdminController {
 		}
 		echo json_encode($arr);
 	}
+
+	public function actionState() {
+		$this->checkAdmin();
+		if(!isset($_POST["state"])) {
+			header("location: /admin/");
+		}
+ 
+		try {
+			$stateList = State::findAll();
+		} catch(RecordNotFoundException $e) {
+			echo json_encode(false);
+			return;
+		}
+		
+		$arr = array();
+		foreach ($stateList as $k => $s) {
+			$arr[$k] = array(
+				"id"   => $s->getID(),
+				"text" => $s->getName(),
+			);
+		}
+		echo json_encode($arr);
+	}
 //action select end
 
 }
