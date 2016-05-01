@@ -34,6 +34,9 @@
 
 	<script type="text/javascript" src="/views/admin/select.js"></script>
 	<script type="text/javascript" src="/views/admin/inherits.js"></script>
+
+	<script type="text/javascript" src="/views/admin/indent/states.js"></script>
+	<script type="text/javascript" src="/views/admin/indent/update_user.js"></script>
 <!-- SCRIPTS END -->
 
 <!-- SETTINGS -->
@@ -42,21 +45,22 @@
 
 <?php $item = $indent; ?>
 
-<?php $indent  = $item->getIndent(); ?>
-<?php $contact = $indent->getContact(); ?>
-<?php $state   = $indent->getState(); ?>
-
-<?php $cargoList = $item->getCargoList(); ?>
 <?php $total     = '$'.$item->total(); ?>
+<?php $indent    = $item->getIndent(); ?>
+<?php $cargoList = $item->getCargoList(); ?>
 
-<?php $id     = $indent->getID(); ?>
-<?php $status = $indent->getStatus(); ?>
+<?php $state   = $indent->getState(); ?>
+<?php $contact = $indent->getContact(); ?>
+
+<?php $id = $indent->getID(); ?>
 
 <?php $name    = $contact->getName(); ?>
 <?php $phone   = $contact->getPhone(); ?>
 <?php $address = $contact->getAddress(); ?>
 
-<?php $userID  = !($contact->getUser() instanceof Anonymous) 
+<?php $stateID = $state->getID(); ?>
+
+<?php $userID  = !($contact->getUser() instanceof Anonym) 
 	? ($contact->getUser()->getID()) 
 	: (null); ?>
 
@@ -142,6 +146,12 @@
 				</label>
 			</div>
 
+			<?php if ($userID): ?>
+				<button class="btn btn-primary update-user" user-id="<?= $userID; ?>">
+					Изменить контактные данные
+				</button>
+			<?php endif ?>
+
 			<!-- Cargos(Товары) -->
 			<div class="form-group">
 				<div class="field-header" style="border-bottom: 1px solid #ECECEC;">
@@ -167,10 +177,10 @@
 						." ".$product->getName()." ".$product->getYear(); ?>
 
 					<div class="row row-eq-height cart-item">
-						<div class="col-md-3 pr-image">
+						<div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 pr-image">
 							<img src="<?= $image; ?>" alt="">
 						</div>
-						<div class="col-md-6 pr-info">
+						<div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pr-info">
 							<ul class="qty">
 								<li class="name">
 									<a href="<?= $link; ?>"><?= $full; ?></a>
@@ -187,7 +197,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="col-md-2 pr-qty">
+						<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1 pr-qty">
 							<div class="qty-field">
 								<input type="text" value="<?= $count; ?>" readonly>
 							</div>
@@ -200,19 +210,22 @@
 				</div>
 			</div>
 
-			<!-- Status(Статус) -->
-			<div class="form-group ad-check">
+			<!-- State(Статус) -->
+			<div class="form-group">
 				<div class="field-header">
 					<label>Статус</label>
 				</div>
-				<label>
-					<input type="checkbox" 
-						class="minimal ad-check-check"
-						<?= ($status) ? ("checked") : (null) ?>>
-					Включен
-					<input type="hidden"
-						class="ad-check-text" 
-						name="indent[status]">
+				<select id="ad-indent-state"
+					name="indent[state]"
+					class="form-control select2 update"
+					required
+					data-id="<?= $stateID; ?>"
+					style="width: 100%;">
+					<option></option>
+				</select>
+				<label class="control-label" for="ad-indent-state">
+					<i class="ico fa fa-check"></i> 
+					<font class="message">Ошибка</font>
 				</label>
 			</div>
 

@@ -28,9 +28,6 @@
 	<h1>
 		Indent Read
 		<small>Просмотр записей из таблицы Indent</small>
-		<button class="btn btn-success ad-add-link">
-			Добавить запись
-		</button>
 	</h1>
 </section>
 
