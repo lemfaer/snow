@@ -3,6 +3,10 @@
 class RegisterController {
 
 	public function actionIndex() {
+		if(Client::logged()) {
+			header("location: /user/orders");
+		}
+		
 		View::template("user/register/index.php");
 	}
 
