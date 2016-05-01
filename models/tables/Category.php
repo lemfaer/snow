@@ -147,6 +147,28 @@ class Category extends AbstractTable {
 	}
 //static functions end
 
+//active record functions
+	/**
+	 * Находит все записи по параметрам
+	 * 
+	 * @param array $whereArr параметры запроса поиска
+	 * @param bool $nullStatus включать ли записи со статусом '0'
+	 * @throws RecordNotFoundException записи не найдены
+	 * @return array<AbstractRecord> записи
+	 */
+	public static function findAll(array $whereArr = array(), string $order = "id ASC", int $limit = self::LIMIT_MAX, int $offset = 0, bool $nullStatus = false) : array {
+		$categoryList = parent::findAll($whereArr, $order, $limit, $offset, $nullStatus);
+
+		foreach ($categoryList as $i => $category) {
+			if($category instanceof NullCategory) {
+				unset($categoryList[$i]);
+			}
+		}
+
+		return array_values($categoryList);
+	}
+//active record functions end
+
 }
 
 final class NullCategory extends Category {
@@ -160,7 +182,7 @@ final class NullCategory extends Category {
 	}
 
 	public function getName() : string {
-		return "no";
+		return "Нет";
 	}
 
 	public function isNull() : bool {
