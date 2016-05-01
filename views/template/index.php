@@ -146,19 +146,17 @@
 					</li>
 				</ul>
 
-				<?php if (Client::logged()): ?>
+				<?php if ($client): ?>
 					<ul class="icon1 sub-icon1 profile_img">
 						<li>
-							<a class="user-icon" href="/profile"> </a>
+							<a class="user-icon" href="/user/orders"> </a>
 							<ul class="sub-icon1 list">
 								<div class="clear"></div>
 								<div class="login_buttons">
-									<div class="check_button login">
-										<a href="/login">Вход</a>
-									</div>
-									<div class="check_button register">
-										<a href="/register">Регистрация</a>
-									</div>
+									<a href="/user/orders">Мои заказы</a>
+									<hr style="margin: 0.5em 0">
+									<a href="/user/logout">
+										Выход</a>
 									<div class="clear"></div>
 								</div>
 								<div class="clear"></div>
