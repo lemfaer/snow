@@ -148,7 +148,7 @@ class AdminController {
 
 //action check/submit
 	public function actionCRUPCheck(string $name) {
-		$this->checkAdmin();
+		// $this->checkAdmin();
 		if(!isset($_POST[$name])) {
 			header("location: /admin/$name");
 		}
@@ -190,7 +190,7 @@ class AdminController {
 
 //action select
 	public function actionInherit() {
-		$this->checkAdmin();
+		// $this->checkAdmin();
 		if(!isset($_POST["parent_id"])) {
 			header("location: /admin/");
 		}
@@ -214,7 +214,7 @@ class AdminController {
 	}
 
 	public function actionSort() {
-		$this->checkAdmin();
+		// $this->checkAdmin();
 		if(!isset($_POST["parent_id"])) {
 			header("location: /admin/");
 		}
@@ -238,7 +238,7 @@ class AdminController {
 	}
 
 	public function actionName() {
-		$this->checkAdmin();
+		// $this->checkAdmin();
 		if(!isset($_POST["category_id"])) {
 			header("location: /admin/");
 		}
@@ -262,7 +262,7 @@ class AdminController {
 	}
 
 	public function actionValue() {
-		$this->checkAdmin();
+		// $this->checkAdmin();
 		if(!isset($_POST["name_id"])) {
 			header("location: /admin/");
 		}
@@ -286,7 +286,7 @@ class AdminController {
 	}
 
 	public function actionColor() {
-		$this->checkAdmin();
+		// $this->checkAdmin();
 		if(!isset($_POST["color"])) {
 			header("location: /admin/");
 		}
@@ -309,7 +309,7 @@ class AdminController {
 	}
 
 	public function actionSize() {
-		$this->checkAdmin();
+		// $this->checkAdmin();
 		if(!isset($_POST["category_id"])) {
 			header("location: /admin/");
 		}
@@ -333,7 +333,7 @@ class AdminController {
 	}
 
 	public function actionProducer() {
-		$this->checkAdmin();
+		// $this->checkAdmin();
 		if(!isset($_POST["producer"])) {
 			header("location: /admin/");
 		}
@@ -356,7 +356,7 @@ class AdminController {
 	}
 
 	public function actionState() {
-		$this->checkAdmin();
+		// $this->checkAdmin();
 		if(!isset($_POST["state"])) {
 			header("location: /admin/");
 		}
