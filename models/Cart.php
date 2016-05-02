@@ -250,19 +250,7 @@ final class Cart {
 	 * @return void
 	 */
 	public static function empty() {
-		$cart = self::get();
-
-		try {
-			foreach ($cart as $one) {
-				self::delete($one['available']->getID());
-			}
-		} catch(NullAccessException $e) {
-			throw new UncheckedLogicException("object without id in cart", $e);
-		} catch(WrongDataException $e) {
-			throw new UncheckedLogicException("wrong id in cart", $e);
-		} catch(CartNotExistsException $e) {
-			throw new UncheckedLogicException("id from cart not in cart", $e);
-		}
+		unset($_SESSION['cart']);
 	}
 //empty end
 
