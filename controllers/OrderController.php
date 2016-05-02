@@ -44,8 +44,7 @@ class OrderController {
 		}
 		$data = $_POST['contactData'];
 
-		$user = Client::get();
-		$data['id'] = $user->getID();
+		$data['id'] = Client::logged() ? (Client::get())->getID() : 0;
 
 		try {
 			OrderForm::submit($data);
@@ -53,7 +52,11 @@ class OrderController {
 			throw new UncheckedLogicException("wrong data from register form", $e);
 		}
 
-		header("location: /user/orders");
+		if(Client::logged()) {
+			header("location: /user/orders");
+		} else {
+			header("location: /");
+		}
 	}
 
 }
