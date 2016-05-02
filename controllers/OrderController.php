@@ -3,6 +3,10 @@
 class OrderController {
 
 	public function actionIndex() {
+		if(!Cart::get()) {
+			header("location: /cart");
+		}
+
 		if(Client::logged()) {
 			$userItem = UserItem::withUser(Client::get());
 			if($userItem->issetContact()) {

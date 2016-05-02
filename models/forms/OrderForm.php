@@ -126,6 +126,10 @@ final class OrderForm extends AbstractForm {
 	 * @return Indent заказ
 	 */
 	private static function indent(Contact $contact, array $cart) : Indent {
+		if(!$cart) {
+			throw new WrongDataException($cart, "cart is empty");
+		}
+
 		//indent
 			$indent = new Indent();
 
