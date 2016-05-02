@@ -19,8 +19,11 @@ class Router {
 
 		$uri = $this->getURI();
 
+		$found = false;
 		foreach($this->routeArray as $uriPattern => $path) {
 			if(preg_match("~^$uriPattern$~", $uri)) {
+				$found = true;
+
 				$path = preg_replace("~$uriPattern~", $path, $uri);
 
 				$segments = explode("/", $path);
@@ -30,6 +33,10 @@ class Router {
 				call_user_func_array(array(new $class, $method), $segments);
 				break;
 			}
+		}
+
+		if(!$found) {
+			throw new PageNotFoundException("unknown page");
 		}
 	}
 
