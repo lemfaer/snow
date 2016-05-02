@@ -39,6 +39,10 @@ class OrderController {
 	}
 
 	public function actionSubmit() {
+		if(!Cart::get()) {
+			header("location: /cart");
+		}
+		
 		if(!isset($_POST['contactData'])) {
 			header("location: /order");
 		}

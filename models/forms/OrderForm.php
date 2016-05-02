@@ -48,6 +48,10 @@ final class OrderForm extends AbstractForm {
 	 * @return void
 	 */
 	public static function submit(array $data) {
+		if(!Cart::get()) {
+			throw new WrongDataException("empty cart", $e);
+		}
+
 		try {
 			try {
 				$user = User::findFirst(array("id" => $data['id']), true);
