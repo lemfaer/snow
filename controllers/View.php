@@ -1,9 +1,25 @@
 <?php
 
-class View {
+/**
+ * Класс для отображения файлов представления
+ * 
+ * @package controllers
+ * @author  Alan Smithee
+ * @final
+ * @static
+ */
+final class View {
 
 	const HTML_COMMENT_PATTERN = "/<!--(.*?)-->/";
 
+	/**
+	 * Отображает выбранное представление
+	 * 
+	 * @param string $contentPath путь к файлу представления
+	 * @param array $compact необходимые данные для отображения
+	 * @throws FileNotFoundException файл не найден
+	 * @return void
+	 */
 	public static function empty(string $contentPath, array $compact = array()) {
 		$relPath = $contentPath;
 		$absPath = ROOT."/views".$relPath;
@@ -19,6 +35,14 @@ class View {
 		eval("?>".$content);
 	}
 
+	/**
+	 * Отображает выбранное представление с шаблоном
+	 * 
+	 * @param string $contentPath путь к файлу представления
+	 * @param array $compact необходимые данные для отображения
+	 * @throws FileNotFoundException файл не найден
+	 * @return void
+	 */
 	public static function template(string $contentPath, array $compact = array()) {
 		$cart   = Cart::get();
 		$client = Client::logged() ? Client::get() : null;
@@ -28,6 +52,14 @@ class View {
 		self::empty("/template/index.php", compact("contentPath", "compact", "cart", "client"));
 	}
 
+	/**
+	 * Отображает выбранное представление с шаблоном администраторской панели
+	 * 
+	 * @param string $contentPath путь к файлу представления
+	 * @param array $compact необходимые данные для отображения
+	 * @throws FileNotFoundException файл не найден
+	 * @return void
+	 */
 	public static function admin(string $contentPath, array $compact = array()) {
 		$contentPath = "/admin".$contentPath;
 
