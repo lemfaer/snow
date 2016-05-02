@@ -51,7 +51,12 @@ class AdminController {
 	 * 
 	 * @return void
 	 */
-	private function checkAdmin() {}
+	private function checkAdmin() {
+		$user = Client::get();
+		if(!$user->isAdmin()) {
+			die("Нет доступа к админ. панели");
+		}
+	}
 //check end
 
 //construct

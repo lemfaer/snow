@@ -45,6 +45,7 @@
 <?php $user = $user->getUser(); ?>
 
 <?php $id        = $user->getID(); ?>
+<?php $admin     = $user->isAdmin(); ?>
 <?php $email     = $user->getEmail(); ?>
 <?php $login     = $user->getLogin(); ?>
 <?php $status    = $user->getStatus(); ?>
@@ -360,6 +361,22 @@
 				<button class="btn btn-default add-clone contact">
 					Добавить контактные данные
 				</button>
+			</div>
+
+			<!-- Is Admin(Админ панель) -->
+			<div class="form-group ad-check">
+				<div class="field-header">
+					<label>Админ панель</label>
+				</div>
+				<label>
+					<input type="checkbox"
+						class="minimal ad-check-check"
+						<?= ($admin) ? ("checked") : (null) ?>>
+					Доступна
+					<input type="hidden"
+						class="ad-check-text" 
+						name="user[is_admin]">
+				</label>
 			</div>
 
 			<!-- Status(Статус) -->

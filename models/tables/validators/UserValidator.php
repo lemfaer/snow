@@ -15,7 +15,8 @@ class UserValidator extends AbstractTableValidator {
 	const PASSWORD_PATTERN = "/^[a-zA-Z0-9]{6,99}$/";
 
 	const FIRSTNAME_ERROR = "Неправильный ввод имени";
-	const LASTNAME_ERROR = "Неправильный ввод фамилии";
+	const LASTNAME_ERROR  = "Неправильный ввод фамилии";
+	const ADMIN_ERROR	  = "Неправильное поле admin";
 
 	const EMAIL_INVALID_ERROR = "Неправильный ввод email";
 	const EMAIL_EXIST_ERROR = "Такой email уже зарегистрирован";
@@ -73,6 +74,11 @@ class UserValidator extends AbstractTableValidator {
 			}
 		}
 		return parent::log($bool, $error);
+	}
+
+	public function checkAdmin(bool $is_admin) : bool {
+		$error = array("is_admin" => self::ADMIN_ERROR);
+		return parent::log(true, $error);
 	}
 //validate methods end
 

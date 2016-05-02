@@ -217,6 +217,21 @@
 				</button>
 			</div>
 
+			<!-- Is Admin(Админ панель) -->
+			<div class="form-group ad-check">
+				<div class="field-header">
+					<label>Админ панель</label>
+				</div>
+				<label>
+					<input type="checkbox"
+						class="minimal ad-check-check">
+					Доступна
+					<input type="hidden"
+						class="ad-check-text" 
+						name="user[is_admin]">
+				</label>
+			</div>
+	
 			<!-- Status(Статус) -->
 			<div class="form-group ad-check">
 				<div class="field-header">

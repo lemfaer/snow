@@ -76,6 +76,7 @@ final class RegisterForm extends AbstractForm {
 		$u->setEmail($data['email']);
 		$u->setLogin($data['login']);
 		$u->setPassword($data['password']);
+		$u->setAdmin(false);
 		$u->setStatus(true);
 		$u->generateHash();
 

@@ -11,6 +11,7 @@ class User extends AbstractTable {
 	private $email;
 	private $login;
 	private $password;
+	private $is_admin;
 	private $hash;
 	//protected $status
 
@@ -33,6 +34,10 @@ class User extends AbstractTable {
 
 	public function getPassword() : string {
 		return parent::get($this->password);
+	}
+
+	public function isAdmin() : bool {
+		return parent::get($this->is_admin);
 	}
 
 	public function getHash() : string {
@@ -86,6 +91,10 @@ class User extends AbstractTable {
 		$password = parent::set($password, "checkPassword");
 		$this->password = md5(md5($password));
 	}
+
+	public function setAdmin(bool $is_admin) {
+		$this->is_admin = parent::set($is_admin, "checkAdmin");
+	}
 	//setters end
 
 	public function generateHash() {
@@ -123,6 +132,7 @@ class User extends AbstractTable {
 		$obj->email      = (string) $arr['email'];
 		$obj->login      = (string) $arr['login'];
 		$obj->password   = (string) $arr['password'];
+		$obj->is_admin   = (bool)   $arr['is_admin'];
 		$obj->hash       = (string) $arr['hash'];
 		$obj->status     = (bool)   $arr['status'];
 

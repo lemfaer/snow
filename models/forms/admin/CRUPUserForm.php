@@ -71,6 +71,9 @@ final class CRUPUserForm extends AbstractCRUPForm {
 				case "password":
 					$m = "checkPassword";
 					break;
+				case "is_admin":
+					$m = "checkAdmin";
+					break;
 				case "status":
 					$m = "checkStatus";
 					break;
@@ -98,6 +101,7 @@ final class CRUPUserForm extends AbstractCRUPForm {
 		$lastName  = $data['last_name'];
 		$firstName = $data['first_name'];
 		$status    = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
+		$admin     = filter_var($data['is_admin'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
 		//user
@@ -105,6 +109,7 @@ final class CRUPUserForm extends AbstractCRUPForm {
 			
 			$user->setEmail($email);
 			$user->setLogin($login);
+			$user->setAdmin($admin);
 			$user->setStatus($status);
 			$user->setPassword($password);
 			$user->setLastName($lastName);
@@ -151,6 +156,7 @@ final class CRUPUserForm extends AbstractCRUPForm {
 	public static function update(array $data) {
 		$id     = $data['id'];
 		$status = filter_var($data['status'], FILTER_VALIDATE_BOOLEAN);
+		$admin  = filter_var($data['is_admin'], FILTER_VALIDATE_BOOLEAN);
 
 		try {
 			try {
@@ -161,6 +167,7 @@ final class CRUPUserForm extends AbstractCRUPForm {
 
 			$user = $userItem->getUser();
 		//user
+			$user->setAdmin($admin);
 			$user->setStatus($status);
 
 			if(isset($data['first_name'])) {

@@ -52,6 +52,7 @@
 						<th>Фамилия</th>
 						<th>Email</th>
 						<th>Логин</th>
+						<th>Админ</th>
 						<th>Статус</th>
 						<th>Редактирование</th>
 					</tr>
@@ -65,6 +66,7 @@
 						<?php $lname     = $user->getLastName(); ?>
 						<?php $email     = $user->getEmail(); ?>
 						<?php $login     = $user->getLogin(); ?>
+						<?php $admin     = $user->isAdmin()   ? "yes"     : "no"; ?>
 						<?php $status    = $user->getStatus() ? "enabled" : "disabled"; ?>
 						
 						<tr>
@@ -73,6 +75,7 @@
 							<td><?= $lname; ?></td>
 							<td><?= $email; ?></td>
 							<td><?= $login; ?></td>
+							<td><?= $admin; ?></td>
 							<td><?= $status; ?></td>
 							<td style="width: 1px;">
 								<a class="ad-update-link" data-id="<?= $id; ?>">
@@ -89,6 +92,7 @@
 						<th>Last</th>
 						<th>Email</th>
 						<th>Login</th>
+						<th>Admin</th>
 						<th>Status</th>
 						<th>Update</th>
 					</tr>
