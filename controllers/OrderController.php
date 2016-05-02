@@ -18,7 +18,11 @@ class OrderController {
 			$contact = null;
 		}
 
-		View::template("user/contact/index.php", compact("contact"));
+		try {
+			View::template("/user/contact/index.php", compact("contact"));
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("contact form view not found", $e);
+		}
 	}
 
 	public function actionCheck() {

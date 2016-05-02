@@ -19,7 +19,11 @@ class CategoryController {
 			throw new PageNotFoundException("categories not found", $e);
 		}
 
-		View::template("shop/category/index.php", compact("category", "categoryList"));
+		try {
+			View::template("/shop/category/index.php", compact("category", "categoryList"));
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("category view not found", $e);
+		}
 	}
 
 	public function actionRedirect($shortName1, $shortName2) {

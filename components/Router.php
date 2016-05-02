@@ -49,10 +49,14 @@ class Router {
 		</script>
 
 		<?php
-		if($e instanceof PageNotFoundException) {
-			View::template("template/404.php");
-		} else {
-			View::template("template/error.php");
+		try {
+			if($e instanceof PageNotFoundException) {
+				View::template("/template/404.php");
+			} else {
+				View::template("/template/error.php");
+			}
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("admin error views not found", $e);
 		}
 	}
 

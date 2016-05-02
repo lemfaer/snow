@@ -7,7 +7,11 @@ class LoginController {
 			header("location: /user/orders");
 		}
 
-		View::template("user/login/index.php");
+		try {
+			View::template("/user/login/index.php");
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("login form view not found", $e);
+		}
 	}
 
 	public function actionCheck() {

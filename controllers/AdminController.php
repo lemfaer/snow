@@ -77,10 +77,14 @@ class AdminController {
 		</script>
 
 		<?php
-		if($e instanceof PageNotFoundException) {
-			View::admin("template/404.php");
-		} else {
-			View::admin("template/error.php");
+		try {
+			if($e instanceof PageNotFoundException) {
+				View::admin("/template/404.php");
+			} else {
+				View::admin("/template/error.php");
+			}
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("error views not found", $e);
 		}
 	}
 //handler end
@@ -129,9 +133,11 @@ class AdminController {
 
 	private function view(string $path, array $compact = array()) {
 		$this->checkAdmin();
-
-		$path = ltrim($path, "/");
-		View::admin($path, $compact);
+		try {
+			View::admin($path, $compact);
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("view not found", $e);
+		}
 	}
 //action view end
 

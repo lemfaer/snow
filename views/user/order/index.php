@@ -108,7 +108,7 @@
 
 		<div id="indent_<?= $id; ?>" class="panel-collapse collapse">
 			<ul class="list-group">
-				<?php View::empty("user/order/cargos.php", compact("cargoList")); ?>
+				<?php View::empty("/user/order/cargos.php", compact("cargoList")); ?>
 			</ul>
 		</div>
 	</div>

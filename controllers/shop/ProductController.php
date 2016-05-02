@@ -19,7 +19,11 @@ class ProductController {
 			$recomendedList = array();
 		}
 
-		View::template("shop/product/index.php", compact("productItem", "recomendedList"));
+		try {
+			View::template("/shop/product/index.php", compact("productItem", "recomendedList"));
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("product view not found", $e);
+		}
 	}
 
 }

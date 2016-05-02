@@ -4,7 +4,11 @@ class CartController {
 
 //view
 	public function actionIndex() {
-		View::template("cart/full/index.php");
+		try {
+			View::template("/cart/full/index.php");
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("full cart view not found", $e);
+		}
 	}
 
 	public function actionMini() {
@@ -14,7 +18,11 @@ class CartController {
 
 		try {
 			$cart = Cart::get();
-			View::empty("cart/mini/mini.php", compact("cart"));
+			try {
+				View::empty("/cart/mini/mini.php", compact("cart"));
+			} catch(FileNotFoundException $e) {
+				throw new UncheckedLogicException("mini cart view not found", $e);
+			}
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("data from view must be valide", $e);
 		} catch(CartNotExistsException $e) {

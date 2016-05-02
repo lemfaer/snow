@@ -7,7 +7,11 @@ class RegisterController {
 			header("location: /user/orders");
 		}
 		
-		View::template("user/register/index.php");
+		try {
+			View::template("/user/register/index.php");
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("register form view not found", $e);
+		}
 	}
 
 	public function actionCheck() {
@@ -34,7 +38,12 @@ class RegisterController {
 		} catch(WrongDataException $e) {
 			throw new UncheckedLogicException("wrong data from register form", $e);
 		}
-		View::template("user/register/success.php");
+
+		try {
+			View::template("/user/register/success.php");
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("register success view not found");
+		}
 	}
 
 }

@@ -104,7 +104,7 @@
 			<div class="box-info-product">
 				<p class="price2"><?= $pPrice; ?></p>
 
-				<?php View::empty("shop/product/product-options.php",
+				<?php View::empty("/shop/product/product-options.php",
 					compact("productItem")); ?>
 			</div>
 		</div>

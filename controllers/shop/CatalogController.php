@@ -26,8 +26,12 @@ class CatalogController {
 
 		$pagination = new Pagination($total, $page, $limit, "page-");
 
-		View::template("shop/catalog/index.php", 
-			compact("category", "productList", "pagination"));
+		try {
+			View::template("/shop/catalog/index.php", 
+				compact("category", "productList", "pagination"));
+		} catch(FileNotFoundException $e) {
+			throw new UncheckedLogicException("catalog view not found", $e);
+		}
 	}
 
 }
