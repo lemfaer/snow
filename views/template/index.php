@@ -199,48 +199,33 @@
 		<div class="row">
 			<div class="col-md-3">
 				<ul class="footer_box">
-					<h4>Products</h4>
-					<li><a href="#">Mens</a></li>
-					<li><a href="#">Womens</a></li>
-					<li><a href="#">Youth</a></li>
+					<h4>Админ панель</h4>
+					<li><a href="/preview/read">Просмотр</a></li>
+					<li><a href="/preview/create">Добавление</a></li>
+					<li><a href="/preview/update">Редактирование</a></li>
 				</ul>
 			</div>
 			<div class="col-md-3">
 				<ul class="footer_box">
-					<h4>About</h4>
-					<li><a href="#">Careers and internships</a></li>
-					<li><a href="#">Sponserships</a></li>
-					<li><a href="#">team</a></li>
-					<li><a href="#">Catalog Request/Download</a></li>
+					<h4>Заказы</h4>
+					<li><a href="/preview/cart">Корзина</a></li>
+					<li><a href="/preview/order">Оформление заказа</a></li>
 				</ul>
 			</div>
 			<div class="col-md-3">
 				<ul class="footer_box">
-					<h4>Customer Support</h4>
-					<li><a href="#">Contact Us</a></li>
-					<li><a href="#">Shipping and Order Tracking</a></li>
-					<li><a href="#">Easy Returns</a></li>
-					<li><a href="#">Warranty</a></li>
-					<li><a href="#">Replacement Binding Parts</a></li>
+					<h4>Пользователь</h4>
+					<li><a href="/preview/register">Регистрация</a></li>
+					<li><a href="/preview/login">Вход</a></li>
+					<li><a href="/preview/orders">Мои заказы</a></li>
 				</ul>
 			</div>
 			<div class="col-md-3">
 				<ul class="footer_box">
-					<h4>Newsletter</h4>
-					<div class="footer_search">
-						<form>
-							<input type="text" value="Enter your email" onfocus="this.value = '';" 
-								onblur="if (this.value == '') {this.value = 'Enter your email';}">
-							<input type="submit" value="Go">
-						</form>
-					</div>
-					<ul class="social">	
-						<li class="facebook"><a href="#"><span> </span></a></li>
-						<li class="twitter"><a href="#"><span> </span></a></li>
-						<li class="instagram"><a href="#"><span> </span></a></li>	
-						<li class="pinterest"><a href="#"><span> </span></a></li>	
-						<li class="youtube"><a href="#"><span> </span></a></li>
-					</ul>
+					<h4>Магазин</h4>
+					<li><a href="/preview/category">Категории</a></li>
+					<li><a href="/preview/catalog">Каталог</a></li>
+					<li><a href="/preview/product">Продукт</a></li>
 				</ul>
 			</div>
 		</div>

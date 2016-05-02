@@ -58,4 +58,20 @@
 		"admin/select/sizes"     => "admin/size",
 		"admin/select/sort"      => "admin/sort",
 
+		//preview
+		"preview/read"   => "preview/adminRead",
+		"preview/create" => "preview/adminCreate",
+		"preview/update" => "preview/adminUpdate",
+
+		"preview/cart"  => "preview/indentCart",
+		"preview/order" => "preview/indentOrder",
+
+		"preview/register" => "preview/userRegister",
+		"preview/login"    => "preview/userLogin",
+		"preview/orders"   => "preview/userOrders",
+
+		"preview/category" => "preview/shopCategory",
+		"preview/catalog"  => "preview/shopCatalog",
+		"preview/product"  => "preview/shopProduct",
+
 	);
