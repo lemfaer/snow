@@ -67,7 +67,7 @@ final class View {
 
 		$compact = array_replace(compact("client"), $compact);
 
-		self::empty("/template/index.php", compact("contentPath", "compact", "client"));
+		self::empty("/admin/template/index.php", compact("contentPath", "compact", "client"));
 	}
 
 	/**
