@@ -207,9 +207,21 @@ class UserItem extends AbstractRecord {
 
 		if(isset($this->contact)) {
 			try {
+				$this->contact->getID();
+				$ioru = true;
+			} catch(NullAccessException $e) {
+				$ioru = false;
+			}
+
+			try {
 				$this->contact->setUser($this->user);
-				if(!$this->contact->isSaved()) {
+
+				if($ioru) {
 					$this->contact->insert();
+				} else {
+					if(!$this->contact->isSaved()) {
+						$this->contact->update();
+					}
 				}
 			} catch(WrongDataException $e) {
 				throw new UncheckedLogicException("data has been checked", $e);
@@ -224,8 +236,28 @@ class UserItem extends AbstractRecord {
 	 * @return void
 	 */
 	public function update() {
-		$this->delete();
-		$this->insert();
+		if(isset($this->contact)) {
+			try {
+				$this->contact->getID();
+				$ioru = false;
+			} catch(NullAccessException $e) {
+				$ioru = true;
+			}
+
+			try {
+				$this->contact->setUser($this->user);
+
+				if($ioru) {
+					$this->contact->insert();
+				} else {
+					if(!$this->contact->isSaved()) {
+						$this->contact->update();
+					}
+				}
+			} catch(WrongDataException $e) {
+				throw new UncheckedLogicException("data has been checked", $e);
+			}
+		}
 	}
 
 	/**

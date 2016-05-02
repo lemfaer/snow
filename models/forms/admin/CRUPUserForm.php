@@ -232,6 +232,8 @@ final class CRUPUserForm extends AbstractCRUPForm {
 
 				$userItem->setContact($contact);
 			} elseif(!isset($data['contact']) && $userItem->issetContact()) {
+				$contact = $userItem->getContact();
+				$contact->delete();
 				$userItem->unsetContact();
 			}
 		//contact end

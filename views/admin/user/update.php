@@ -207,11 +207,20 @@
 					<?php if($userItem->issetContact()): ?>
 						<?php $contact = $userItem->getContact(); ?>
 
+						<?php $id      = $contact->getID(); ?>
 						<?php $name    = $contact->getName(); ?>
 						<?php $phone   = $contact->getPhone(); ?>
 						<?php $address = $contact->getAddress(); ?>
 
 						<div class="clone" this="<?= $i; ?>">
+							<!-- ID -->
+							<div class="form-group id">
+								<input type="hidden"
+									id=ad-user-contact-id_0
+									name="user[contact][id_<?= $i; ?>]"
+									value="<?= $id; ?>">
+							</div>
+
 							<!-- Name(Контактное лицо) -->
 							<div class="form-group">
 								<div class="field-header">
