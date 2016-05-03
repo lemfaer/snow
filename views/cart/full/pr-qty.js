@@ -87,7 +87,7 @@ jQuery(document).ready(function($) {
 		check();
 	});
 	mini.update(); // from mini.js
-	price.calculate(); // from price.js
+	// price.calculate(); // from price.js
 //load check end
 
 });

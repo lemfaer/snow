@@ -15,6 +15,7 @@
 	<div class="cart col-lg-9 col-md-9 col-sm-9 col-xs-9">
 		<h4 class="title">корзина</h4>
 		
+		<?php $total = 0; ?>
 		<?php foreach ($cart as $value): ?>
 			<?php $count     = $value['count']; ?>
 			<?php $available = $value['available']; ?>
@@ -33,6 +34,9 @@
 
 			<?php $pPrice    = $product->getPrice(); ?>
 			<?php $pSubTotal = $pPrice * $count; ?>
+
+			<?php $total += $pSubTotal; ?>
+
 			<?php $pPrice    = "$".$pPrice; ?>
 			<?php $pSubTotal = "$".$pSubTotal; ?>
 
@@ -97,7 +101,7 @@
 		</div>
 		<ul class="total_price">
 			<li class="last_price"> <h4>Итого:</h4></li>	
-			<li class="last_price"><span id="total"></span></li>
+			<li class="last_price"><span id="total"><?= '$'.$total; ?></span></li>
 			<div class="clearfix"> </div>
 		</ul> 
 		<div class="clearfix"></div>
