@@ -7,6 +7,7 @@
 			"/controllers/",
 			"/controllers/admin/",
 			"/controllers/cart/",
+			"/controllers/main/",
 			"/controllers/order/",
 			"/controllers/preview/",
 			"/controllers/shop/",

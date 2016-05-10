@@ -2,6 +2,8 @@
 
 	return array(
 
+		"" => "main/index",
+
 		"category" => "category/index",
 		"category/([a-z]+)" => "category/index/$1",
 		"category/([a-z]+)/([a-z]+)" => "category/redirect/$1/$2",
