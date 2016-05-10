@@ -5,7 +5,10 @@
 		$pathArray = array(
 			"/components/",
 			"/controllers/",
+			"/controllers/admin/",
 			"/controllers/cart/",
+			"/controllers/order/",
+			"/controllers/preview/",
 			"/controllers/shop/",
 			"/controllers/user/",
 			"/models/", 
