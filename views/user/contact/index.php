@@ -6,6 +6,8 @@
 <script type="text/javascript" src="/template/js/jquery.maskedinput.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 
+<script type="text/javascript">document.title = "Контактная информация";</script>
+
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		var address = $("#contact-check-address");

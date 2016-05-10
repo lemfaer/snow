@@ -1,4 +1,5 @@
 <script type="text/javascript" src="/views/user/login/login.js" charset="utf-8"></script>
+<script type="text/javascript">document.title = "Вход";</script>
 
 <div class="main">
 <div class="shop_top">

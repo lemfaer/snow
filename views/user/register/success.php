@@ -2,6 +2,8 @@
 <div class="check">
 <div class="container">
 
+<script type="text/javascript">document.title = "Регистрация успешна";</script>
+
 <div class="cart">
 	<h4 class="title">Регистрация прошла успешно! =)</h4>
 	<p class="cart">

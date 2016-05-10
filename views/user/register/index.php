@@ -1,6 +1,8 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script type="text/javascript" src="/views/user/register/register-check.js"></script>
 
+<script type="text/javascript">document.title = "Регистрация";</script>
+
 <div class="main">
 	<div class="shop_top">
 		<div class="container">

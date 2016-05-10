@@ -7,6 +7,12 @@
 <div class="shop_top">
 <div class="container">
 
+<?php $pageName = !($category instanceof NullCategory) 
+			? ($category->getName()) 
+			: ("Категории"); ?>
+
+<script type="text/javascript">document.title = "<?= $pageName; ?>";</script>
+
 <div style="margin-bottom: 20px">
 	<h3 class="m_2" style="margin-bottom: 1%">
 		<?= !($category instanceof NullCategory) 

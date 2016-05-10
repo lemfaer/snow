@@ -2,6 +2,8 @@
 <div class="check">
 <div class="container">
 
+<script type="text/javascript">document.title = "Неизвестная ошибка";</script>
+
 <div class="cart">
 	<h4 class="title">неизвестная ошибка</h4>
 	<p class="cart">

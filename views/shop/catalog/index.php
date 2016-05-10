@@ -28,6 +28,8 @@
 
 <?php $cName = $category->getName(); ?>
 
+<script type="text/javascript">document.title = "<?= $cName; ?>";</script>
+
 <div class="main">
 <div class="shop_top">
 <div class="container">

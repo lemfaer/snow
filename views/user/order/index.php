@@ -2,6 +2,8 @@
 	<!-- $indentList -->
 <!-- REQUIRED END -->
 
+<script type="text/javascript">document.title = "Мои заказы";</script>
+
 <?php usort($indentList, function($a, $b) {
 	return 0 - ($a->getIndent()->getID() <=> $b->getIndent()->getID()) <=> 0;
 }); ?>

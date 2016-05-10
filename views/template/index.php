@@ -7,7 +7,6 @@
 <!-- REQUIRED END -->
 
 <head>
-<title>Free Snow Bootstrap Website Template | Checkout :: w3layouts</title>
 
 <!-- meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

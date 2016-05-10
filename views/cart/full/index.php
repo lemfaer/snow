@@ -6,6 +6,8 @@
 <script type="text/javascript" src="/views/cart/full/pr-qty.js"></script>
 <script type="text/javascript" src="/views/cart/full/pr-remove.js"></script>
 
+<script type="text/javascript">document.title = "Корзина"</script>
+
 <div class="main">
 <div class="check">
 <div class="container">

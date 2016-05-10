@@ -17,6 +17,8 @@
 <?php $pName      = $product->getProducer()->getName()
 	.' '.$product->getName().' '.$product->getYear(); ?>
 
+<script type="text/javascript">document.title = "<?= $pName; ?>";</script>
+
 <div class="main">
 <div class="shop_top">
 <div class="container">
