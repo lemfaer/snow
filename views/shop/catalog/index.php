@@ -97,7 +97,7 @@
 
 					<ul class="buttons">
 						<li class="shop_btn">
-							<a href="<?= $link; ?>">Read More</a>
+							<a href="<?= $link; ?>">купить</a>
 						</li>
 						<div class="clear"> </div>
 					</ul>

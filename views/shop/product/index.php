@@ -48,7 +48,7 @@
 				<?php if ($pAvailable): ?>
 		        	<?php if (count($sizeList) > 1): ?>
 						<ul class="options">
-							<h4 class="m_12">Select a Size(cm)</h4>
+							<h4 class="m_12">Доступные размеры</h4>
 							<?php foreach ($sizeList as $value): ?>
 								<?php $name = $value['size']->getName(); ?>
 
@@ -59,7 +59,7 @@
 
 					<?php if (count($colorList) > 1): ?>
 						<ul class="product-colors">
-							<h3>available Colors</h3>
+							<h3>Доступные цвета</h3>
 							<?php foreach ($colorList as $value): ?>
 								<?php $value = $value['color']->getValue(); ?>
 
@@ -115,14 +115,14 @@
 
 <?php if ($pDesc): ?>
 	<div class="desc">
-		<h4>Description</h4>
+		<h4>Описание</h4>
 		<p><?= $pDesc; ?></p>
 	</div>				
 <?php endif ?>
 
 <?php if ($charList): ?>
 	<div class="product-specifications">
-		<h4>Characteristics</h4>
+		<h4>Характеристики</h4>
 		<ul>
 			<?php foreach ($charList as $cValue): ?>
 				<?php $cName  = $cValue->getName(); ?>
@@ -139,7 +139,7 @@
 <?php endif ?>
 
 <div class="row">
-	<h4 class="m_11">Related Products //in the same Category</h4>
+	<h4 class="m_11">Рекомендованные продукты</h4>
 	
 	<?php foreach ($recomendedList as $rec): ?>
 		<?php $price     = '$'.$rec->getPrice(); ?>
@@ -160,7 +160,7 @@
 				<p><?= $shortDesc; ?></p>
 				<span class="actual"><?= $price; ?></span><br>
 				<ul class="buttons">
-					<li class="shop_btn"><a href="<?= $link; ?>">Read More</a></li>
+					<li class="shop_btn"><a href="<?= $link; ?>">купить</a></li>
 					<div class="clear"> </div>
 				</ul>
 			</div>

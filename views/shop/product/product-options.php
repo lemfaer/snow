@@ -71,7 +71,7 @@
 	<?php endif; ?>
 
 	<button type="submit" name="Submit" class="exclusive">
-		<span>Add to cart</span>
+		<span>В Корзину</span>
 	</button>
 
 </form>
