@@ -3,6 +3,28 @@
 
 <script type="text/javascript">document.title = "Главная"</script>
 
+<?php 
+	$bannerCount = 6;
+
+	$quoteArr = array(
+		"this is <br> happiness",
+		"<i>the mountains</i> <br> are calling",
+		"just <br> snowboard",
+		"go play <br> outside",
+		"ride it",
+		"it's time to dig another one"
+	);
+	shuffle($quoteArr);
+
+	$bannerArr = array();
+	for ($i = 1; $i <= $bannerCount; $i++) { 
+		$bannerArr[$i]['path']  = "/template/images/banners/$i.jpeg";
+		$bannerArr[$i]['quote'] = array_shift($quoteArr);
+	}
+
+	shuffle($bannerArr);
+ ?>
+
 <script type="text/javascript">
 	$(window).load(function() {
 		$("#flexiselDemo3").flexisel({
@@ -53,28 +75,19 @@
 <div class="banner">
 	<div id="fwslider">
 		<div class="slider_container">
-			<div class="slide"> 
-				<img src="/template/images/slider1.jpg" class="img-responsive" alt=""/>
+			<?php foreach ($bannerArr as $banner): ?>
+				<?php $path  = $banner['path']; ?>
+				<?php $quote = $banner['quote']; ?>
 
-				<div class="slide_content">
-					<div class="slide_content_wrap">
-						<!-- Text title -->
-						<h1 class="title">Run Over<br>Everything</h1>
-						<!-- /Text title -->
-						<div class="button"><a href="#">See Details</a></div>
+				<div class="slide"> 
+					<img src="<?= $path; ?>" class="img-responsive" alt=""/>
+					<div class="slide_content">
+						<div class="slide_content_wrap">
+							<h1 class="title"><?= $quote; ?></h1>
+						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="slide">
-				<img src="/template/images/slider2.jpg" class="img-responsive" alt=""/>
-				<div class="slide_content">
-					<div class="slide_content_wrap">
-						<h1 class="title">Run Over<br>Everything</h1>
-						<div class="button"><a href="#">See Details</a></div>
-					</div>
-				</div>
-			</div>
+			<?php endforeach ?>
         </div>
 
 		<div class="timers"></div>
