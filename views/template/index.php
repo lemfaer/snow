@@ -111,7 +111,7 @@
 		<div class="row">
 			<div class="header-left">
 				<div class="logo">
-					<a href="index.html"><img src="/template/images/logo.png" alt=""/></a>
+					<a href="/"><img src="/template/images/logo.png" alt=""/></a>
 				</div>
 				<div class="menu">
 					<a class="toggleMenu" href="#">
@@ -196,7 +196,7 @@
 <div class="footer">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
 				<ul class="footer_box">
 					<h4>Админ панель</h4>
 					<li><a href="/preview/read">Просмотр</a></li>
@@ -204,14 +204,14 @@
 					<li><a href="/preview/update">Редактирование</a></li>
 				</ul>
 			</div>
-			<div class="col-md-3">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
 				<ul class="footer_box">
 					<h4>Заказы</h4>
 					<li><a href="/preview/cart">Корзина</a></li>
 					<li><a href="/preview/order">Оформление заказа</a></li>
 				</ul>
 			</div>
-			<div class="col-md-3">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
 				<ul class="footer_box">
 					<h4>Пользователь</h4>
 					<li><a href="/preview/register">Регистрация</a></li>
@@ -219,7 +219,7 @@
 					<li><a href="/preview/orders">Мои заказы</a></li>
 				</ul>
 			</div>
-			<div class="col-md-3">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
 				<ul class="footer_box">
 					<h4>Магазин</h4>
 					<li><a href="/preview/category">Категории</a></li>

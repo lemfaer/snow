@@ -71,32 +71,6 @@
 						</ul>							
 					<?php endif; ?>
 				<?php endif; ?>
-
-				<ul class="add-to-links">
-					<li>
-						<img src="/template/images/wish.png" alt="">
-						<a href="#">Add to wishlist</a>
-					</li>
-				</ul>
-
-				<div class="social_buttons">
-					<button type="button" 
-						class="btn1 btn1-default1 btn1-twitter" onclick="">
-						<i class="icon-twitter"></i> Tweet
-					</button>
-					<button type="button" 
-						class="btn1 btn1-default1 btn1-facebook" onclick="">
-						<i class="icon-facebook"></i> Share
-					</button>
-					 <button type="button" 
-					 	class="btn1 btn1-default1 btn1-google" onclick="">
-						<i class="icon-google"></i> Google+
-					</button>
-					<button type="button" 
-						class="btn1 btn1-default1 btn1-pinterest" onclick="">
-						<i class="icon-pinterest"></i> Pinterest
-					</button>
-				</div>
 			</div>
 			<div class="clear"> </div>
 		</div>
@@ -149,7 +123,7 @@
 		<?php $name      = $rec->getProducer()->getName()
 			.' '.$rec->getName().' '.$rec->getYear(); ?>
 
-		<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 product1">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 product1">
 			<img src="<?= $image; ?>" class="img-responsive" alt=""/> 
 			<div class="shop_desc">
 				<a href="<?= $link; ?>"></a>
